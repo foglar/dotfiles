@@ -1,0 +1,14 @@
+#!/bin/bash
+# Simple today's note creator
+
+date=$(date '+%Y-%m-%d')
+filename="${date}.md"
+
+if [ -f "$filename" ]; then
+  echo "File already existed!!!"
+  sleep 2
+  nvim $filename
+else
+  touch ./$filename
+  nvim $filename
+fi
