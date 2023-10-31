@@ -1,1 +1,0 @@
-awk '{ printf "%.f degrees Celsius\n",  $0 / 1000.0 }' /sys/class/thermal/thermal_zone*/temp
