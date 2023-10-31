@@ -1,0 +1,49 @@
+#!/bin/bash
+# Copy all settings
+# required packages: git
+os ()
+{
+  os=$(hostnamectl | grep 'Operating System:')
+  if [[ $os == "Operating System: Arch Linux" ]]; then
+    return "0"
+  elif [[ $os == "Operating System: Kali GNU/Linux Rolling" ]]; then
+    return "1"
+  fi
+}
+
+echo "[*] Updating repositories"
+if [[ $(os) -eq 0 ]]; then
+  echo "[*] Detected Arch Linux"
+  sudo pacman -Suy
+  install="pacman -S"
+elif [[ $(os) -eq 1 ]]; then
+  echo "[*] Detected Debian"
+  sudo apt update && sudo apt upgrade -y
+  install="apt-get"
+fi
+
+echo "[*] Installing packages"
+sudo $install neovim alacritty tmux
+
+echo "[*] Cloning NvChad setup"
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
+
+echo "[*] Cloning Alacritty themes"
+mkdir -p ~/.config/alacritty/themes
+git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+
+echo "[!] Attention, this action will rewrite your current nvim config!!!"
+read
+echo "[*] Copying neovim setup"
+cp -r ../../.config/nvim/lua/custom ~/.config/nvim/lua/
+
+if [[ $(grep "source ~/.bash_aliases" ~/.bash_aliases) != ""]]; then
+  echo "[*] Added vim=nvim alias to the .bash_aliases"
+  echo "alias vim=nvim" >> ~/.bash_aliases
+fi
+if [[ $(grep "source ~/.bash_aliases" ~/.bashrc) != "" ]]; then
+  echo "[*] Added bash_aliases to the .bashrc"
+  echo "source ~/.bash_aliases" >> ~/.bashrc
+fi
+
+nvim

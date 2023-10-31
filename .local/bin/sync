@@ -1,0 +1,26 @@
+#!/bin/bash
+# copy all files into my dotfiles repository
+
+# all important config files and folders
+# ~/.config/tmux/tmux.conf
+# ~/.config/neofetch/config.conf
+# ~/.config/alacritty/alacritty.yml
+# ~/.config/nvim/lua/custom/
+
+TOOLS="git:neovim:python3:ranger:exa:rg:jp2a:figlet:entr:fzf:yt-dlp:tgpt:cmatrix:lolcat:autojump"
+FILES="~/.config/tmux/tmux.conf:~/.config/neofetch/config.conf:~/.config/alacritty/alacritty.yml"
+FOLDERS="~/.config/nvim/lua/custom/"
+
+# conda setup
+
+# nvchad setup
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2 && nvim 
+
+# autojump setup
+
+# themes for alacritty
+mkdir -p ~/.config/alacritty/themes
+git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+
+echo "[*] Copy neofetch/config.conf"
+cp ~/.config/neofetch/config.conf 
