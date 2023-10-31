@@ -1,6 +1,8 @@
 #!/bin/bash
 # Copy all settings
 # required packages: git
+
+# Determine users distro
 os ()
 {
   os=$(hostnamectl | grep 'Operating System:')
@@ -22,6 +24,9 @@ elif [[ $(os) -eq 1 ]]; then
   install="apt-get"
 fi
 
+echo "[*] Installing oh-my-posh"
+curl -s https://ohmyposh.dev/install.sh | bash -s
+
 echo "[*] Installing packages"
 sudo $install neovim alacritty tmux
 
@@ -37,13 +42,24 @@ read
 echo "[*] Copying neovim setup"
 cp -r ../../.config/nvim/lua/custom ~/.config/nvim/lua/
 
-if [[ $(grep "source ~/.bash_aliases" ~/.bash_aliases) != ""]]; then
-  echo "[*] Added vim=nvim alias to the .bash_aliases"
-  echo "alias vim=nvim" >> ~/.bash_aliases
+echo "Would you like to replace your .bashrc file?"
+read -r ANS
+if [[ $ANS=="y" ]]; then
+  echo "[*] Copy .bashrc"
+  cp ../../.bashrc ~/
+else
+  echo "[-] Skip Copy .bashrc"
 fi
-if [[ $(grep "source ~/.bash_aliases" ~/.bashrc) != "" ]]; then
-  echo "[*] Added bash_aliases to the .bashrc"
-  echo "source ~/.bash_aliases" >> ~/.bashrc
+read -r ANS1
+if [[ $ANS1 == "y" ]]; then
+  echo "[*] Copy .bash_aliases"
+  cp ../../.bash_aliases ~/
+else
+  echo "[-] Skip Copy .bash_aliases"
 fi
+echo "[?] To update your tmux config press <CTRL-SPACE>+I"
+echo "[?] To install syntax highlighting in neovim run ':TSInstall <language_name>'"
+sleep 2
 
+tmux
 nvim
