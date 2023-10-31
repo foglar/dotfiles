@@ -28,7 +28,7 @@ echo "[*] Installing oh-my-posh"
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
 echo "[*] Installing packages"
-sudo $install neovim alacritty tmux
+sudo $install neovim alacritty tmux unzip autojump npm go python3 neofetch
 
 echo "[*] Cloning NvChad setup"
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
@@ -57,9 +57,18 @@ if [[ $ANS1 == "y" ]]; then
 else
   echo "[-] Skip Copy .bash_aliases"
 fi
+
+echo [*] Copy tmux config
+cp ../../.config/tmux/tmux.conf ~/.config/tmux/
+echo [*] Copy oh-my-posh theme
+mkdir ~/.themes
+cp ../../.themes/kali.omp.json ~/.themes/
+echo "[*] Copy neofetch config"
+cp ../../.config/neofetch/config.conf ~/.config/neofetch/
+
 echo "[?] To update your tmux config press <CTRL-SPACE>+I"
 echo "[?] To install syntax highlighting in neovim run ':TSInstall <language_name>'"
 sleep 2
 
-tmux
 nvim
+tmux
