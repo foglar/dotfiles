@@ -24,11 +24,11 @@ elif [[ $(os) -eq 1 ]]; then
   install="apt-get"
 fi
 
+echo "[*] Installing packages"
+sudo $install neovim alacritty tmux unzip npm go python3 neofetch
+
 echo "[*] Installing oh-my-posh"
 curl -s https://ohmyposh.dev/install.sh | bash -s
-
-echo "[*] Installing packages"
-sudo $install neovim alacritty tmux unzip autojump npm go python3 neofetch
 
 echo "[*] Cloning NvChad setup"
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
@@ -36,6 +36,12 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
 echo "[*] Cloning Alacritty themes"
 mkdir -p ~/.config/alacritty/themes
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+
+if [[ $os -eq 0 ]]; then
+  echo "[*] Installing autojump (only Arch)"
+  $install paru
+  paru -S autojump
+fi
 
 echo "[!] Attention, this action will rewrite your current nvim config!!!"
 read
