@@ -56,12 +56,11 @@ cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
 # TMUX
 echo [*] Copy tmux config
-if [[ -f "~/config/tmux/tmux.conf"]]; then
+if [[ -f "/home/foglar/.config/tmux/tmux.conf" ]]; then
   mkdir ~/.config/tmux
   cp .config/tmux/tmux.conf ~/.config/tmux/
 else
-  echo "File ~/.config/tmux/tmux.conf already exist, remove it to proceed."
-  exit
+  echo "File ~/.config/tmux/tmux.conf already exist, remove it to setup config."
 fi
 
 # OH-MY-POSH
@@ -71,8 +70,11 @@ cp .themes/kali.omp.json ~/.themes/
 
 # NEOFETCH
 echo "[*] Copy neofetch config"
-mkdir ~/.config/neofetch
-cp .config/neofetch/config.conf ~/.config/neofetch/
+if [[ -f "/home/foglar/.config/neofetch/config.conf" ]]; then
+  mkdir ~/.config/neofetch
+  cp .config/neofetch/config.conf ~/.config/neofetch/
+else
+  echo "File ~/.config/neofetch/config.conf already exist, remove it to setup config."
 
 # TERMINAL
 echo "Would you like to replace your .bashrc file? [y/n]"
