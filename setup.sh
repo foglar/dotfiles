@@ -32,7 +32,7 @@ if [[ $(os) -eq 0 ]]; then
 fi
 
 echo "[*] Installing packages"
-sudo $install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix tgpt ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng
+sudo $install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng
 paru -S autojump 
 
 # OH-MY-POSH
@@ -56,7 +56,7 @@ cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
 # TMUX
 echo [*] Copy tmux config
-if [[ -f "/home/foglar/.config/tmux/tmux.conf" ]]; then
+if [[ ! -f "/home/foglar/.config/tmux/tmux.conf" ]]; then
   mkdir ~/.config/tmux
   cp .config/tmux/tmux.conf ~/.config/tmux/
 else
@@ -70,12 +70,12 @@ cp .themes/kali.omp.json ~/.themes/
 
 # NEOFETCH
 echo "[*] Copy neofetch config"
-if [[ -f "/home/foglar/.config/neofetch/config.conf" ]]; then
+if [[ ! -f "/home/foglar/.config/neofetch/config.conf" ]]; then
   mkdir ~/.config/neofetch
   cp .config/neofetch/config.conf ~/.config/neofetch/
 else
   echo "File ~/.config/neofetch/config.conf already exist, remove it to setup config."
-
+fi
 # TERMINAL
 echo "Would you like to replace your .bashrc file? [y/n]"
 read -r ANS
