@@ -32,23 +32,49 @@ if [[ $(os) -eq 0 ]]; then
 fi
 
 echo "[*] Installing packages"
-sudo $install neovim alacritty tmux unzip npm go python3 neofetch exa paru
+sudo $install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix tgpt ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng
+paru -S autojump 
 
+# OH-MY-POSH
 echo "[*] Installing oh-my-posh"
 curl -s https://ohmyposh.dev/install.sh | sudo bash -s
 
+# NEOVIM
 echo "[*] Cloning NvChad setup"
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
 
+# ALACRITTY
 echo "[*] Cloning Alacritty themes"
 mkdir -p ~/.config/alacritty/themes
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 
+# NEOVIM
 echo "[!] Attention, this action will rewrite your current nvim config!!! Press [Enter] to continue..."
 read
 echo "[*] Copying neovim setup"
 cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
+# TMUX
+echo [*] Copy tmux config
+if [[ -f "~/config/tmux/tmux.conf"]]; then
+  mkdir ~/.config/tmux
+  cp .config/tmux/tmux.conf ~/.config/tmux/
+else
+  echo "File ~/.config/tmux/tmux.conf already exist, remove it to proceed."
+  exit
+fi
+
+# OH-MY-POSH
+echo [*] Copy oh-my-posh theme
+mkdir ~/.themes
+cp .themes/kali.omp.json ~/.themes/
+
+# NEOFETCH
+echo "[*] Copy neofetch config"
+mkdir ~/.config/neofetch
+cp .config/neofetch/config.conf ~/.config/neofetch/
+
+# TERMINAL
 echo "Would you like to replace your .bashrc file? [y/n]"
 read -r ANS
 if [[ $ANS=="y" ]]; then
@@ -66,17 +92,9 @@ else
   echo "[-] Skip Copy .bash_aliases"
 fi
 
-echo [*] Copy tmux config
-cp .config/tmux/tmux.conf ~/.config/tmux/
-echo [*] Copy oh-my-posh theme
-mkdir ~/.themes
-cp .themes/kali.omp.json ~/.themes/
-echo "[*] Copy neofetch config"
-cp .config/neofetch/config.conf ~/.config/neofetch/
-
 echo "[?] To update your tmux config press <CTRL-SPACE>+I"
 echo "[?] To install syntax highlighting in neovim run ':TSInstall <language_name>'"
-sleep 2
+sleep 4
 
-tmux
+tmux &
 nvim
