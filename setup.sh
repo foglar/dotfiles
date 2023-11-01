@@ -19,21 +19,16 @@ os ()
   fi
 }
 
-if [[ $os == 0 ]]; then
+if [[ $(os) -eq 0 ]]; then
   echo "[*] Detected Arch Linux"
-  install = "pacman -S"
+  install="pacman -S"
+  echo "[*] Updating repositories"
   sudo pacman -Suy
   echo "[*] Adding blackarch repositories"
   curl -O https://blackarch.org/strap.sh
   echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
   chmod +x strap.sh
   sudo ./strap.sh 
-fi
-
-if [[ $(os) -eq 1 ]]; then
-  echo "[*] Detected Debian"
-  sudo apt update && sudo apt upgrade -y
-  install="apt-get"
 fi
 
 echo "[*] Installing packages"
@@ -49,7 +44,7 @@ echo "[*] Cloning Alacritty themes"
 mkdir -p ~/.config/alacritty/themes
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 
-echo "[!] Attention, this action will rewrite your current nvim config!!!"
+echo "[!] Attention, this action will rewrite your current nvim config!!! Press [Enter] to continue..."
 read
 echo "[*] Copying neovim setup"
 cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
@@ -62,6 +57,7 @@ if [[ $ANS=="y" ]]; then
 else
   echo "[-] Skip Copy .bashrc"
 fi
+echo "Would you like to replace your .bash_aliases file [y/n]"
 read -r ANS1
 if [[ $ANS1 == "y" ]]; then
   echo "[*] Copy .bash_aliases"
@@ -82,5 +78,5 @@ echo "[?] To update your tmux config press <CTRL-SPACE>+I"
 echo "[?] To install syntax highlighting in neovim run ':TSInstall <language_name>'"
 sleep 2
 
-nvim
 tmux
+nvim

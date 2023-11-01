@@ -1,4 +1,4 @@
-# ~
+# ~  󰣇  
 **all my config files in one place**
 
 ## my arch linux setup
