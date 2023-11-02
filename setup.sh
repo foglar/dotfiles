@@ -37,7 +37,7 @@ paru -S autojump
 
 # FONTS
 echo "[*] Download JetBrainsMono Nerd font"
-wget --output-document JetBrainsMono.zip "https://github.com/ryanoasis/nerd-font  s/releases/download/v3.0.2/JetBrainsMono.zip"
+wget --output-document JetBrainsMono.zip "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
 mkdir ~/.local/share/fonts/
 unzip JetBrainsMono.zip -d  ~/.local/share/fonts
 fc-cache -vf
@@ -58,8 +58,10 @@ echo "[*] Copying neovim setup"
 cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
 # ALACRITTY
-echo "[*] Cloning Alacritty themes"
+echo "[*] Cloning alacritty setup file"
 mkdir -p ~/.config/alacritty/themes
+cp .config/alacritty/alacritty.yml ~/.config/alacritty/
+echo "[*] Cloning Alacritty themes"
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 
 # TMUX
@@ -102,7 +104,8 @@ fi
 
 echo "[?] To update your tmux config press <CTRL-SPACE>+I"
 echo "[?] To install syntax highlighting in neovim run ':TSInstall <language_name>'"
+echo "[?] You may have to restart terminal to se changes"
 sleep 4
 
-tmux &
 nvim
+tmux
