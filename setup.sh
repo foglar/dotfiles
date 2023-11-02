@@ -63,9 +63,11 @@ mkdir -p ~/.config/alacritty/themes
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 
 # TMUX
-echo [*] Copy tmux config
+echo "[*] Tmux TPM install"
+mkdir -p ~/.config/tmux/plugins/
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "[*] Copy tmux config"
 if [[ ! -f "/home/foglar/.config/tmux/tmux.conf" ]]; then
-  mkdir ~/.config/tmux
   cp .config/tmux/tmux.conf ~/.config/tmux/
 else
   echo "File ~/.config/tmux/tmux.conf already exist, remove it to setup config."
