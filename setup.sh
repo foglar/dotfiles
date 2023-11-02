@@ -32,27 +32,35 @@ if [[ $(os) -eq 0 ]]; then
 fi
 
 echo "[*] Installing packages"
-sudo $install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng
+sudo $install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr
 paru -S autojump 
+
+# FONTS
+echo "[*] Download JetBrainsMono Nerd font"
+wget --output-document JetBrainsMono.zip "https://github.com/ryanoasis/nerd-font  s/releases/download/v3.0.2/JetBrainsMono.zip"
+mkdir ~/.local/share/fonts/
+unzip JetBrainsMono.zip -d  ~/.local/share/fonts
+fc-cache -vf
 
 # OH-MY-POSH
 echo "[*] Installing oh-my-posh"
 curl -s https://ohmyposh.dev/install.sh | sudo bash -s
+echo [*] Copy oh-my-posh theme
+mkdir ~/.themes
+cp .themes/kali.omp.json ~/.themes/
 
 # NEOVIM
 echo "[*] Cloning NvChad setup"
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
+echo "[!] Attention, this action will rewrite your current nvim config!!! Press [Enter] to continue..."
+read
+echo "[*] Copying neovim setup"
+cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
 # ALACRITTY
 echo "[*] Cloning Alacritty themes"
 mkdir -p ~/.config/alacritty/themes
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-
-# NEOVIM
-echo "[!] Attention, this action will rewrite your current nvim config!!! Press [Enter] to continue..."
-read
-echo "[*] Copying neovim setup"
-cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
 # TMUX
 echo [*] Copy tmux config
@@ -63,11 +71,6 @@ else
   echo "File ~/.config/tmux/tmux.conf already exist, remove it to setup config."
 fi
 
-# OH-MY-POSH
-echo [*] Copy oh-my-posh theme
-mkdir ~/.themes
-cp .themes/kali.omp.json ~/.themes/
-
 # NEOFETCH
 echo "[*] Copy neofetch config"
 if [[ ! -f "/home/foglar/.config/neofetch/config.conf" ]]; then
@@ -76,6 +79,7 @@ if [[ ! -f "/home/foglar/.config/neofetch/config.conf" ]]; then
 else
   echo "File ~/.config/neofetch/config.conf already exist, remove it to setup config."
 fi
+
 # TERMINAL
 echo "Would you like to replace your .bashrc file? [y/n]"
 read -r ANS

@@ -2,3 +2,5 @@
 .local/bin/nosetests
 
 .local/bin/nosetests-3.4
+
+JetBrainsMono.zip
