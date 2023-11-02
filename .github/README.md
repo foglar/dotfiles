@@ -2,7 +2,7 @@
 
 ## **all my config files in one place**
 
-I      󰣇 
+  󰣇 
 
 
 ## ./scripts
@@ -11,8 +11,7 @@ I      󰣇 
 
 ```bash
 git clone https://github.com/foglar/dotfiles
-cd dotfiles
-chmod +x setup.sh
+cd dotfiles && chmod +x setup.sh
 ./setup.sh
 ```
 When neovim setup is completed, exit neovim and you will have to update tmux with "<CTRL + SPC> + I"    
@@ -59,9 +58,6 @@ to read more about package try `pacman -Ss <package_name>` or to get more info a
 │  │  ├──  sync
 │  │  ├──  temp
 │  │  └──  today
-│  └──  share
-│     └──  autojump
-│        └──  autojump.txt
 ├──  .themes
 │  ├──  kali-test.omp.json
 │  └──  kali.omp.json
