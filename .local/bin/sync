@@ -1,26 +1,23 @@
 #!/bin/bash
 # copy all files into my dotfiles repository
 
-# all important config files and folders
-# ~/.config/tmux/tmux.conf
-# ~/.config/neofetch/config.conf
-# ~/.config/alacritty/alacritty.yml
-# ~/.config/nvim/lua/custom/
+repo_path="/mnt/Files/Programming/Git/dotfiles/"
 
-TOOLS="git:neovim:python3:ranger:exa:rg:jp2a:figlet:entr:fzf:yt-dlp:tgpt:cmatrix:lolcat:autojump"
-FILES="~/.config/tmux/tmux.conf:~/.config/neofetch/config.conf:~/.config/alacritty/alacritty.yml"
-FOLDERS="~/.config/nvim/lua/custom/"
-
-# conda setup
-
-# nvchad setup
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2 && nvim 
-
-# autojump setup
-
-# themes for alacritty
-mkdir -p ~/.config/alacritty/themes
-git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-
-echo "[*] Copy neofetch/config.conf"
-cp ~/.config/neofetch/config.conf 
+echo "[*] Syncing sync script"
+cp $repo_path.local/bin/sync ~/.local/bin/sync
+echo "[*] alacritty"
+cp ~/.config/alacritty/alacritty.yml $repo_path.config/alacritty
+echo "[*] neovim"
+cp -r ~/.config/nvim/lua/custom/ -T $repo_path.config/nvim/lua/custom/
+echo "[*] neofetch"
+cp ~/.config/neofetch/config.conf $repo_path.config/neofetch/
+echo "[*] tmux"
+cp ~/.config/tmux/tmux.conf $repo_path.config/tmux/
+echo "[*] .bashrc"
+cp ~/.bashrc $repo_path
+echo "[*] .bash_aliases"
+cp ~/.bash_aliases $repo_path
+echo "[*] .local/bin/"
+cp -r ~/.local/bin/ -T $repo_path.local/bin/
+echo "[*] .themes"
+cp -r ~/.themes/ -T $repo_path.themes
