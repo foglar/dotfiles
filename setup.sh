@@ -27,9 +27,9 @@ os ()
 if [[ $(os) -eq 0 ]]; then
   echo "$green[*]$blue Detected Arch Linux"
   install="paru -S"
-  echo "$green[*]$blue Updating repositories"
+  echo "$green[*]$blue Updating repositories$reset"
   sudo pacman -Suy
-  echo "$green[*]$blue Adding blackarch repositories"
+  echo "$green[*]$blue Adding blackarch repositories$reset"
   curl -O https://blackarch.org/strap.sh
   echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
   chmod +x strap.sh
@@ -38,82 +38,82 @@ if [[ $(os) -eq 0 ]]; then
   read -r VAR
 fi
 
-echo "$green[*]$blue Installing packages"
+echo "$green[*]$blue Installing packages$reset"
 $install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr autojump tgpt-bin 
 
 # FONTS
-echo "$green[*]$blue Download JetBrainsMono Nerd font"
+echo "$green[*]$blue Download JetBrainsMono Nerd font$reset"
 wget --output-document JetBrainsMono.zip "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
 mkdir ~/.local/share/fonts/
 unzip JetBrainsMono.zip -d  ~/.local/share/fonts
 fc-cache -vf
 
 # OH-MY-POSH
-echo "$green[*]$blue Installing oh-my-posh"
+echo "$green[*]$blue Installing oh-my-posh$reset"
 curl -s https://ohmyposh.dev/install.sh | sudo bash -s
-echo "$green[*]$blue Copy oh-my-posh theme"
+echo "$green[*]$blue Copy oh-my-posh theme$reset"
 mkdir ~/.themes
 cp .themes/kali.omp.json ~/.themes/
 
 # NEOVIM
-echo "$green[*]$blue Cloning NvChad setup"
+echo "$green[*]$blue Cloning NvChad setup$reset"
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
-echo "$red[!] Attention, this action will rewrite your current nvim config!!! Press [Enter] to continue..."
+echo "$red[!] Attention, this action will rewrite your current nvim config!!! Press [Enter] to continue...$reset"
 read
-echo "$green[*]$blue Copying neovim setup"
+echo "$green[*]$blue Copying neovim setup$reset"
 cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
 # ALACRITTY
-echo "$green[*]$blue Cloning alacritty setup file"
+echo "$green[*]$blue Cloning alacritty setup file$reset"
 mkdir -p ~/.config/alacritty/themes
 cp .config/alacritty/alacritty.yml ~/.config/alacritty/
-echo "$green[*]$blue Cloning Alacritty themes"
+echo "$green[*]$blue Cloning Alacritty themes$reset"
 git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 
 # TMUX
-echo "$green[*]$blue Tmux TPM install"
+echo "$green[*]$blue Tmux TPM install$reset"
 mkdir -p ~/.config/tmux/plugins/
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-echo "$green[*]$blue Copy tmux config"
+echo "$green[*]$blue Copy tmux config$reset"
 if [[ ! -f "/home/foglar/.config/tmux/tmux.conf" ]]; then
   cp .config/tmux/tmux.conf ~/.config/tmux/
 else
-  echo "$red[!] File ~/.config/tmux/tmux.conf already exist, remove it to setup config."
+  echo "$red[!] File ~/.config/tmux/tmux.conf already exist, remove it to setup config.$reset"
 fi
 
 # NEOFETCH
-echo "$green[*]$blue Copy neofetch config"
+echo "$green[*]$blue Copy neofetch config$reset"
 if [[ ! -f "/home/foglar/.config/neofetch/config.conf" ]]; then
   mkdir ~/.config/neofetch
   cp .config/neofetch/config.conf ~/.config/neofetch/
 else
-  echo "$red[!] File ~/.config/neofetch/config.conf already exist, remove it to setup config."
+  echo "$red[!] File ~/.config/neofetch/config.conf already exist, remove it to setup config.$reset"
 fi
 
 # TERMINAL
-echo "$blue[?] Would you like to replace your .bashrc file? [y/n]"
+echo "$blue[?] Would you like to replace your .bashrc file? [y/n]$reset"
 read -r ANS
 if [[ $ANS=="y" ]]; then
-  echo "$green[*]$blue Copy .bashrc"
+  echo "$green[*]$blue Copy .bashrc$reset"
   cp .bashrc ~/
 else
-  echo "$red[-]$blue Skip Copy .bashrc"
+  echo "$red[-]$blue Skip Copy .bashrc$reset"
 fi
-echo "$blue[?] Would you like to replace your .bash_aliases file [y/n]"
+echo "$blue[?] Would you like to replace your .bash_aliases file [y/n]$reset"
 read -r ANS1
 if [[ $ANS1 == "y" ]]; then
-  echo "$green[*]$blue Copy .bash_aliases"
+  echo "$green[*]$blue Copy .bash_aliases$reset"
   cp .bash_aliases ~/
 else
-  echo "$red[-]$blue Skip Copy .bash_aliases"
+  echo "$red[-]$blue Skip Copy .bash_aliases$reset"
 fi
 
 echo "$blue[?] To update your tmux config press <CTRL-SPACE>+I"
 echo "$blue[?] To install syntax highlighting in neovim run ':TSInstall <language_name>'"
-echo "$blue[?] You may have to restart terminal to se changes"
+echo "$blue[?] You may have to restart terminal to se changes$reset"
 sleep 4
 
 nvim
 tmux
 
-echo "Instalation end"
+echo "Instalation end$reset"
