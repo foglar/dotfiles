@@ -35,7 +35,6 @@ if [[ $(os) -eq 0 ]]; then
   chmod +x strap.sh
   sudo ./strap.sh 
   sudo pacman -S paru
-  read -r VAR
 fi
 
 echo "$green[*]$blue Installing packages$reset"
