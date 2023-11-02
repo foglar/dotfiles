@@ -1,10 +1,28 @@
 # ~/dotfiles
 
-<style>@import "https://www.nerdfonts.com/assets/css/webfont.css";</style>
+## **all my config files in one place**
 
- ## **all my config files in one place**
+I     󰣇 
 
-<i class="nf nf-custom-vim" style="color: #009930"></i> <i class="nf nf-cod-terminal_tmux" style="color: #15C71A; width:30px;height:30px"></i> <i class="nf nf-linux-archlinux" style="color: #1095D3"></i> <i class="nf nf-dev-linux"></i>
+
+  ## ./scripts
+
+  - ./setup.sh - full arch setup script
+
+  ```bash
+  git clone https://github.com/foglar/dotfiles
+  cd dotfiles
+  chmod +x setup.sh
+  ./setup.sh
+  ```
+
+### ./useful_stuff
+
+- alacritty - custom config and themes
+- neovim - with custom config
+- neofetch - with custom config
+- custom aliases in .bash_aliases file
+- many other useful packages
 
 ## ./file_tree
 ```bash
@@ -43,21 +61,3 @@
 └──  setup.sh
 ```
 
-## ./scripts
-
-- ./setup.sh - full arch setup script
-
-```bash
-git clone https://github.com/foglar/dotfiles
-cd dotfiles
-chmod +x setup.sh
-./setup.sh
-```
-
-### ./install
-
-- alacritty - custom config and themes
-- neovim - with custom config
-- neofetch - with custom config
-- custom aliases in .bash_aliases file
-- many other packages
