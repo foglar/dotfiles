@@ -21,7 +21,7 @@ os ()
 
 if [[ $(os) -eq 0 ]]; then
   echo "[*] Detected Arch Linux"
-  install="pacman -S"
+  install="paru -S"
   echo "[*] Updating repositories"
   sudo pacman -Suy
   echo "[*] Adding blackarch repositories"
@@ -29,11 +29,11 @@ if [[ $(os) -eq 0 ]]; then
   echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
   chmod +x strap.sh
   sudo ./strap.sh 
+  sudo pacman -S paru
 fi
 
 echo "[*] Installing packages"
-sudo $install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr
-paru -S autojump 
+$install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr autojump tgpt-bin 
 
 # FONTS
 echo "[*] Download JetBrainsMono Nerd font"

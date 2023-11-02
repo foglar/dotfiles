@@ -2,27 +2,35 @@
 
 ## **all my config files in one place**
 
-I     󰣇 
+I      󰣇 
 
 
-  ## ./scripts
+## ./scripts
 
-  - ./setup.sh - full arch setup script
+- ./setup.sh - full arch setup script
 
-  ```bash
-  git clone https://github.com/foglar/dotfiles
-  cd dotfiles
-  chmod +x setup.sh
-  ./setup.sh
-  ```
+```bash
+git clone https://github.com/foglar/dotfiles
+cd dotfiles
+chmod +x setup.sh
+./setup.sh
+```
+When neovim setup is completed, exit neovim and you will have to update tmux with "<CTRL + SPC> + I"    
+
 
 ### ./useful_stuff
 
+- add blackarch repositories
 - alacritty - custom config and themes
-- neovim - with custom config
+- neovim - with custom config (NVChad)
 - neofetch - with custom config
 - custom aliases in .bash_aliases file
-- many other useful packages
+- fonts - installs jetbrains_mono font for you
+- many other useful/less packages:
+
+neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr
+
+to read more about package try `pacman -Ss <package_name>` or to get more info about usage, use `tldr <package_name>`.
 
 ## ./file_tree
 ```bash
