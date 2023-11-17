@@ -4,7 +4,6 @@
 
   󰣇 
 
-
 ## ./scripts
 
 - ./setup.sh - full arch setup script
@@ -14,13 +13,14 @@ git clone https://github.com/foglar/dotfiles
 cd dotfiles && chmod +x setup.sh
 ./setup.sh
 ```
-When neovim setup is completed, exit neovim and you will have to update tmux with "<CTRL + SPC> + I"    
 
+When neovim setup is completed, exit neovim and you will have to update tmux with "<CTRL + SPC> + I"
 
 ### ./useful_stuff
 
 - add blackarch repositories
 - alacritty - custom config and themes
+- anaconda - conda python virtual environments
 - neovim - with custom config (NVChad)
 - neofetch - with custom config
 - custom aliases in .bash_aliases file
@@ -32,6 +32,7 @@ neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix rang
 to read more about package try `pacman -Ss <package_name>` or to get more info about usage, use `tldr <package_name>`.
 
 ## ./file_tree
+
 ```bash
 ~
 ├──  .bash_aliases
@@ -64,4 +65,3 @@ to read more about package try `pacman -Ss <package_name>` or to get more info a
 ├──  default-bg.jpg
 └──  setup.sh
 ```
-

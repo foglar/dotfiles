@@ -38,7 +38,7 @@ if [[ $(os) -eq 0 ]]; then
 fi
 
 echo "$green[*]$blue Installing packages$reset"
-$install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr autojump tgpt-bin 
+$install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr autojump tgpt-bin
 
 # FONTS
 echo "$green[*]$blue Download JetBrainsMono Nerd font$reset"
@@ -88,6 +88,11 @@ if [[ ! -f "/home/foglar/.config/neofetch/config.conf" ]]; then
 else
   echo "$red[!] File ~/.config/neofetch/config.conf already exist, remove it to setup config.$reset"
 fi
+
+# CONDA
+wget "https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh"
+chmod +x Anaconda3-2023.09-0-Linux-x86_64.sh
+./Anaconda3-2023.09-0-Linux-x86_64.sh
 
 # TERMINAL
 echo "$blue[?] Would you like to replace your .bashrc file? [y/n]$reset"

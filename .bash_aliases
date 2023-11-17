@@ -5,3 +5,4 @@ alias tree="exa --tree --icons"
 alias ai="tgpt"
 alias chtsh="lolcat ~/Documents/Obsidian/Home/Programming/term-tools.md"
 alias f=fuck
+alias open=rifle

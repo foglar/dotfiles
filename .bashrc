@@ -36,4 +36,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# PATH
+PATH=$PATH:~/.local/bin/
 eval "$(thefuck --alias)"

@@ -4,7 +4,7 @@
 repo_path="/mnt/Files/Programming/Git/dotfiles/"
 
 echo "[*] Syncing sync script"
-cp $repo_path.local/bin/sync ~/.local/bin/sync
+cp $repo_path.local/bin/dot-sync ~/.local/bin/dot-sync
 echo "[*] alacritty"
 cp ~/.config/alacritty/alacritty.yml $repo_path.config/alacritty
 echo "[*] neovim"
