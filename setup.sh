@@ -1,6 +1,7 @@
 #!/bin/bash
 # Copy all settings
 # required packages: git
+# manually enable multilib in /etc/pacman.conf
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
@@ -38,22 +39,17 @@ echo """   __  ___       ___           __     __   _
 
 # ADDING REPOSITORIES
 echo "$green[*]$blue Updating repositories$reset"
-echo "$green[*]$blue Enabling multilib repositories$reset"
-chmod +x add_multilib.sh
-sudo ./add_multilib.sh
 echo "$green[*]$blue Adding blackarch repositories$reset"
-curl -O https://blackarch.org/strap.sh
+curl -O https://blackarch.org/strap.sh 
 echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
 chmod +x strap.sh
 sudo ./strap.sh
 sudo pacman -Syu
+echo "$green[*]$blue Install paru - AUR helper$reset"
+sudo pacman -S paru
 
 # PACKAGES
 echo "$green[*]$blue Installing packages$reset"
-# Check if paru is installed
-if ! command -v paru &> /dev/null; then
-    sudo pacman -S paru
-fi
 
 # Install packages from the file
 while IFS= read -r package; do
@@ -102,14 +98,14 @@ else
   echo "$red[!] File ~/.config/tmux/tmux.conf already exist, remove it to setup config.$reset"
 fi
 
-# NEOFETCH
-echo "$green[*]$blue Copy neofetch config$reset"
-if [[ ! -f "/home/foglar/.config/neofetch/config.conf" ]]; then
-  mkdir ~/.config/neofetch
-  cp .config/neofetch/config.conf ~/.config/neofetch/
-else
-  echo "$red[!] File ~/.config/neofetch/config.conf already exist, remove it to setup config.$reset"
-fi
+# # NEOFETCH
+# echo "$green[*]$blue Copy neofetch config$reset"
+# if [[ ! -f "/home/foglar/.config/neofetch/config.conf" ]]; then
+#   mkdir ~/.config/neofetch
+#   cp .config/neofetch/config.conf ~/.config/neofetch/
+# else
+#   echo "$red[!] File ~/.config/neofetch/config.conf already exist, remove it to setup config.$reset"
+# fi
 
 # CONDA
 wget "https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh"
