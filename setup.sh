@@ -54,7 +54,7 @@ echo "$green[*]$blue Installing packages$reset"
 
 # Install packages from the file
 while IFS= read -r package; do
-    paru -S --noconfirm "$package"
+    sudo pacman -S --noconfirm "$package"
 done < app_list.cfg
 
 echo "Packages installation completed."
