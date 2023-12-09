@@ -14,31 +14,53 @@ echo """   __  ___       ___           __     __   _
        /___/
 """
 # Determine users distro
-os ()
-{
-  os=$(hostnamectl | grep 'Operating System:')
-  if [[ $os == "Operating System: Arch Linux" ]]; then
-    return "0"
-  elif [[ $os == "Operating System: Kali GNU/Linux Rolling" ]]; then
-    return "1"
-  fi
-}
+# os ()
+# {
+#   os=$(hostnamectl | grep 'Operating System:')
+#   if [[ $os == "Operating System: Arch Linux" ]]; then
+#     return "0"
+#   elif [[ $os == "Operating System: Kali GNU/Linux Rolling" ]]; then
+#     return "1"
+#   fi
+# }
 
-if [[ $(os) -eq 0 ]]; then
-  echo "$green[*]$blue Detected Arch Linux"
-  install="paru -S"
-  echo "$green[*]$blue Updating repositories$reset"
-  sudo pacman -Suy
-  echo "$green[*]$blue Adding blackarch repositories$reset"
-  curl -O https://blackarch.org/strap.sh
-  echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
-  chmod +x strap.sh
-  sudo ./strap.sh 
-  sudo pacman -S paru
+# if [[ $(os) -eq 0 ]]; then
+#   echo "$green[*]$blue Detected Arch Linux"
+#   install="paru -S"
+#   echo "$green[*]$blue Updating repositories$reset"
+#   sudo pacman -Suy
+#   echo "$green[*]$blue Adding blackarch repositories$reset"
+#   curl -O https://blackarch.org/strap.sh
+#   echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
+#   chmod +x strap.sh
+#   sudo ./strap.sh 
+# fi
+
+# ADDING REPOSITORIES
+echo "$green[*]$blue Updating repositories$reset"
+echo "$green[*]$blue Enabling multilib repositories$reset"
+chmod +x add_multilib.sh
+sudo ./add_multilib.sh
+echo "$green[*]$blue Adding blackarch repositories$reset"
+curl -O https://blackarch.org/strap.sh
+echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
+chmod +x strap.sh
+sudo ./strap.sh
+sudo pacman -Syu
+
+# PACKAGES
+echo "$green[*]$blue Installing packages$reset"
+# Check if paru is installed
+if ! command -v paru &> /dev/null; then
+    sudo pacman -S paru
 fi
 
-echo "$green[*]$blue Installing packages$reset"
-$install neovim alacritty tmux unzip npm go python3 neofetch exa paru lolcat cmatrix ranger yt-dlp ncdu ripgrep entr jp2a figlet fzf thefuck espeak-ng htop wget tldr autojump tgpt-bin
+# Install packages from the file
+while IFS= read -r package; do
+    paru -S --noconfirm "$package"
+done < app_list.cfg
+
+echo "Packages installation completed."
 
 # FONTS
 echo "$green[*]$blue Download JetBrainsMono Nerd font$reset"
@@ -62,12 +84,12 @@ read
 echo "$green[*]$blue Copying neovim setup$reset"
 cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
 
-# ALACRITTY
-echo "$green[*]$blue Cloning alacritty setup file$reset"
-mkdir -p ~/.config/alacritty/themes
-cp .config/alacritty/alacritty.yml ~/.config/alacritty/
-echo "$green[*]$blue Cloning Alacritty themes$reset"
-git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+# # ALACRITTY
+# echo "$green[*]$blue Cloning alacritty setup file$reset"
+# mkdir -p ~/.config/alacritty/themes
+# cp .config/alacritty/alacritty.yml ~/.config/alacritty/
+# echo "$green[*]$blue Cloning Alacritty themes$reset"
+# git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 
 # TMUX
 echo "$green[*]$blue Tmux TPM install$reset"
