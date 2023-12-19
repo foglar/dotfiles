@@ -1,42 +1,35 @@
 #!/bin/bash
 # Copy all settings
 # required packages: git
-# manually enable multilib in /etc/pacman.conf
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 blue=$(tput setaf 4)
 reset=$(tput sgr0)
-
-echo """   __  ___       ___           __     __   _
-  /  |/  /_ __  / _ | ________/ /    / /  (_)__  __ ____ __
- / /|_/ / // / / __ |/ __/ __/ _ \\  / /__/ / _ \\/ // /\\ \\ /
-/_/  /_/\\_, / /_/ |_/_/  \\__/_//_/ /____/_/_//_/\\_,_//_\\_\\
-       /___/
+echo """                   ,.                   
+                  '::,                  
+     .          ll;,,;lc          :     
+      ,OX;       ',,,,.       lKk,      
+       .clok0XK  '    ' .XK0kocc.       
+          'ccccl;      :lcccccc         
+         .olccccc      ccccccc          
+           :cccccl    lccccc:           
+            ccccclk00xccccc:            
+             :cccccccccccc;             
+              :cccccccccc;              
+               ;ccccl ;c;               
+                :ccccldc                
+                 ;cccc:                 
+                  :ccc                  
+                   :c                   
+                                        
+                                        """
+echo """   ___           __     __   _               
+  / _ | ________/ /    / /  (_)__  __ ____ __
+ / __ |/ __/ __/ _ \  / /__/ / _ \/ // /\ \ /
+/_/ |_/_/  \__/_//_/ /____/_/_//_/\_,_//_\_\ 
 """
-# Determine users distro
-# os ()
-# {
-#   os=$(hostnamectl | grep 'Operating System:')
-#   if [[ $os == "Operating System: Arch Linux" ]]; then
-#     return "0"
-#   elif [[ $os == "Operating System: Kali GNU/Linux Rolling" ]]; then
-#     return "1"
-#   fi
-# }
-
-# if [[ $(os) -eq 0 ]]; then
-#   echo "$green[*]$blue Detected Arch Linux"
-#   install="paru -S"
-#   echo "$green[*]$blue Updating repositories$reset"
-#   sudo pacman -Suy
-#   echo "$green[*]$blue Adding blackarch repositories$reset"
-#   curl -O https://blackarch.org/strap.sh
-#   echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
-#   chmod +x strap.sh
-#   sudo ./strap.sh 
-# fi
-
+read -r VAR
 # ADDING REPOSITORIES
 echo "$green[*]$blue Updating repositories$reset"
 sudo pacman -Syu
@@ -45,7 +38,7 @@ curl -O https://blackarch.org/strap.sh
 echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
 chmod +x strap.sh
 sudo ./strap.sh
-sudo pacman -Syu
+sudo pacman -Syy
 echo "$green[*]$blue Install paru - AUR helper$reset"
 sudo pacman -S paru
 
@@ -53,9 +46,6 @@ sudo pacman -S paru
 echo "$green[*]$blue Installing packages$reset"
 
 # Install packages from the file
-while IFS= read -r package; do
-    sudo pacman -S --noconfirm "$package"
-done < app_list.cfg
 
 echo "Packages installation completed."
 
@@ -96,7 +86,8 @@ echo "$green[*]$blue Copy tmux config$reset"
 if [[ ! -f "/home/foglar/.config/tmux/tmux.conf" ]]; then
   cp .config/tmux/tmux.conf ~/.config/tmux/
 else
-  echo "$red[!] File ~/.config/tmux/tmux.conf already exist, remove it to setup config.$reset"
+  mv ~/.config/tmux/tmux.conf -T ~/.config/tmux/tmux.conf.b
+  echo "$red[!] File ~/.config/tmux/tmux.conf already exist, it was copied$reset"
 fi
 
 # # NEOFETCH
