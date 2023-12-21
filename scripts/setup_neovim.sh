@@ -16,4 +16,3 @@ echo "$red[!] Attention, this action will rewrite your current nvim config!!! Pr
 read
 echo "$green[*]$blue Copying neovim setup$reset"
 cp -r .config/nvim/lua/custom ~/.config/nvim/lua/
-

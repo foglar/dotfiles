@@ -1,8 +1,6 @@
 #!/bin/bash
-# Copy all settings
-# required packages: git
-
 source global_fn.sh
+
 echo """                                        
                  0kxxkK.                
                ;:,,,,,,;l               
@@ -39,12 +37,14 @@ echo "$green[*]$blue Install paru - AUR helper$reset"
 sudo pacman -S paru
 }
 
-repositories_config
-
-# PACKAGES
+install_pkg() {
 echo "$green[*]$blue Installing packages$reset"
 ./install_pkg.sh
 echo "Packages installation completed."
+}
+
+repositories_config
+install_pkg
 
 sh ./setup_fonts.sh
 sh ./setup_oh-my-posh.sh
