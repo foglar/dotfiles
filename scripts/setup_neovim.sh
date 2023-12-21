@@ -1,5 +1,5 @@
 #!/bin/bash
-source global_fn.sh
+source ./global_fn.sh
 
 echo """$blue
    _  __             _         _____          ____     
