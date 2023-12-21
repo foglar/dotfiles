@@ -34,7 +34,6 @@ chmod +x strap.sh
 sudo ./strap.sh
 sudo pacman -Syy
 echo "$green[*]$blue Install paru - AUR helper$reset"
-sudo pacman -S paru
 }
 
 install_pkg() {

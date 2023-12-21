@@ -15,4 +15,4 @@ echo "$green[*]$blue Installing oh-my-posh$reset"
 curl -s https://ohmyposh.dev/install.sh | sudo bash -s
 echo "$green[*]$blue Copy oh-my-posh theme$reset"
 mkdir ~/.themes
-cp .themes/kali.omp.json ~/.themes/
+cp ../.themes/kali.omp.json ~/.themes/

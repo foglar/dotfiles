@@ -14,10 +14,10 @@ setup_alacritty()
 {
   echo "$green[*]$blue Cloning alacritty setup file$reset"
   mkdir -p ~/.config/alacritty/themes 
-  if [[ $(path_exists "~/.config/alacritty/alacritty.yml") != "True" ]]; then
+  if [[ $(path_exists "../.config/alacritty/alacritty.yml") != "True" ]]; then
     wget --output-document ~/.config/alacritty/alacritty.yml "https://raw.githubusercontent.com/foglar/dotfiles/master/.config/alacritty/alacritty.yml"
   else
-    cp .config/alacritty/alacritty.yml ~/.config/alacritty/
+    cp ../.config/alacritty/alacritty.yml ~/.config/alacritty/
   fi
   echo "$green[*]$blue Cloning Alacritty themes$reset"
   git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes

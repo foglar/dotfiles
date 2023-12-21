@@ -16,7 +16,7 @@ setup_neofetch()
   if [[ $(path_exists "../.config/neofetch/config.conf") != "True" ]]; then
     $(wget --output-document ~/.config/neofetch/config.conf "https://raw.githubusercontent.com/foglar/dotfiles/master/.config/neofetch/config.conf")
   else 
-    cp .config/neofetch/config.conf ~/.config/neofetch/
+    cp ../.config/neofetch/config.conf ~/.config/neofetch/
   fi
 }
 
