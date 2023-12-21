@@ -1,4 +1,14 @@
 #!/bin/bash
+source global_fn.sh
+
+echo """$blue
+  ____                   _____          ____     
+ / __ \___ __ _  __ __  / ___/__  ___  / _(_)__ _
+/ /_/ / -_)  ' \/ // / / /__/ _ \/ _ \/ _/ / _ \`/
+\___\_\__/_/_/_/\_,_/  \___/\___/_//_/_//_/\_, / 
+                                          /___/  
+by$red foglar $reset
+"""
 
 sudo pacman -Syy
 sudo pacman -S archlinux-keyring qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode ebtables iptables libguestfs --needed

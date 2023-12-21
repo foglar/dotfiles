@@ -4,9 +4,23 @@
 #|-/ /--| Prasanth Rangan  |-/ /--|#
 #|/ /---+------------------+/ /---|#
 
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+blue=$(tput setaf 4)
+reset=$(tput sgr0)
+
 set -e
 
 CloneDir=`dirname "$(dirname "$(realpath "$0")")"`
+
+path_exists()
+{
+ if [[ ! -f $1 ]]; then
+   echo "False"
+ else
+  echo "True"
+ fi
+}
 
 service_ctl()
 {
@@ -77,14 +91,14 @@ aur_available()
     fi
 }
 
-#nvidia_detect()
-#{
-#    if [ `lspci -k | grep -A 2 -E "(VGA|3D)" | grep -i nvidia | wc -l` -gt 0 ]
-#    then
-        #echo "nvidia card detected..."
-#        return 0
-#    else
-        #echo "nvidia card not detected..."
-#        return 1
-#    fi
-#}
+nvidia_detect()
+{
+    if [ `lspci -k | grep -A 2 -E "(VGA|3D)" | grep -invidia | wc -l` -gt 0 ]
+    then
+       #echo "nvidia card detected..."
+        return 0
+    else
+      #echo "nvidia card not detected..."
+        return 1
+    fi
+}
