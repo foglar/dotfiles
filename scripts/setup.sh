@@ -57,15 +57,16 @@ echo "$blue[?] Would you like to replace your .bashrc file? [y/n]$reset"
 read -r ANS
 if [[ $ANS=="y" ]]; then
   echo "$green[*]$blue Copy .bashrc$reset"
-  cp .bashrc ~/
+  cp ../.bashrc ~/
 else
   echo "$red[-]$blue Skip Copy .bashrc$reset"
 fi
+
 echo "$blue[?] Would you like to replace your .bash_aliases file [y/n]$reset"
 read -r ANS1
 if [[ $ANS1 == "y" ]]; then
   echo "$green[*]$blue Copy .bash_aliases$reset"
-  cp .bash_aliases ~/
+  cp ../.bash_aliases ~/
 else
   echo "$red[-]$blue Skip Copy .bash_aliases$reset"
 fi
