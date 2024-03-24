@@ -83,7 +83,7 @@ if [ -z $aurhlpr ]
     ./install_aur.sh $aurhlpr 2>&1
 fi
 
-install_list="${1:-'~/.local/share/packages/term-tools.lst'}"
+install_list="${1:-$HOME/.local/share/packages/term-tools.lst}"
 
 while read pkg
 do
