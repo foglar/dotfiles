@@ -17,4 +17,4 @@ jobs:
 
       - name: Run script in Arch Linux environment
         run: |
-          docker run --rm -v $(pwd):/work -w /work archlinux:latest sh -c "pacman -S --noconfirm chezmoi; chezmoi init --apply foglar && echo 'Script ran successfully' || (echo 'Script failed' && exit 1)"
+          docker run --rm -v $(pwd):/work -w /work archlinux:latest sh -c "pacman -Syu --noconfirm chezmoi; chezmoi init --apply foglar && echo 'Script ran successfully' || (echo 'Script failed' && exit 1)"
