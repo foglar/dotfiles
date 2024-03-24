@@ -1,0 +1,20 @@
+name: Test Arch Linux Script
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Run script in Arch Linux environment
+        run: |
+          docker run --rm -v $(pwd):/work -w /work archlinux:latest sh -c "chezmoi init --apply foglar && echo 'Script ran successfully' || (echo 'Script failed' && exit 1)"
