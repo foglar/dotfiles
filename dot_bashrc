@@ -20,6 +20,10 @@ source ~/.bash_aliases
 eval "$(oh-my-posh init bash --config ~/.themes/kali.omp.json)"
 eval "$(zoxide init bash)"
 
+# Use bash-completion, if available
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('~/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -44,3 +48,6 @@ export EDITOR=nvim
 #PATH
 PATH=$PATH:~/.local/bin/
 PATH=~/.console-ninja/.bin:$PATH
+
+export PATH="$PATH:/home/foglar/.local/share/JetBrains/Toolbox/scripts"
+
