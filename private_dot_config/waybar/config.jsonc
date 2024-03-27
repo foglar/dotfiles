@@ -48,7 +48,7 @@
     },
 
     "custom/cpuinfo": {
-        "exec": " ~/.config/hypr/scripts/cpuinfo.sh",
+        "exec": " /home/foglar/.config/hyprdots/scripts/cpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -58,18 +58,18 @@
     },
 
     "custom/gpuinfo": {
-        "exec": " ~/.config/hypr/scripts/gpuinfo.sh",
+        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
         "interval": 5, // once every 5 seconds
         "tooltip": true,
         "max-length": 1000,
-        "on-click": "~/.config/hypr/scripts/gpuinfo.sh --toggle",
+        "on-click": "/home/foglar/.config/hyprdots/scripts/gpuinfo.sh --toggle",
     },
 
     "custom/gpuinfo#nvidia": {
-        "exec": " ~/.config/hypr/scripts/gpuinfo.sh --use nvidia ",
+        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh --use nvidia ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -79,7 +79,7 @@
     },
 
     "custom/gpuinfo#amd": {
-        "exec": " ~/.config/hypr/scripts/gpuinfo.sh --use amd ",
+        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh --use amd ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -89,7 +89,7 @@
     },
 
     "custom/gpuinfo#intel": {
-        "exec": " ~/.config/hypr/scripts/gpuinfo.sh --use intel ",
+        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh --use intel ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -99,11 +99,11 @@
     },
 
     "custom/updates": {
-        "exec": "~/.config/hypr/scripts/systemupdate.sh",
+        "exec": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh",
         "return-type": "json",
         "format": "󰮯 {}",
         "rotate": 0,
-        "on-click": "~/.config/hypr/scripts/systemupdate.sh up",
+        "on-click": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh up",
         "interval": 86400, // once every day
         "tooltip": true,
     },
@@ -118,7 +118,7 @@
     },
 
     "clock": {
-        "format": "{:%H:%M}",
+        "format": "{:%I:%M %p}",
         "rotate": 0,
         "format-alt": "{:%R 󰃭 %d·%m·%y}",
         "tooltip-format": "<tt>{calendar}</tt>",
@@ -143,15 +143,15 @@
     },
 
     "custom/spotify": {
-        "exec": "/usr/bin/python3 /home/foglar/.config/waybar/modules/mediaplayer.py --player spotify",
+        "exec": "/usr/bin/env python3 /home/foglar/.config/waybar/modules/mediaplayer.py --player spotify",
         "format": " {}",
         "rotate": 0,
         "return-type": "json",
         "on-click": "playerctl play-pause --player spotify",
         "on-click-right": "playerctl next --player spotify",
         "on-click-middle": "playerctl previous --player spotify",
-        "on-scroll-up": "~/.config/hypr/scripts/volumecontrol.sh -p spotify i",
-        "on-scroll-down": "~/.config/hypr/scripts/volumecontrol.sh -p spotify d",
+        "on-scroll-up": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -p spotify i",
+        "on-scroll-down": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -p spotify d",
         "max-length": 25,
         "escape": true,
         "tooltip": true
@@ -210,9 +210,9 @@
         "rotate": 0,
         "format-muted": "婢",
         "on-click": "pavucontrol -t 3",
-        "on-click-middle": "~/.config/hypr/scripts/volumecontrol.sh -o m",
-        "on-scroll-up": "~/.config/hypr/scripts/volumecontrol.sh -o i",
-        "on-scroll-down": "~/.config/hypr/scripts/volumecontrol.sh -o d",
+        "on-click-middle": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -o m",
+        "on-scroll-up": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -o i",
+        "on-scroll-down": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -o d",
         "tooltip-format": "{icon} {desc} // {volume}%",
         "scroll-step": 5,
         "format-icons": {
@@ -232,9 +232,9 @@
         "format-source": "",
         "format-source-muted": "",
         "on-click": "pavucontrol -t 4",
-        "on-click-middle": "~/.config/hypr/scripts/volumecontrol.sh -i m",
-        "on-scroll-up": "~/.config/hypr/scripts/volumecontrol.sh -i i",
-        "on-scroll-down": "~/.config/hypr/scripts/volumecontrol.sh -i d",
+        "on-click-middle": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -i m",
+        "on-scroll-up": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -i i",
+        "on-scroll-down": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -i d",
         "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
@@ -242,7 +242,7 @@
     "custom/keybindhint": {
         "format": " ",
         "rotate": 0,
-        "on-click": "Hyprdots show binds",
+        "on-click": "/home/foglar/.config/hyprdots/scripts/keybinds_hint.sh"
     },
 
     "tray": {
@@ -269,9 +269,9 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo 󰅇 clipboard history",
-        "on-click": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh c",
-        "on-click-right": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh d",
-        "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh w",
+        "on-click": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/cliphist.sh c",
+        "on-click-right": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/cliphist.sh d",
+        "on-click-middle": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/cliphist.sh w",
         "interval" : 86400, // once every day
         "tooltip": true
     },
@@ -280,7 +280,8 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo  logout",
-        "on-click": "~/.config/hypr/scripts/logoutlaunch.sh 2",
+        "on-click": "/home/foglar/.config/hyprdots/scripts/logoutlaunch.sh 2",
+        "on-click-right": "/home/foglar/.config/hyprdots/scripts/logoutlaunch.sh 1",
         "interval" : 86400, // once every day
         "tooltip": true
     },

@@ -5,15 +5,15 @@ existing_ports=$(ls /dev/ttyACM* 2>/dev/null)
 
 # Check if any ports are found
 if [ -z "$existing_ports" ]; then
-    echo "No /dev/ttyACM* ports found."
+    echo "No ports found."
     exit 1
 fi
 
-# Loop through each port and run chmod
+# Loop through each port
 for port in $existing_ports; do
-    echo "Changing permissions for $port"
-    sudo chmod a+rw "$port"
+    # Check if port already has necessary permissions
+    if !([ -r "$port" ] && [ -w "$port" ]); then
+        echo "Changing permissions for $port"
+        sudo chmod a+rw "$port"
+    fi
 done
-
-echo "Permissions changed for all existing /dev/ttyACM* ports."
-
