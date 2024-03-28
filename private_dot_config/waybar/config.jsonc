@@ -6,7 +6,7 @@
     "layer": "top",
     "position": "bottom",
     "mod": "dock",
-    "height": 28,
+    "height": 31,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -14,9 +14,9 @@
 
 // positions generated based on config.ctl //
 
-	"modules-left": ["custom/padd","custom/l_end","cpu","memory","custom/cpuinfo","custom/gpuinfo","custom/r_end","custom/l_end","idle_inhibitor","clock","custom/r_end","custom/l_end","hyprland/workspaces","custom/r_end","custom/padd"],
-	"modules-center": ["custom/padd","custom/l_end","hyprland/window","custom/r_end","custom/padd"],
-	"modules-right": ["custom/padd","custom/l_end","backlight","network","bluetooth","pulseaudio","pulseaudio#microphone","custom/updates","custom/keybindhint","custom/r_end","custom/l_end","tray","battery","custom/r_end","custom/l_end","custom/wallchange","custom/theme","custom/wbar","custom/cliphist","custom/power","custom/r_end","custom/padd"],
+	"modules-left": ["custom/padd","custom/l_end","cpu","memory","custom/cpuinfo","custom/gpuinfo","custom/updates","custom/r_end","custom/l_end","idle_inhibitor","clock","custom/spotify","custom/r_end","","custom/padd"],
+	"modules-center": ["custom/padd","","custom/l_end","hyprland/workspaces","hyprland/window","custom/r_end","custom/padd"],
+	"modules-right": ["custom/padd","custom/l_end","backlight","network","bluetooth","pulseaudio","pulseaudio#microphone","custom/keybindhint","custom/r_end","custom/l_end","tray","battery","custom/r_end","custom/l_end","custom/cliphist","custom/power","custom/r_end","custom/padd"],
 
 
 // sourced from modules based on config.ctl //
@@ -98,6 +98,16 @@
         "max-length": 1000,
     },
 
+    "custom/updates": {
+        "exec": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh",
+        "return-type": "json",
+        "format": "󰮯 {}",
+        "rotate": 0,
+        "on-click": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh up",
+        "interval": 86400, // once every day
+        "tooltip": true,
+    },
+
     "idle_inhibitor": {
         "format": "{icon}",
         "rotate": 0,
@@ -108,7 +118,7 @@
     },
 
     "clock": {
-        "format": "{:%I:%M %p}",
+        "format": "{:%H:%M}",
         "rotate": 0,
         "format-alt": "{:%R 󰃭 %d·%m·%y}",
         "tooltip-format": "<tt>{calendar}</tt>",
@@ -130,6 +140,21 @@
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
         }
+    },
+
+    "custom/spotify": {
+        "exec": "/usr/bin/env python3 /home/foglar/.config/waybar/modules/mediaplayer.py --player spotify",
+        "format": " {}",
+        "rotate": 0,
+        "return-type": "json",
+        "on-click": "playerctl play-pause --player spotify",
+        "on-click-right": "playerctl next --player spotify",
+        "on-click-middle": "playerctl previous --player spotify",
+        "on-scroll-up": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -p spotify i",
+        "on-scroll-down": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -p spotify d",
+        "max-length": 25,
+        "escape": true,
+        "tooltip": true
     },
 
     "hyprland/workspaces": {
@@ -231,16 +256,6 @@
         "scroll-step": 5
     },
 
-    "custom/updates": {
-        "exec": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh",
-        "return-type": "json",
-        "format": "󰮯 {}",
-        "rotate": 0,
-        "on-click": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh up",
-        "interval": 86400, // once every day
-        "tooltip": true,
-    },
-
     "custom/keybindhint": {
         "format": " ",
         "rotate": 0,
@@ -248,7 +263,7 @@
     },
 
     "tray": {
-        "icon-size": 16,
+        "icon-size": 18,
         "rotate": 0,
         "spacing": 5
     },
@@ -265,39 +280,6 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-    },
-
-    "custom/wallchange": {
-        "format": "{}",
-        "rotate": 0,
-        "exec": "echo ; echo 󰆊 switch wallpaper",
-        "on-click": "/home/foglar/.config/hyprdots/scripts/swwwallpaper.sh -n",
-        "on-click-right": "/home/foglar/.config/hyprdots/scripts/swwwallpaper.sh -p",
-        "on-click-middle": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/swwwallselect.sh",
-        "interval" : 86400, // once every day
-        "tooltip": true
-    },
-
-    "custom/theme": {
-        "format": "{}",
-        "rotate": 0,
-        "exec": "echo ; echo 󰟡 switch theme",
-        "on-click": "/home/foglar/.config/hyprdots/scripts/themeswitch.sh -n",
-        "on-click-right": "/home/foglar/.config/hyprdots/scripts/themeswitch.sh -p",
-        "on-click-middle": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/themeselect.sh",
-        "interval" : 86400, // once every day
-        "tooltip": true
-    },
-
-    "custom/wbar": {
-        "format": "{}", //    //
-        "rotate": 0,
-        "exec": "echo ; echo  switch bar //  dock",
-        "on-click": "/home/foglar/.config/hyprdots/scripts/wbarconfgen.sh n",
-        "on-click-right": "/home/foglar/.config/hyprdots/scripts/wbarconfgen.sh p",
-        "on-click-middle": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/quickapps.sh kitty firefox spotify code dolphin",
-        "interval" : 86400,
-        "tooltip": true
     },
 
     "custom/cliphist": {
