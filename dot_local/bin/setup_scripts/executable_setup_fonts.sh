@@ -11,7 +11,7 @@ by$red foglar $reset
 echo "Install emoji font"
 sudo pacman -S noto-fonts-emoji --needed 
 echo "$green[*]$blue Download JetBrainsMono Nerd font$reset"
-wget --output-document JetBrainsMono.zip "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
+wget --output-document JetBrainsMono.zip "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
 mkdir -p ~/.local/share/fonts/
 unzip JetBrainsMono.zip -d  ~/.local/share/fonts
 fc-cache -vf

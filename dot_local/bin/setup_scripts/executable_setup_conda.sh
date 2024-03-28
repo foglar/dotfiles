@@ -8,7 +8,14 @@ echo """$blue  _____             __       _   _______  ___   __  _____          
 by$red foglar $reset
 """
 
-paru -S wget --needed
-wget "https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh"
-chmod +x Anaconda3-2023.09-0-Linux-x86_64.sh
+get_anaconda_download_link() {
+    html_content=$(curl -s "https://www.anaconda.com/download/")
+    download_url=$(echo "$html_content" | grep -oE "let linLink = '([^']*)';" | sed "s/let linLink = '//; s/'//")
+    echo "$download_url"
+}
+
+paru -S curl --needed
+download_url=$(get_anaconda_download_link)
+curl -o Anaconda3-Linux-x86_64.sh "$download_url"
+chmod +x Anaconda3-Linux-x86_64.sh
 ./Anaconda3-2023.09-0-Linux-x86_64.sh

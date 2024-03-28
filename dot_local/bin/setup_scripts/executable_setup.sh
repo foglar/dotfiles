@@ -48,8 +48,13 @@ install_pkg
 sh ./setup_fonts.sh
 sh ./setup_oh-my-posh.sh
 
-sh ./setup_tmux.sh
-sh ./setup_neovim.sh
+echo "$green[*]$blue Tmux TPM install$reset"
+mkdir -p ~/.config/tmux/plugins/
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+echo "$green[*]$blue Cloning NvChad setup$reset"
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
+
 sh ./setup_conda.sh
 
 # TERMINAL
