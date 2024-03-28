@@ -5,6 +5,19 @@ green=$(tput setaf 2)
 blue=$(tput setaf 4)
 reset=$(tput sgr0)
 
+repositories_config()
+{
+echo "$green[*]$blue Updating repositories$reset"
+sudo pacman -Syu
+echo "$green[*]$blue Adding blackarch repositories$reset"
+curl -O https://blackarch.org/strap.sh 
+echo 3f121404fd02216a053f7394b8dab67f105228e3 strap.sh | sha1sum -c 
+chmod +x strap.sh
+sudo ./strap.sh
+sudo pacman -Syy
+echo "$green[*]$blue Install paru - AUR helper$reset"
+}
+
 pkg_installed() {
     local PkgIn=$1
 
@@ -49,13 +62,6 @@ if ! pkg_installed git; then
     sudo pacman -S git
 fi
 
-chk_aurh
-
-if [ -z "$aurhlpr" ]; then
-    echo "installing dependency $aurhlpr..."
-    install_aur.sh "yay" 2>&1
-fi
-
 install_category() {
     category="$1"
     echo "Installing packages from $category..."
@@ -86,24 +92,18 @@ install_category() {
     fi
 }
 
+chk_aurh
+
+if [ -z "$aurhlpr" ]; then
+    echo "installing dependency $aurhlpr..."
+    install_aur.sh "yay" 2>&1
+fi
+
+repositories_config
+
 install_list="${1:-$HOME/.local/share/packages/term-tools.lst}"
 
-while read -r category; do
-    if [ -f "$category" ]; then
-        read -p "Do you want to install packages from $category? (y/n): " answer
-        if [ "$answer" = "y" ]; then
-            install_category "$category"
-        fi
-    fi
-done <<<"games.lst
-hacking.lst
-hyprland.lst
-internet.lst
-nvidia.lst
-other.lst
-programming.lst
-term-tools.lst
-tools-apps.lst"
+install_category $install_list
 
 echo "Installation complete."
 
