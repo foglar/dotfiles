@@ -92,14 +92,13 @@ install_category() {
     fi
 }
 
+repositories_config
 chk_aurh
 
 if [ -z "$aurhlpr" ]; then
     echo "installing dependency $aurhlpr..."
     install_aur.sh "yay" 2>&1
 fi
-
-repositories_config
 
 install_list="${1:-$HOME/.local/share/packages/term-tools.lst}"
 
