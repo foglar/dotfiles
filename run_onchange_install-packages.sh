@@ -53,7 +53,7 @@ chk_aurh
 
 if [ -z "$aurhlpr" ]; then
     echo "installing dependency $aurhlpr..."
-    ./install_aur.sh "yay" 2>&1
+    install_aur.sh "yay" 2>&1
 fi
 
 install_category() {

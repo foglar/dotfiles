@@ -50,4 +50,5 @@ PATH=$PATH:~/.local/bin/
 PATH=~/.console-ninja/.bin:$PATH
 
 export PATH="$PATH:/home/foglar/.local/share/JetBrains/Toolbox/scripts"
+export PATH="$PATH:/home/foglar/.local/bin/setup_scripts"
 
