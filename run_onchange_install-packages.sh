@@ -52,18 +52,8 @@ fi
 chk_aurh
 
 if [ -z "$aurhlpr" ]; then
-    echo -e "Select aur helper:\n1) yay\n2) paru"
-    read -p "Enter option number : " aurinp
-
-    case $aurinp in
-    1) aurhlpr="yay" ;;
-    2) aurhlpr="paru" ;;
-    *) echo -e "...Invalid option selected..."
-        exit 1 ;;
-    esac
-
     echo "installing dependency $aurhlpr..."
-    ./install_aur.sh "$aurhlpr" 2>&1
+    ./install_aur.sh "yay" 2>&1
 fi
 
 install_category() {
