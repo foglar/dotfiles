@@ -50,3 +50,4 @@ for package in $installed_packages; do
 done
 
 echo "Package check complete."
+chezmoi re-add $HOME/.local/share/packages/games.lst $HOME/.local/share/packages/hacking.lst $HOME/.local/share/packages/hyprland.lst $HOME/.local/share/packages/internet.lst $HOME/.local/share/packages/nvidia.lst $HOME/.local/share/packages/other.lst $HOME/.local/share/packages/programming.lst $HOME/.local/share/packages/term-tools.lst $HOME/.local/share/packages/tools-apps.lst
