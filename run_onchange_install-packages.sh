@@ -115,7 +115,6 @@ categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hac
 
 echo "$green[*]$blue Cloning NvChad setup$reset"
 
-# Check if the folder already exists
 if [ -d ~/.config/nvim ]; then
     echo "$green[*]$blue Removing existing nvim config folder$reset"
     read -p "Would you like to rewrite your nvim config? [N/y]: " answer
@@ -125,7 +124,7 @@ if [ -d ~/.config/nvim ]; then
 fi
 
 # Clone NvChad setup
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
+git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
 
 # Prompt the user for each category file
 for category_file in "${categories[@]}"; do
