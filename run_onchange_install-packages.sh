@@ -5,6 +5,12 @@ green=$(tput setaf 2)
 blue=$(tput setaf 4)
 reset=$(tput sgr0)
 
+if [ "$EUID" -ne 0 ]; then
+    echo "This script requires sudo privileges. Please enter your password."
+    sudo "$0" "$@"
+    exit $?
+fi
+
 repositories_config()
 {
 echo "$green[*]$blue Updating repositories$reset"
@@ -12,8 +18,8 @@ echo "$green[*]$blue Adding blackarch repositories$reset"
 curl -O https://blackarch.org/strap.sh 
 echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
 chmod +x strap.sh
-sudo ./strap.sh
-sudo pacman -Syyu --noconfirm
+./strap.sh
+pacman -Syyu --noconfirm
 echo "$green[*]$blue Install paru - AUR helper$reset"
 }
 
@@ -78,7 +84,7 @@ install_category() {
 
     if [ -n "$pkg_arch" ]; then
         echo "installing $pkg_arch from arch repo..."
-        sudo pacman -S $pkg_arch --noconfirm
+        pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -100,7 +106,7 @@ execute_script() {
 
 if ! pkg_installed git; then
     echo "installing dependency git..."
-    sudo pacman -S git --noconfirm
+    pacman -S git --noconfirm
 fi
 
 repositories_config
@@ -115,6 +121,17 @@ fi
 categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hacking.lst internet.lst other.lst term-tools.lst)
 
 echo "$green[*]$blue Cloning NvChad setup$reset"
+echo "$green[*]$blue Cloning NvChad setup$reset"
+
+# Check if the folder already exists
+if [ -d ~/.config/nvim ]; then
+    echo "$green[*]$blue Removing existing nvim config folder$reset"
+    read -p "Would you like to rewrite your nvim config? [N/y]: " answer
+    if [[ $answer == [yY] ]]; then
+      rm -rf ~/.config/nvim
+fi
+
+# Clone NvChad setup
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
 
 # Prompt the user for each category file
