@@ -10,7 +10,7 @@ repositories_config()
 echo "$green[*]$blue Updating repositories$reset"
 echo "$green[*]$blue Adding blackarch repositories$reset"
 curl -O https://blackarch.org/strap.sh 
-echo 3f121404fd02216a053f7394b8dab67f105228e3 strap.sh | sha1sum -c 
+echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
 chmod +x strap.sh
 sudo ./strap.sh
 sudo pacman -Syyu
@@ -101,9 +101,16 @@ if [ -z "$aurhlpr" ]; then
     $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
-install_list="${1:-$HOME/.local/share/packages/term-tools.lst}"
+# List of category files
+categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hacking.lst internet.lst other.lst term-tools.lst)
 
-install_category $install_list
+# Prompt the user for each category file
+for category_file in "${categories[@]}"; do
+    read -p "Install packages from $category_file? [y/n]: " category_choice
+    if [[ $category_choice == [yY] ]]; then
+        install_category "$HOME/.local/share/packages/$category_file"
+    fi
+done
 
 echo "Installation complete."
 
