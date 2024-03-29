@@ -5,15 +5,6 @@ green=$(tput setaf 2)
 blue=$(tput setaf 4)
 reset=$(tput sgr0)
 
-if [ "$EUID" -ne 0 ]; then
-    echo "This script requires sudo privileges. Please enter your password."
-    home=$HOME
-    sudo "$0" "$@"
-    exit $?
-else
-  echo "This script needs sudo privileges, but don't execute it directly with sudo"
-fi
-
 repositories_config()
 {
 echo "$green[*]$blue Updating repositories$reset"
@@ -21,8 +12,8 @@ echo "$green[*]$blue Adding blackarch repositories$reset"
 curl -O https://blackarch.org/strap.sh 
 echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
 chmod +x strap.sh
-./strap.sh
-pacman -Syyu --noconfirm
+sudo ./strap.sh
+sudo pacman -Syyu --noconfirm
 echo "$green[*]$blue Install paru - AUR helper$reset"
 }
 
@@ -87,7 +78,7 @@ install_category() {
 
     if [ -n "$pkg_arch" ]; then
         echo "installing $pkg_arch from arch repo..."
-        pacman -S $pkg_arch --noconfirm
+        sudo pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -101,7 +92,7 @@ execute_script() {
     read -p "Execute $script_name? [Y/n]: " choice
     if [[ !($choice == [Nn]) ]]; then
         echo "Executing $script_name..."
-        "$home/.local/bin/setup_scripts/$script_name"
+        "$HOME/.local/bin/setup_scripts/$script_name"
     else
         echo "Skipping $script_name..."
     fi
@@ -109,7 +100,7 @@ execute_script() {
 
 if ! pkg_installed git; then
     echo "installing dependency git..."
-    pacman -S git --noconfirm
+    sudo pacman -S git --noconfirm
 fi
 
 repositories_config
@@ -117,7 +108,7 @@ chk_aurh
 
 if [ -z "$aurhlpr" ]; then
     echo "installing dependency $aurhlpr..."
-    $home/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
+    $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
 # List of category files
@@ -141,7 +132,7 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
 for category_file in "${categories[@]}"; do
     read -p "Install packages from $category_file? [Y/n]: " category_choice
     if [[ !($category_choice == [nN]) ]]; then
-        install_category "$home/.local/share/packages/$category_file"
+        install_category "$HOME/.local/share/packages/$category_file"
     fi
 done
 
