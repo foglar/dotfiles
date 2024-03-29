@@ -14,7 +14,6 @@ echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c
 chmod +x strap.sh
 sudo ./strap.sh
 sudo pacman -Syyu --noconfirm
-echo "$green[*]$blue Install paru - AUR helper$reset"
 }
 
 pkg_installed() {
@@ -115,7 +114,6 @@ fi
 categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hacking.lst internet.lst other.lst term-tools.lst)
 
 echo "$green[*]$blue Cloning NvChad setup$reset"
-echo "$green[*]$blue Cloning NvChad setup$reset"
 
 # Check if the folder already exists
 if [ -d ~/.config/nvim ]; then
@@ -123,6 +121,7 @@ if [ -d ~/.config/nvim ]; then
     read -p "Would you like to rewrite your nvim config? [N/y]: " answer
     if [[ $answer == [yY] ]]; then
       rm -rf ~/.config/nvim
+    fi
 fi
 
 # Clone NvChad setup
