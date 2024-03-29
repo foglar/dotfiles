@@ -13,7 +13,7 @@ curl -O https://blackarch.org/strap.sh
 echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
 chmod +x strap.sh
 sudo ./strap.sh
-sudo pacman -Syyu
+sudo pacman -Syyu --noconfirm
 echo "$green[*]$blue Install paru - AUR helper$reset"
 }
 
@@ -78,7 +78,7 @@ install_category() {
 
     if [ -n "$pkg_arch" ]; then
         echo "installing $pkg_arch from arch repo..."
-        sudo pacman -S $pkg_arch
+        sudo pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -100,7 +100,7 @@ execute_script() {
 
 if ! pkg_installed git; then
     echo "installing dependency git..."
-    sudo pacman -S git
+    sudo pacman -S git --noconfirm
 fi
 
 repositories_config
@@ -117,19 +117,20 @@ categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hac
 # Prompt the user for each category file
 for category_file in "${categories[@]}"; do
     read -p "Install packages from $category_file? [y/n]: " category_choice
-    if [[ $category_choice == [yY] ]]; then
+    if [[ !($category_choice == [nN]) ]]; then
         install_category "$HOME/.local/share/packages/$category_file"
-
-        if [[ $category_file == "programming.lst" ]]; then
-          echo "$green[*]$blue Tmux TPM install$reset"
-          mkdir -p ~/.config/tmux/plugins/
-          git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-          
-          echo "$green[*]$blue Cloning NvChad setup$reset"
-          git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
-        fi
     fi
 done
+
+read -p "Install packages from $category_file? [y/n]: " choice
+    if [[ $choice == [yY] ]]; then
+      echo "$green[*]$blue Tmux TPM install$reset"
+      mkdir -p ~/.config/tmux/plugins/
+      git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
+
+echo "$green[*]$blue Cloning NvChad setup$reset"
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
 
 scripts_to_execute=(setup_conda.sh setup_qemu.sh setup_fonts.sh)
 
