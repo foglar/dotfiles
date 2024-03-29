@@ -7,8 +7,11 @@ reset=$(tput sgr0)
 
 if [ "$EUID" -ne 0 ]; then
     echo "This script requires sudo privileges. Please enter your password."
+    home=$HOME
     sudo "$0" "$@"
     exit $?
+else
+  echo "This script needs sudo privileges, but don't execute it directly with sudo"
 fi
 
 repositories_config()
@@ -98,7 +101,7 @@ execute_script() {
     read -p "Execute $script_name? [Y/n]: " choice
     if [[ !($choice == [Nn]) ]]; then
         echo "Executing $script_name..."
-        "$HOME/.local/bin/setup_scripts/$script_name"
+        "$home/.local/bin/setup_scripts/$script_name"
     else
         echo "Skipping $script_name..."
     fi
@@ -114,7 +117,7 @@ chk_aurh
 
 if [ -z "$aurhlpr" ]; then
     echo "installing dependency $aurhlpr..."
-    $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
+    $home/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
 # List of category files
@@ -138,7 +141,7 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
 for category_file in "${categories[@]}"; do
     read -p "Install packages from $category_file? [Y/n]: " category_choice
     if [[ !($category_choice == [nN]) ]]; then
-        install_category "$HOME/.local/share/packages/$category_file"
+        install_category "$home/.local/share/packages/$category_file"
     fi
 done
 
