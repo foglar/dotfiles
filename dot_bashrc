@@ -17,7 +17,7 @@ PS1='[\u@\h \W]\$ '
 # All aliases stored here
 source ~/.bash_aliases
 
-eval "$(oh-my-posh init bash --config ~/.themes/kali.omp.json)"
+eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/kali.omp.json)"
 eval "$(zoxide init bash)"
 
 # Use bash-completion, if available

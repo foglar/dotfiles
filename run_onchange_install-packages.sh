@@ -89,8 +89,8 @@ install_category() {
 
 execute_script() {
     local script_name="$1"
-    read -p "Execute $script_name? [y/n]: " choice
-    if [[ $choice == [yY] ]]; then
+    read -p "Execute $script_name? [Y/n]: " choice
+    if [[ !($choice == [Nn]) ]]; then
         echo "Executing $script_name..."
         "$HOME/.local/bin/setup_scripts/$script_name"
     else
