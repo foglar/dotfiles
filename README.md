@@ -4,3 +4,5 @@
 - make it more error resistent, so it wouldn't stop, but try to continue
 - make your decisions on the beggining, no input after
 - cleanup after installation
+- NVChad should be installed before sync -> add it into other script
+- sudo 
