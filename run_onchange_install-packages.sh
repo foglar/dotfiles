@@ -97,7 +97,7 @@ chk_aurh
 
 if [ -z "$aurhlpr" ]; then
     echo "installing dependency $aurhlpr..."
-    install_aur.sh "yay" 2>&1
+    /home/foglar/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
 install_list="${1:-$HOME/.local/share/packages/term-tools.lst}"
