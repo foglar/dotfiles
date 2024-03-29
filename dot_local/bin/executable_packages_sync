@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Directory containing package lists
+lists_directory="$HOME/.local/share/packages"
+
+# Function to check if a package is in any list
+check_package() {
+    local package="$1"
+    for list_file in "$lists_directory"/*.lst; do
+        if grep -Fxq "$package" "$list_file"; then
+            return 0  # Package found in list
+        fi
+    done
+    return 1  # Package not found in any list
+}
+
+# Function to prompt user to add package to a list
+add_to_list() {
+    local package="$1"
+    echo "Package '$package' is not found in any list."
+    read -p "Do you want to add it to a list? [y/n]: " choice
+    if [[ $choice == [yY] ]]; then
+        select list_file in "$lists_directory"/*.lst; do
+            if [ "$list_file" != "$lists_directory/ignored_packages.lst" ]; then
+                if [ -n "$list_file" ]; then
+                    echo "$package" >> "$list_file"
+                    sort -o "$list_file" "$list_file"
+                    echo "Package '$package' added to '$list_file'."
+                else
+                    echo "Invalid selection. Please try again."
+                fi
+            else
+                echo "Invalid selection. Please try again."
+            fi
+            break
+        done
+    else
+        echo "Skipping package '$package'."
+    fi
+}
+
+# Get list of installed packages
+installed_packages=$(paru -Qe | awk '{print $1}')
+
+# Check each installed package
+for package in $installed_packages; do
+    if ! check_package "$package"; then
+        add_to_list "$package"
+    fi
+done
+
+echo "Package check complete."

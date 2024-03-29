@@ -1,11 +1,12 @@
 armitage
+arp-scan
 beef
 bettercap
 blackarch-keyring
-termshark
-tor-browser
 ghidra
 openbsd-netcat
+termshark
+tor-browser
 whapa
 wireshark-cli
 wireshark-qt
