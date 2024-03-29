@@ -73,11 +73,12 @@ install_category() {
                 echo "error: unknown package $pkg..."
             fi
         fi
-    done 
+     done < <(cut -d '#' -f 1 "$category")
+
 
     if [ -n "$pkg_arch" ]; then
         echo "installing $pkg_arch from arch repo..."
-        sudo pacman "${use_default}" -S $pkg_arch
+        sudo pacman -S $pkg_arch
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -97,7 +98,7 @@ chk_aurh
 
 if [ -z "$aurhlpr" ]; then
     echo "installing dependency $aurhlpr..."
-    /home/foglar/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
+    $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
 install_list="${1:-$HOME/.local/share/packages/term-tools.lst}"
