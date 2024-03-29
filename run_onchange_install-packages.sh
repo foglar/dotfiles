@@ -114,23 +114,23 @@ fi
 # List of category files
 categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hacking.lst internet.lst other.lst term-tools.lst)
 
+echo "$green[*]$blue Cloning NvChad setup$reset"
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
+
 # Prompt the user for each category file
 for category_file in "${categories[@]}"; do
-    read -p "Install packages from $category_file? [y/n]: " category_choice
+    read -p "Install packages from $category_file? [Y/n]: " category_choice
     if [[ !($category_choice == [nN]) ]]; then
         install_category "$HOME/.local/share/packages/$category_file"
     fi
 done
 
-read -p "Install packages from $category_file? [y/n]: " choice
-    if [[ $choice == [yY] ]]; then
-      echo "$green[*]$blue Tmux TPM install$reset"
-      mkdir -p ~/.config/tmux/plugins/
-      git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    fi
-
-echo "$green[*]$blue Cloning NvChad setup$reset"
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
+read -p "Install TMUX TPM plugin? [Y/n]: " choice
+if [[ !($choice == [nN]) ]]; then
+  echo "$green[*]$blue Tmux TPM install$reset"
+  mkdir -p ~/.config/tmux/plugins/
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 
 scripts_to_execute=(setup_conda.sh setup_qemu.sh setup_fonts.sh)
 
