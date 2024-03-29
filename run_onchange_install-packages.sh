@@ -8,13 +8,12 @@ reset=$(tput sgr0)
 repositories_config()
 {
 echo "$green[*]$blue Updating repositories$reset"
-sudo pacman -Syu
 echo "$green[*]$blue Adding blackarch repositories$reset"
 curl -O https://blackarch.org/strap.sh 
 echo 3f121404fd02216a053f7394b8dab67f105228e3 strap.sh | sha1sum -c 
 chmod +x strap.sh
 sudo ./strap.sh
-sudo pacman -Syy
+sudo pacman -Syyu
 echo "$green[*]$blue Install paru - AUR helper$reset"
 }
 
@@ -57,13 +56,8 @@ aur_available() {
     fi
 }
 
-if ! pkg_installed git; then
-    echo "installing dependency git..."
-    sudo pacman -S git
-fi
-
 install_category() {
-    category="$1"
+    local category="$1"
     echo "Installing packages from $category..."
     while IFS= read -r pkg; do
         if [ -n "$pkg" ]; then
@@ -79,7 +73,7 @@ install_category() {
                 echo "error: unknown package $pkg..."
             fi
         fi
-    done < <(cut -d '#' -f 1 "$category")
+    done 
 
     if [ -n "$pkg_arch" ]; then
         echo "installing $pkg_arch from arch repo..."
@@ -91,6 +85,12 @@ install_category() {
         "$aurhlpr" "${use_default}" -S $pkg_aur
     fi
 }
+
+
+if ! pkg_installed git; then
+    echo "installing dependency git..."
+    sudo pacman -S git
+fi
 
 repositories_config
 chk_aurh
