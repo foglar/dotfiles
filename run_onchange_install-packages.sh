@@ -98,13 +98,6 @@ execute_script() {
     fi
 }
 
-scripts_to_execute=(setup_conda.sh setup_qemu.sh setup_fonts.sh)
-
-# Execute each script with confirmation
-for script in "${scripts_to_execute[@]}"; do
-    execute_script "$script"
-done
-
 if ! pkg_installed git; then
     echo "installing dependency git..."
     sudo pacman -S git
@@ -136,6 +129,13 @@ for category_file in "${categories[@]}"; do
           git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
         fi
     fi
+done
+
+scripts_to_execute=(setup_conda.sh setup_qemu.sh setup_fonts.sh)
+
+# Execute each script with confirmation
+for script in "${scripts_to_execute[@]}"; do
+    execute_script "$script"
 done
 
 echo "Installation complete."
