@@ -87,6 +87,23 @@ install_category() {
     fi
 }
 
+execute_script() {
+    local script_name="$1"
+    read -p "Execute $script_name? [y/n]: " choice
+    if [[ $choice == [yY] ]]; then
+        echo "Executing $script_name..."
+        "$HOME/.local/bin/setup_scripts/$script_name"
+    else
+        echo "Skipping $script_name..."
+    fi
+}
+
+scripts_to_execute=(setup_conda.sh setup_qemu.sh setup_fonts.sh)
+
+# Execute each script with confirmation
+for script in "${scripts_to_execute[@]}"; do
+    execute_script "$script"
+done
 
 if ! pkg_installed git; then
     echo "installing dependency git..."
@@ -109,6 +126,15 @@ for category_file in "${categories[@]}"; do
     read -p "Install packages from $category_file? [y/n]: " category_choice
     if [[ $category_choice == [yY] ]]; then
         install_category "$HOME/.local/share/packages/$category_file"
+
+        if [[ $category_file == "programming.lst" ]]; then
+          echo "$green[*]$blue Tmux TPM install$reset"
+          mkdir -p ~/.config/tmux/plugins/
+          git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+          
+          echo "$green[*]$blue Cloning NvChad setup$reset"
+          git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 2
+        fi
     fi
 done
 
