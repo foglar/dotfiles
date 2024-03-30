@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "$green[*]$blue Cloning NvChad setup$reset"
 
 if [ -d ~/.config/nvim ]; then
