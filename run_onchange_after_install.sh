@@ -105,7 +105,7 @@ fi
 if ! pkg_installed go; then
   echo "installing dependency go..."
   sudo pacman -S go --noconfirm
-
+fi
 repositories_config
 chk_aurh
 
