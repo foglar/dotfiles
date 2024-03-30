@@ -82,7 +82,7 @@ install_category() {
 
     if [ -n "$pkg_aur" ]; then
         echo "installing $pkg_aur from aur..."
-        "$aurhlpr" "${use_default}" -S $pkg_aur
+        "$aurhlpr" "${use_default}" -S $pkg_aur --noconfirm
     fi
 }
 
@@ -102,6 +102,10 @@ if ! pkg_installed git; then
     sudo pacman -S git --noconfirm
 fi
 
+if ! pkg_installed go; then
+  echo "installing dependency go..."
+  sudo pacman -S go --noconfirm
+
 repositories_config
 chk_aurh
 
@@ -112,19 +116,6 @@ fi
 
 # List of category files
 categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hacking.lst internet.lst other.lst term-tools.lst)
-
-echo "$green[*]$blue Cloning NvChad setup$reset"
-
-if [ -d ~/.config/nvim ]; then
-    echo "$green[*]$blue Removing existing nvim config folder$reset"
-    read -p "Would you like to rewrite your nvim config? [N/y]: " answer
-    if [[ $answer == [yY] ]]; then
-      rm -rf ~/.config/nvim
-    fi
-fi
-
-# Clone NvChad setup
-git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
 
 # Prompt the user for each category file
 for category_file in "${categories[@]}"; do
