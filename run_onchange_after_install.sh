@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "█▀▀ █▀█ █▀▀ █░░ ▄▀█ █▀█"
-echo "█▀░ █▄█ █▄█ █▄▄ █▀█ █▀▄"
+#echo "█▀▀ █▀█ █▀▀ █░░ ▄▀█ █▀█"
+#echo "█▀░ █▄█ █▄█ █▄▄ █▀█ █▀▄"
 
 source ~/.bashrc
 
@@ -132,12 +132,12 @@ execute_script() {
 }
 
 if ! pkg_installed git; then
-    echo "installing dependency git..."
+    echo "$green[*]$blue installing dependency git..."
     sudo pacman -S git --noconfirm
 fi
 
 if ! pkg_installed go; then
-  echo "installing dependency go..."
+  echo "$green[*]$blue installing dependency go..."
   sudo pacman -S go --noconfirm
 fi
 
@@ -181,6 +181,6 @@ if [[ !($choice == [nN]) ]]; then
   rm -rf ~/Clone/yay
   rm ~/Clone/.directory
   rmdir ~/Clone
-  rm README.md
+  rm ~/README.md
 fi
 

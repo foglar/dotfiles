@@ -2,7 +2,10 @@
 # ~/.bashrc
 #
 
-pfetch
+if type pfetch >/dev/null 2>&1
+then
+  pfetch
+fi
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return

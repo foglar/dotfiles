@@ -9,7 +9,7 @@
 - [x] cleanup after installation
 - [x] NVChad should be installed before sync -> add it into other script
 - [x] sudo
-- [ ] pick from 4 categories minimal.lst basic.lst full.lst or custom.lst (pick for each category)
+- [ ] pick from 4 categories **minimal.lst basic.lst full.lst** or **custom.lst** (pick for each category)
 - [ ] fix nvim/NVChad config to load
 - [ ] wallpapers are big, load them only if user agreed so
 
