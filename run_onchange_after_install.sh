@@ -3,7 +3,7 @@
 echo "█▀▀ █▀█ █▀▀ █░░ ▄▀█ █▀█"
 echo "█▀░ █▄█ █▄█ █▄▄ █▀█ █▀▄"
 
-
+source ~/.bashrc
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
@@ -176,10 +176,11 @@ echo "Installation complete."
 
 read -p "Cleanup after installation [Y/n]: " choice
 if [[ !($choice == [nN]) ]]; then
-  rm strap.sh
+  current_dir=$(pwd)
+  rm $current_dir/strap.sh
   rm -rf ~/Clone/yay
   rm ~/Clone/.directory
-  rmdir Clone
+  rmdir ~/Clone
   rm README.md
 fi
 
