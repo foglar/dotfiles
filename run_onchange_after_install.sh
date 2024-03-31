@@ -12,13 +12,13 @@ reset=$(tput sgr0)
 
 repositories_config()
 {
-echo "$green[*]$blue Updating repositories$reset"
-echo "$green[*]$blue Adding blackarch repositories$reset"
-curl -O https://blackarch.org/strap.sh 
-echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
-chmod +x strap.sh
-sudo ./strap.sh
-sudo pacman -Syyu --noconfirm
+    echo "$green[*]$blue Updating repositories$reset"
+    echo "$green[*]$blue Adding blackarch repositories$reset"
+    curl -O https://blackarch.org/strap.sh 
+    echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
+    chmod +x strap.sh
+    sudo ./strap.sh
+    sudo pacman -Syyu --noconfirm
 }
 
 pkg_installed() {
@@ -62,31 +62,31 @@ aur_available() {
 
 install_category() {
     local category="$1"
-    echo "Installing packages from $category..."
+    echo "$green[*]$blue Installing packages from $category$reset"
     while IFS= read -r pkg; do
         if [ -n "$pkg" ]; then
             if pkg_installed "$pkg"; then
-                echo "skipping $pkg..."
+                echo "[*] skipping $pkg..."
             elif pkg_available "$pkg"; then
-                echo "queueing $pkg from arch repo..."
+                echo "[*] queueing $pkg from arch repo..."
                 pkg_arch+=" $pkg"
             elif aur_available "$pkg"; then
-                echo "queueing $pkg from aur..."
+                echo "[*] queueing $pkg from aur..."
                 pkg_aur+=" $pkg"
             else
-                echo "error: unknown package $pkg..."
+                echo "[*] error: unknown package $pkg..."
             fi
         fi
-     done < <(cut -d '#' -f 1 "$category")
+    done < <(cut -d '#' -f 1 "$category")
 
 
     if [ -n "$pkg_arch" ]; then
-        echo "installing $pkg_arch from arch repo..."
+        echo "[*] installing $pkg_arch from arch repo..."
         sudo pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
-        echo "installing $pkg_aur from aur..."
+        echo "[*] installing $pkg_aur from aur..."
         "$aurhlpr" "${use_default}" -S $pkg_aur --noconfirm
     fi
 }
@@ -110,11 +110,11 @@ list_scripts() {
 
     # List folders containing scripts
     for script in "$search_dir"/setup_*; do
-    if [ -f "$script" ]; then
-        filename=$(basename "$script")
-        scripts+=("$filename")
-    fi
-done
+        if [ -f "$script" ]; then
+            filename=$(basename "$script")
+            scripts+=("$filename")
+        fi
+    done
 
     # Print the list
     echo "${scripts[@]}"
@@ -122,49 +122,49 @@ done
 
 execute_script() {
     local script_name="$1"
-    read -p "Execute $script_name? [Y/n]: " choice
+    read -p "[?] Execute $script_name? [Y/n]: " choice
     if [[ !($choice == [Nn]) ]]; then
-        echo "Executing $script_name..."
+        echo "$green[*]$blue Executing $script_name...$reset"
         "$HOME/.local/bin/setup_scripts/$script_name"
     else
-        echo "Skipping $script_name..."
+        echo "[*] Skipping $script_name..."
     fi
 }
 
 if ! pkg_installed git; then
-    echo "$green[*]$blue installing dependency git..."
+    echo "$green[*]$blue Installing dependency git...$reset"
     sudo pacman -S git --noconfirm
 fi
 
 if ! pkg_installed go; then
-  echo "$green[*]$blue installing dependency go..."
-  sudo pacman -S go --noconfirm
+    echo "$green[*]$blue Installing dependency go...$reset"
+    sudo pacman -S go --noconfirm
 fi
 
 repositories_config
 chk_aurh
 
 if [ -z "$aurhlpr" ]; then
-    echo "installing dependency $aurhlpr..."
+    echo "$red[!] Installing dependency $aurhlpr...$reset"
     $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
 categories=$(list_dir $HOME/.local/share/packages/)
 for category_file in ${categories[@]}; do
-    read -p "Install packages from $category_file? [Y/n]: " category_choice
+    read -p "[?] Install packages from $category_file? [Y/n]: " category_choice
     if [[ !($category_choice == [nN]) ]]; then
         install_category "$HOME/.local/share/packages/$category_file"
     fi
 done
 
-echo "Install emoji font"
+echo "$green[*]$blue Install emoji font$reset"
 fc-cache -vf
 
-read -p "Install TMUX TPM plugin? [Y/n]: " choice
+read -p "[?] Install TMUX TPM plugin? [Y/n]: " choice
 if [[ !($choice == [nN]) ]]; then
-  echo "$green[*]$blue Tmux TPM install$reset"
-  mkdir -p ~/.config/tmux/plugins/
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    echo "$green[*]$blue Tmux TPM install$reset"
+    mkdir -p ~/.config/tmux/plugins/
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
 scripts_to_execute=($(list_scripts "$HOME/.local/bin/setup_scripts/"))
@@ -172,15 +172,15 @@ for script in ${scripts_to_execute[@]}; do
     execute_script "$script"
 done
 
-echo "Installation complete."
+echo "$green[*]$blue Installation complete.$reset"
 
-read -p "Cleanup after installation [Y/n]: " choice
+read -p "[?] Cleanup after installation [Y/n]: " choice
 if [[ !($choice == [nN]) ]]; then
-  current_dir=$(pwd)
-  rm $current_dir/strap.sh
-  rm -rf ~/Clone/yay
-  rm ~/Clone/.directory
-  rmdir ~/Clone
-  rm ~/README.md
+    current_dir=$(pwd)
+    echo "$red[!] Cleaning up...$reset"
+    rm $current_dir/strap.sh
+    rm -rf ~/Clone/yay
+    rm ~/Clone/.directory
+    rmdir ~/Clone
+    rm ~/README.md
 fi
-
