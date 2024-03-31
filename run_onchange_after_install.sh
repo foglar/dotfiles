@@ -91,6 +91,41 @@ install_category() {
     fi
 }
 
+list_dir() {
+    local search_dir=$1
+    local categories=()
+
+    for entry in "$search_dir"/*; do
+        filename=$(basename "$entry")
+        categories+=("$filename")
+    done
+
+    # Print the list
+    echo "${categories[@]}"
+}
+
+# Define the function
+list_scripts() {
+    local search_dir="$1"
+    local scripts=()
+
+    # List folders containing scripts
+    for entry in "$search_dir"/*; do
+        if [ -d "$entry" ]; then
+            # Iterate over files in each folder
+            for script in "$entry"/setup_*; do
+                if [ -f "$script" ]; then
+                    filename=$(basename "$script")
+                    scripts+=("$filename")
+                fi
+            done
+        fi
+    done
+
+    # Print the list
+    echo "${scripts[@]}"
+}
+
 execute_script() {
     local script_name="$1"
     read -p "Execute $script_name? [Y/n]: " choice
@@ -120,10 +155,7 @@ if [ -z "$aurhlpr" ]; then
     $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
-# List of category files
-categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hacking.lst internet.lst other.lst term-tools.lst minimal-install.lst)
-
-# Prompt the user for each category file
+categories=$(list_dir $HOME/.local/share/packages/)
 for category_file in "${categories[@]}"; do
     read -p "Install packages from $category_file? [Y/n]: " category_choice
     if [[ !($category_choice == [nN]) ]]; then
@@ -141,9 +173,7 @@ fi
 echo "Install emoji font"
 fc-cache -vf
 
-scripts_to_execute=(setup_conda.sh setup_qemu.sh)
-
-# Execute each script with confirmation
+scripts_to_execute=($(list_scripts "$HOME/.local/bin/setup_scripts/"))
 for script in "${scripts_to_execute[@]}"; do
     execute_script "$script"
 done
@@ -154,6 +184,7 @@ read -p "Cleanup after installation [Y/n]: " choice
 if [[ !($choice == [nN]) ]]; then
   rm strap.sh
   rm -rf ~/Clone/yay
+  rm ~/Clone/.directory
   rmdir Clone
   rm README.md
 fi

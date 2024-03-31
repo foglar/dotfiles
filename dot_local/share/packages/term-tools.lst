@@ -17,7 +17,6 @@ jp2a
 lolcat
 man-db
 mdp
-mutt-wizard
 ncdu
 neofetch
 neovim
@@ -41,3 +40,5 @@ wget
 yt-dlp
 zoxide
 zsh
+noto-fonts-emoji 
+ttf-jetbrains-mono-nerd
