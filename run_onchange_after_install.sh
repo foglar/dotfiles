@@ -68,10 +68,10 @@ install_category() {
             if pkg_installed "$pkg"; then
                 echo "$green[*]$blue skipping $pkg..."
             elif pkg_available "$pkg"; then
-                echo "$green[*]$blue queueing $pkg from arch repo..."
+                echo "$green[*]$blue queueing $pkg from$green arch$blue repo..."
                 pkg_arch+=" $pkg"
             elif aur_available "$pkg"; then
-                echo "$blue[*]$green queueing $pkg from aur..."
+                echo "$green[*]$blue queueing $pkg from$green aur$blue..."
                 pkg_aur+=" $pkg"
             else
                 echo "$red[!] error: unknown package $pkg..."
@@ -81,12 +81,12 @@ install_category() {
 
 
     if [ -n "$pkg_arch" ]; then
-        echo "$green[*]$blue installing $pkg_arch from arch repo..."
+        echo "$green[*]$blue installing $pkg_arch from arch repo...$reset"
         sudo pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
-        echo "$green[*]$blue installing $pkg_aur from aur..."
+        echo "$green[*]$blue installing $pkg_aur from aur...$reset"
         "$aurhlpr" "${use_default}" -S $pkg_aur --noconfirm
     fi
 }
@@ -122,12 +122,12 @@ list_scripts() {
 
 execute_script() {
     local script_name="$1"
-    read -p "$blue[?] Execute $script_name? [Y/n]: " choice
+    read -p "$blue[?] Execute $script_name? [Y/n]: $reset" choice
     if [[ !($choice == [Nn]) ]]; then
         echo "$green[*]$blue Executing $script_name...$reset"
         "$HOME/.local/bin/setup_scripts/$script_name"
     else
-        echo "$green[-] Skipping $script_name..."
+        echo "$green[-] Skipping $script_name...$reset"
     fi
 }
 
@@ -141,26 +141,30 @@ if ! pkg_installed go; then
     sudo pacman -S go --noconfirm
 fi
 
+# Configure blackarch repositories
 repositories_config
+# Check if aur helper is installled
 chk_aurh
-
 if [ -z "$aurhlpr" ]; then
     echo "$red[!] Installing dependency $aurhlpr...$reset"
     $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
+# Install packages from categories
 categories=$(list_dir $HOME/.local/share/packages/)
 for category_file in ${categories[@]}; do
-    read -p "$blue[?] Install packages from $category_file? [Y/n]: " category_choice
+    read -p "$blue[?] Install packages from $category_file? [Y/n]: $reset" category_choice
     if [[ !($category_choice == [nN]) ]]; then
         install_category "$HOME/.local/share/packages/$category_file"
     fi
 done
 
-echo "$green[*]$blue Install emoji font$reset"
+# Reload emoji cache
+echo "$green[*]$blue Reload fonts$reset"
 fc-cache -vf
 
-read -p "$blue[?] Install TMUX TPM plugin? [Y/n]: " choice
+# Scripts to execute
+read -p "$blue[?] Install Tmux TPM plugin? [Y/n]: " choice
 if [[ !($choice == [nN]) ]]; then
     echo "$green[*]$blue Tmux TPM install$reset"
     mkdir -p ~/.config/tmux/plugins/
@@ -176,7 +180,8 @@ done
 
 echo "$green[*]$blue Installation complete.$reset"
 
-read -p "[?] Cleanup after installation [Y/n]: " choice
+# Cleanup
+read -p "$blue[?] Cleanup after installation [Y/n]: $reset" choice
 if [[ !($choice == [nN]) ]]; then
     current_dir=$(pwd)
     echo "$red[!] Cleaning up...$reset"
