@@ -104,23 +104,17 @@ list_dir() {
     echo "${categories[@]}"
 }
 
-# Define the function
 list_scripts() {
     local search_dir="$1"
     local scripts=()
 
     # List folders containing scripts
-    for entry in "$search_dir"/*; do
-        if [ -d "$entry" ]; then
-            # Iterate over files in each folder
-            for script in "$entry"/setup_*; do
-                if [ -f "$script" ]; then
-                    filename=$(basename "$script")
-                    scripts+=("$filename")
-                fi
-            done
-        fi
-    done
+    for script in "$search_dir"/setup_*; do
+    if [ -f "$script" ]; then
+        filename=$(basename "$script")
+        scripts+=("$filename")
+    fi
+done
 
     # Print the list
     echo "${scripts[@]}"
@@ -156,12 +150,15 @@ if [ -z "$aurhlpr" ]; then
 fi
 
 categories=$(list_dir $HOME/.local/share/packages/)
-for category_file in "${categories[@]}"; do
+for category_file in ${categories[@]}; do
     read -p "Install packages from $category_file? [Y/n]: " category_choice
     if [[ !($category_choice == [nN]) ]]; then
         install_category "$HOME/.local/share/packages/$category_file"
     fi
 done
+
+echo "Install emoji font"
+fc-cache -vf
 
 read -p "Install TMUX TPM plugin? [Y/n]: " choice
 if [[ !($choice == [nN]) ]]; then
@@ -170,11 +167,8 @@ if [[ !($choice == [nN]) ]]; then
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-echo "Install emoji font"
-fc-cache -vf
-
 scripts_to_execute=($(list_scripts "$HOME/.local/bin/setup_scripts/"))
-for script in "${scripts_to_execute[@]}"; do
+for script in ${scripts_to_execute[@]}; do
     execute_script "$script"
 done
 
