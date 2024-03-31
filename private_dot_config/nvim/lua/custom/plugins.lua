@@ -11,6 +11,7 @@ local plugins = {
       },
     },
   },
+  { "nvim-neotest/nvim-nio" },
   {
     "christoomey/vim-tmux-navigator",
     lazy = false,

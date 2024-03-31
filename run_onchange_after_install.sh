@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "█▀▀ █▀█ █▀▀ █░░ ▄▀█ █▀█"
+echo "█▀░ █▄█ █▄█ █▄▄ █▀█ █▀▄"
+
+
+
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 blue=$(tput setaf 4)
@@ -106,6 +111,7 @@ if ! pkg_installed go; then
   echo "installing dependency go..."
   sudo pacman -S go --noconfirm
 fi
+
 repositories_config
 chk_aurh
 
