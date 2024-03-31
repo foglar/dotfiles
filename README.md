@@ -1,6 +1,6 @@
 # My personal dotfiles
 
-- [ ] add nice look, colors in terminal and logos
+- [x] add nice look, colors in terminal and logos
 - [ ] make it more error resistent, so it wouldn't stop, but try to continue
 - [ ] make your decisions on the beggining, no input after, config saved into file, then runned
     - [ ] create a script before sync, which will ask user for all settings, saved all what can be done after into json file (you can also use your json to skip questions 
