@@ -120,8 +120,6 @@ if [ -z "$aurhlpr" ]; then
     $HOME/.local/bin/setup_scripts/install_aur.sh "yay" 2>&1
 fi
 
-echo "Install emoji font"
-fc-cache -vf
 # List of category files
 categories=(games.lst hyprland.lst nvidia.lst programming.lst tools-apps.lst hacking.lst internet.lst other.lst term-tools.lst minimal-install.lst)
 
@@ -140,6 +138,9 @@ if [[ !($choice == [nN]) ]]; then
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
+echo "Install emoji font"
+fc-cache -vf
+
 scripts_to_execute=(setup_conda.sh setup_qemu.sh)
 
 # Execute each script with confirmation
@@ -148,4 +149,12 @@ for script in "${scripts_to_execute[@]}"; do
 done
 
 echo "Installation complete."
+
+read -p "Cleanup after installation [Y/n]: " choice
+if [[ !($choice == [nN]) ]]; then
+  rm strap.sh
+  rm -rf ~/Clone/yay
+  rmdir Clone
+  rm README.md
+fi
 
