@@ -1,10 +1,5 @@
 #!/bin/bash
 
-config_file="$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/config.json"
-output_config_file="$HOME/.local/bin/setup_scripts/output_config.json"
-app_list_dir="$HOME/.local/share/chezmoi/dot_local/share/packages/"
-scripts_path="$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/"
-
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 blue=$(tput setaf 4)
@@ -16,6 +11,11 @@ error_box="$red[!] $reset"
 skip_box="$green[-] $reset"
 
 skip_msg="${skip_box}Skipping..."
+
+config_file="$HOME/.local/bin/setup_scripts/config.json"
+output_config_file="$HOME/.local/bin/setup_scripts/output_config.json"
+app_list_dir="$HOME/.local/share/packages/"
+scripts_path="$HOME/.local/bin/setup_scripts/setup_scripts/"
 
 check_value() {
   local param=$1

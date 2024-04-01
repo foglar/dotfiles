@@ -2,49 +2,7 @@
 
 #set -x
 
-echo "${info_box}Installing dependencies"
-sudo pacman -Syu --noconfirm --needed
-sudo pacman -S jq --noconfirm --needed
-
-echo "${info_box}Preparing environment"
-mkdir -p $HOME/.local/bin/setup_scripts/
-mkdir -p $HOME/.local/share/packages/
-
-config_file="$HOME/.local/bin/setup_scripts/config.json"
-output_config_file="$HOME/.local/bin/setup_scripts/output_config.json"
-app_list_dir="$HOME/.local/share/packages/"
-scripts_path="$HOME/.local/bin/setup_scripts/setup_scripts/"
-
 source "$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/global.sh"
-
-nvchad_setup() 
-{
-  if [ -d ~/.config/nvim ]; then
-      echo "${info_box}Removing existing nvim config folder$reset"
-      if [ $(check_value "nvchad_overwrite_dir") == "true" ]; then
-        echo "${error_box}Removing NvChad configuration$reset"
-        #rm -rf ~/.config/nvim/
-        # Clone NvChad setup
-        git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
-      else
-          ans=$(dialog "${question_box}Would you like to rewrite your nvim config?$reset")
-          if [[ $ans == "true" ]]; then
-            echo "${error_box}Removing previous nvim configuration $reset"
-            #rm -rf ~/.config/nvim
-            # Clone NvChad setup
-            git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
-          else
-            echo "$skip_msg NvChad setup$reset"
-          fi
-      fi
-  fi
-}
-
-#---START---#
-
-echo "$green█▀▀ █▀█ █▀▀ █░░ ▄▀█ █▀█ ▀ █▀   █▀▄ █▀█ ▀█▀ █▀"
-echo "█▀░ █▄█ █▄█ █▄▄ █▀█ █▀▄ ░ ▄█   █▄▀ █▄█ ░█░ ▄█$reset"
-echo ""
 
 # Skip installation
 skip_installation=$(check_value "skip_script")
@@ -179,20 +137,5 @@ else
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after}' \
     > $output_config_file)
-fi
-
-
-# NvChad Setup
-install_nvchad=$(check_value "nvchad")
-if [ "$install_nvchad" == "true" ]; then
-  echo "${info_box}NvChad setup$reset"
-  nvchad_setup
-elif [ "$install_nvchad" == "false" ]; then
-  echo "${skip_msg}NvChad setup$reset"
-else
-  ans=$(dialog "${question_box}Install neovim NvChad configuration?")
-  if [[ $ans == "true" ]]; then
-    nvchad_setup
-  fi
 fi
 
