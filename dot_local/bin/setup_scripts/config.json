@@ -1,12 +1,4 @@
 {
   "skip_script": 0,
-  "nvchad": 1,
-  "nvchad_overwrite_dir": 0,
-  "blackarch_repo": 1,
-  "scripts_before_dialog": 0,
-  "scripts_after_dialog": 1,
-  "scripts_after": [
-    "setup_conda.sh",
-    "setup_qemu.sh"
-  ]
+  "nvchad_overwrite_dir": 0
 }

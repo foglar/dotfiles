@@ -3,12 +3,17 @@
 #set -x
 
 echo "${info_box}Installing dependencies"
-sudo pacman -Syu --noconfirm
-sudo pacman -S jq --noconfirm
+sudo pacman -Syu --noconfirm --needed
+sudo pacman -S jq --noconfirm --needed
+
 echo "${info_box}Preparing environment"
 mkdir -p $HOME/.local/bin/setup_scripts/
 mkdir -p $HOME/.local/share/packages/
 
+config_file="$HOME/.local/bin/setup_scripts/config.json"
+output_config_file="$HOME/.local/bin/setup_scripts/output_config.json"
+app_list_dir="$HOME/.local/share/packages/"
+scripts_path="$HOME/.local/bin/setup_scripts/setup_scripts/"
 
 source "$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/global.sh"
 
@@ -111,7 +116,7 @@ fi
 
 # Interactive user
 if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts_before_dialog") == "null" ]]; then
-  scripts_to_execute=($(list_scripts "$HOME/.local/bin/setup_scripts/"))
+  scripts_to_execute=($(list_scripts "$scripts_path"))
   for script in ${scripts_to_execute[@]}; do
     if [[ $(dialog "${question_box}Run script $script?$reset") == "true" && -f "${scripts_path}${script_name}" ]]; then
       echo "$info_box Executing script $script...$reset"
@@ -144,7 +149,7 @@ fi
 
 # User
 if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_after_dialog") == "null" ]]; then
-  scripts_to_execute=($(list_scripts "$HOME/.local/bin/setup_scripts/"))
+  scripts_to_execute=($(list_scripts "$scripts_path"))
   scripts_to_execute_checked=()
   for script in ${scripts_to_execute[@]}; do
       result=$(is_in_array "${script}" "${scripts_to_run_after_checked[@]}")
@@ -185,7 +190,7 @@ if [ "$install_nvchad" == "true" ]; then
 elif [ "$install_nvchad" == "false" ]; then
   echo "${skip_msg}NvChad setup$reset"
 else
-  ans=$(dialog "${question_box} Install neovim NvChad configuration?")
+  ans=$(dialog "${question_box}Install neovim NvChad configuration?")
   if [[ $ans == "true" ]]; then
     nvchad_setup
   fi
