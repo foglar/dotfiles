@@ -13,6 +13,7 @@
 - [x] fix nvim/NVChad config to load in new NVChad environment
 - [ ] wallpapers are big, load them only if user agreed so
 - [ ] ask if user wants to run script
+- [ ] ask if user wants to install any applications or skip
 
 ## Credits
 
