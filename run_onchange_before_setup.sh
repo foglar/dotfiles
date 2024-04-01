@@ -2,10 +2,10 @@
 
 #set -x
 
-config_file="config.json"
+config_file="$HOME/.local/bin/setup_scripts/config.json"
+output_config_file="$HOME/.local/bin/setup_scripts/"
 app_list_dir="$HOME/.local/share/packages/"
 scripts_path="$HOME/.local/bin/setup_scripts/"
-source global.sh
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
@@ -283,7 +283,7 @@ else
     --arg category "$applications_to_install_config" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after}' \
-    > output.json)
+    > $output_config_file)
 fi
 
 
