@@ -15,6 +15,16 @@
 - [ ] ask if user wants to run script
 - [ ] ask if user wants to install any applications or skip
 
+- ?Add function value exists
+- Add configuration for colours of terminal and validation of config file before installation
+- Your own config files
+- In block "scripts to run before file sync" remove scripts which are already in config file
+- Check if script ran with sudo priviledges or not 
+- improve error message in the block "run after file sync becouse it in the user interaction part it will write skipping in any case, should add more checks to differentiate cases, file not exist, file already in list"
+- install jq dependency
+- create one file with helper functions
+
+
 ## Credits
 
 - inspired by https://github.com/prasanthrangan/hyprdots Aesthetic, dynamic and minimal dots for Arch hyprland by prasanthrangan
