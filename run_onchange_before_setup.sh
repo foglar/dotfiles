@@ -2,6 +2,14 @@
 
 #set -x
 
+echo "${info_box}Installing dependencies"
+sudo pacman -Syu --noconfirm
+sudo pacman -S jq --noconfirm
+echo "${info_box}Preparing environment"
+mkdir -p $HOME/.local/bin/setup_scripts/
+mkdir -p $HOME/.local/share/packages/
+
+
 source "$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/global.sh"
 
 nvchad_setup() 
@@ -38,16 +46,6 @@ skip_installation=$(check_value "skip_script")
 if [ "$skip_installation" == "true" ]; then
   echo "${error_box}Skipping script (if you don't expect this behaviour, edit your config file in ~/.config/scripts/config.json)$reset"
   exit 1
-fi
-
-if [[ ! $(pkg_installed jq) && $(pkg_available jq) ]]; then
-  echo "${info_box}Installing dependency"
-  sudo pacman -Syu
-  sudo pacman -S jq --noconfirm
-  mkdir -p $HOME/.local/bin/setup_scripts/
-  mkdir -p $HOME/.local/share/packages/
-else
-  echo "${info_box}Dependencies satisfied"
 fi
 
 # Blackarch repository setup
