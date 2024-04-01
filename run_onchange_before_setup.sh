@@ -3,7 +3,7 @@
 #set -x
 
 config_file="$HOME/.local/bin/setup_scripts/config.json"
-output_config_file="$HOME/.local/bin/setup_scripts/"
+output_config_file="$HOME/.local/bin/setup_scripts/output_config.json"
 app_list_dir="$HOME/.local/share/packages/"
 scripts_path="$HOME/.local/bin/setup_scripts/"
 
