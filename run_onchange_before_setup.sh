@@ -42,7 +42,8 @@ fi
 
 if [[ ! $(pkg_installed jq) && $(pkg_available jq) ]]; then
   echo "${info_box}Installing dependency"
-  sudo pacman -S jq --noconfirm)
+  sudo pacman -Syu
+  sudo pacman -S jq --noconfirm
   mkdir -p $HOME/.local/bin/setup_scripts/
   mkdir -p $HOME/.local/share/packages/
 else
