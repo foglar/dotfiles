@@ -2,7 +2,7 @@
 
 #set -x
 
-source "$HOME/.local/bin/setup_scripts/global.sh"
+source "$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/global.sh"
 
 nvchad_setup() 
 {
@@ -42,7 +42,9 @@ fi
 
 if [[ ! $(pkg_installed jq) && $(pkg_available jq) ]]; then
   echo "${info_box}Installing dependency"
-  $(sudo pacman -S jq --noconfirm)
+  sudo pacman -S jq --noconfirm)
+  mkdir -p $HOME/.local/bin/setup_scripts/
+  mkdir -p $HOME/.local/share/packages/
 else
   echo "${info_box}Dependencies satisfied"
 fi
