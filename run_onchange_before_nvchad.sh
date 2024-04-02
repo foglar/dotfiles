@@ -48,12 +48,47 @@ fi
 install_nvchad=$(check_value "nvchad")
 if [ "$install_nvchad" == "true" ]; then
   echo "${info_box}NvChad setup$reset"
-  nvchad_setup
-elif [ "$install_nvchad" == "false" ]; then
+  if [ -d ~/.config/nvim ]; then
+      echo "${info_box}Removing existing nvim config folder$reset">&2
+      if [ $(check_value "nvchad_overwrite_dir") == "true" ]; then
+        echo "${error_box}Removing NvChad configuration$reset">&2
+        #rm -rf ~/.config/nvim/
+        # Clone NvChad setup
+        git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
+      else
+          ans=$(dialog "${question_box}Would you like to rewrite your nvim config?$reset")>&2
+          if [[ $ans == "true" ]]; then
+            echo "${error_box}Removing previous nvim configuration $reset"
+            #rm -rf ~/.config/nvim
+            # Clone NvChad setup
+            git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
+          else
+            echo "$skip_msg NvChad setup$reset">&2
+          fi
+      fi
+  fielif [ "$install_nvchad" == "false" ]; then
   echo "${skip_msg}NvChad setup$reset"
 else
   ans=$(dialog "${question_box}Install neovim NvChad configuration?")
   if [[ $ans == "true" ]]; then
-    nvchad_setup
+    if [ -d ~/.config/nvim ]; then
+      echo "${info_box}Removing existing nvim config folder$reset">&2
+      if [ $(check_value "nvchad_overwrite_dir") == "true" ]; then
+        echo "${error_box}Removing NvChad configuration$reset">&2
+        #rm -rf ~/.config/nvim/
+        # Clone NvChad setup
+        git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
+      else
+          ans=$(dialog "${question_box}Would you like to rewrite your nvim config?$reset")>&2
+          if [[ $ans == "true" ]]; then
+            echo "${error_box}Removing previous nvim configuration $reset"
+            #rm -rf ~/.config/nvim
+            # Clone NvChad setup
+            git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
+          else
+            echo "$skip_msg NvChad setup$reset">&2
+          fi
+      fi
+  fi
   fi
 fi
