@@ -66,7 +66,8 @@ if [ "$install_nvchad" == "true" ]; then
             echo "$skip_msg NvChad setup$reset">&2
           fi
       fi
-  fielif [ "$install_nvchad" == "false" ]; then
+  fi
+elif [ "$install_nvchad" == "false" ]; then
   echo "${skip_msg}NvChad setup$reset"
 else
   ans=$(dialog "${question_box}Install neovim NvChad configuration?")
