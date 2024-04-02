@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./global_fn.sh
+source $HOME/.local/bin/setup_scripts/global_fn.sh
 
 echo """$blue
   ____                   _____          ____     
@@ -10,6 +10,7 @@ echo """$blue
 by$red foglar $reset
 """
 
+sleep 5
 sudo pacman -Syy
 sudo pacman -S archlinux-keyring qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode ebtables iptables libguestfs --needed
 

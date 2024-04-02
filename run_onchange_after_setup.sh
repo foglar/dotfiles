@@ -2,7 +2,7 @@
 
 #set -x
 
-source "$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/global.sh"
+source "$HOME/.config/dotfiles/scripts/global.sh"
 
 # Skip installation
 skip_installation=$(check_value "skip_script")
@@ -74,7 +74,7 @@ fi
 
 # Interactive user
 if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts_before_dialog") == "null" ]]; then
-  scripts_to_execute=($(list_scripts "$scripts_path"))
+  scripts_to_execute=($(list_scripts "${scripts_path}"))
   for script in ${scripts_to_execute[@]}; do
     if [[ $(dialog "${question_box}Run script $script?$reset") == "true" && -f "${scripts_path}${script_name}" ]]; then
       echo "$info_box Executing script $script...$reset"

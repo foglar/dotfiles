@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./global_fn.sh
+source $HOME/.local/bin/setup_scripts/global_fn.sh
 echo """$blue  _____             __       _   _______  ___   __  _____          ____     
  / ___/__  ___  ___/ /__ _  | | / / __/ |/ / | / / / ___/__  ___  / _(_)__ _
 / /__/ _ \/ _ \/ _  / _ \`/  | |/ / _//    /| |/ / / /__/ _ \/ _ \/ _/ / _ \`/
@@ -14,7 +14,7 @@ get_anaconda_download_link() {
     echo "$download_url"
 }
 
-paru -S curl --needed
+yay -S curl --needed
 download_url=$(get_anaconda_download_link)
 curl -o Anaconda3-Linux-x86_64.sh "$download_url"
 chmod +x Anaconda3-Linux-x86_64.sh

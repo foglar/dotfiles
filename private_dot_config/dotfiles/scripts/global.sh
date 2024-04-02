@@ -12,10 +12,10 @@ skip_box="$green[-] $reset"
 
 skip_msg="${skip_box}Skipping..."
 
-config_file="$HOME/.local/bin/setup_scripts/config.json"
-output_config_file="$HOME/.local/bin/setup_scripts/output_config.json"
-app_list_dir="$HOME/.local/share/packages/"
-scripts_path="$HOME/.local/bin/setup_scripts/setup_scripts/"
+config_file="$HOME/.config/dotfiles/config.json"
+output_config_file="$HOME/.config/dotfiles/output_config.json"
+app_list_dir="$HOME/.config/dotfiles/packages/"
+scripts_path="$HOME/.config/dotfiles/scripts/"
 
 check_value() {
   local param=$1

@@ -6,9 +6,8 @@ echo "${info_box}Installing dependencies"
 sudo pacman -Syu --noconfirm --needed
 sudo pacman -S jq --noconfirm --needed
 
-source "$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/global.sh" 
-
-config_file="$HOME/.local/share/chezmoi/dot_local/bin/setup_scripts/config.json"
+source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh" 
+config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
 
 #nvchad_setup() 
 #{
