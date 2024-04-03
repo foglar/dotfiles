@@ -2,7 +2,18 @@
 
 #set -x
 
+if [ ! -f "$HOME/.config/dotfiles/scripts/global.sh" ]; then
+  echo "Could not load global.sh, you've done something very bad."
+  echo "Try rerunning 'chezmoi update'"
+  exit 1
+fi
+
 source "$HOME/.config/dotfiles/scripts/global.sh"
+
+if [ $(id -u) = 0 ]; then
+  echo "Please don't run this script as sudo, it will ask for permission by itself"
+  exit 1
+fi
 
 # Skip installation
 skip_installation=$(check_value "skip_script")
@@ -15,7 +26,7 @@ fi
 echo "${info_box}Setup blackarch repository"
 blackarch_repository_config=$(return_value "blackarch_repo")
 if [ "$blackarch_repository_config" == "null" ]; then
-  blackarch_repository_config=$(dialog "${question_box}Add blackarch repo: $reset")
+  blackarch_repository_config=$(dialog "${question_box}Add blackarch repo$reset")
 fi
 echo "${info_box}Blackarch repository: ${blackarch_repository_config}"
 
@@ -27,11 +38,23 @@ if [[ "$applications_to_install_config" != "minimal" && "$applications_to_instal
   select category in minimal base full custom; do
     echo "$reset"
     case "$REPLY" in
-      1) echo "${info_box}Picked category Minimal$reset" ; break ;;
-      2) echo "${info_box}Picked category Base$reset" ; break ;;
-      3) echo "${info_box}Picked category Full$reset"; break ;;
-      4) echo "${info_box}Picked category Custom$reset"; break ;;
-      *) echo "${error_box}Enter number 1-4:"
+    1)
+      echo "${info_box}Picked category Minimal$reset"
+      break
+      ;;
+    2)
+      echo "${info_box}Picked category Base$reset"
+      break
+      ;;
+    3)
+      echo "${info_box}Picked category Full$reset"
+      break
+      ;;
+    4)
+      echo "${info_box}Picked category Custom$reset"
+      break
+      ;;
+    *) echo "${error_box}Enter number 1-4:" ;;
     esac
   done
   applications_to_install_config=$category
@@ -40,52 +63,21 @@ echo "${info_box}Application category: ${applications_to_install_config}"
 if [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") != "null" ]]; then
   json_data=$(return_value "categories_to_install")
   categories_to_install_config=$(json_to_bash_array "$json_data")
-  read -r -a categories_to_install_config <<< "$categories_to_install_config"
+  read -r -a categories_to_install_config <<<"$categories_to_install_config"
 elif [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") == "null" ]]; then
   categories=$(list_dir)
   categories_to_install_config=()
   for category_file in ${categories[@]}; do
     ans=$(dialog "${question_box}Install packages from $category_file?$reset")
-      if [[ $ans == "true" ]]; then
-        categories_to_install_config+=("$category_file")
-      fi
+    if [[ $ans == "true" ]]; then
+      categories_to_install_config+=("$category_file")
+    fi
   done
 fi
 
 # Which scripts to execute
 echo "${info_box}Setup scripts"
 # Before
-
-# Config
-echo "${info_box}Scripts to run ${red}before${reset} file sync"
-scripts_to_run_before_config=$(return_value "scripts_before")
-if [[ $scripts_to_run_before_config != "null" ]]; then
-  scripts_to_run_before_config=$(json_to_bash_array "$scripts_to_run_before_config")
-  for script in ${scripts_to_run_before_config[@]}; do
-    if [ -f "${scripts_path}${script}" ]; then
-      echo "${info_box}Executing script ${scripts_path}${script}"
-      chmod +x "${scripts_path}${script}"
-      sh "${scripts_path}/${script}"
-    else
-      echo "${error_box}Script not detected in ~/.local/bin/setup_scripts/ move it into this directory."
-    fi
-  done
-fi
-
-# Interactive user
-if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts_before_dialog") == "null" ]]; then
-  scripts_to_execute=($(list_scripts "${scripts_path}"))
-  for script in ${scripts_to_execute[@]}; do
-    if [[ $(dialog "${question_box}Run script $script?$reset") == "true" && -f "${scripts_path}${script_name}" ]]; then
-      echo "$info_box Executing script $script...$reset"
-      chmod +x "${scripts_path}${script_name}"
-      sh "$scripts_path$script_name"
-    else
-      echo "${skip_msg} script $script"
-    fi
-  done
-fi
-
 # After
 
 # Config
@@ -110,14 +102,14 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   scripts_to_execute=($(list_scripts "$scripts_path"))
   scripts_to_execute_checked=()
   for script in ${scripts_to_execute[@]}; do
-      result=$(is_in_array "${script}" "${scripts_to_run_after_checked[@]}")
-      if [[ $(dialog "${question_box}Run script $script after file sync?$reset") == "true" && -f "${scripts_path}${script_name}" && $result -eq 1 ]]; then
-        scripts_to_run_after_checked+=("$script")
-        echo "${info_box}Running script $script after file sync"
-      else
-        echo "${skip_msg} $script"
-      fi
-  done  
+    result=$(is_in_array "${script}" "${scripts_to_run_after_checked[@]}")
+    if [[ $(dialog "${question_box}Run script $script after file sync?$reset") == "true" && -f "${scripts_path}${script_name}" && $result -eq 1 ]]; then
+      scripts_to_run_after_checked+=("$script")
+      echo "${info_box}Running script $script after file sync"
+    else
+      echo "${skip_msg} $script"
+    fi
+  done
 fi
 
 # Save configuration
@@ -129,13 +121,12 @@ if [[ "$applications_to_install_config" == "custom" ]]; then
     --argjson categories_to_install_config "$(printf '%s\n' "${categories_to_install_config[@]}" | jq -R . | jq -s .)" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     '{"blackarch_repo": $blackarch_repo, "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after}' \
-    > output.json)
+    >output.json)
 else
   json=$(jq -n \
     --arg blackarch_repo "$blackarch_repository_config" \
     --arg category "$applications_to_install_config" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after}' \
-    > $output_config_file)
+    >$output_config_file)
 fi
-

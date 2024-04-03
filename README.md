@@ -24,14 +24,17 @@
 - [x] install jq dependency
 - [x] create one file with helper functions
 - [x] move installation process into after sync file so it wouldn't depend on the files in chezmoi repo, but instead on files in real filetree, only NVChad will stay in first script
-- [ ] check if global.sh exists
-- [ ] move part with setup scripts before file sync into run_before_nvchad.sh
+- [x] check if global.sh exists
+- [x] move part with setup scripts before file sync into run_before_nvchad.sh
 - [ ] add more functionalities:
     - [ ] grub theme
     - [ ] bluetooth
     - [ ] printer
     - [ ] add into groups for docker arduino wireshark...
     - [ ] ...
+- [ ] move nvchad_setup into one function, no duplicate code
+- [ ] add more skip messages so the user knows why something is not showing
+- [ ] in scripts check if the script is executed before or after or use chezmoi templates
 
 ## Credits
 

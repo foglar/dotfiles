@@ -9,6 +9,7 @@ info_box="$green[*] $reset"
 question_box="$blue[?] $reset"
 error_box="$red[!] $reset"
 skip_box="$green[-] $reset"
+yes_no="[y/n]"
 
 skip_msg="${skip_box}Skipping..."
 
@@ -40,7 +41,7 @@ return_value() {
 }
 
 dialog() {
-  echo "${1} [y/n]: " >&2
+  echo -n "${1} [y/n]: " >&2
    while true; do
     read -r answer
     case $answer in 
@@ -82,6 +83,12 @@ list_scripts() {
         fi
     done
 
+    for script in "$search_dir"/executable_setup*; do
+        if [ -f "$script" ]; then
+            filename=$(basename "$script")
+            scripts+=("$filename")
+        fi
+    done
     # Print the list
     echo "${scripts[@]}"
 }
