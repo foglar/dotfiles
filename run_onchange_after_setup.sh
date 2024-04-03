@@ -103,7 +103,7 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   scripts_to_execute_checked=()
   for script in ${scripts_to_execute[@]}; do
     result=$(is_in_array "${script}" "${scripts_to_run_after_checked[@]}")
-    if [[ $(dialog "${question_box}Run script $script after file sync?$reset") == "true" && -f "${scripts_path}${script_name}" && $result -eq 1 ]]; then
+    if [[ $(dialog "${question_box}Run script $script after file sync?$reset") == "true" && -f "${scripts_path}${script}" && $result -eq 1 ]]; then
       scripts_to_run_after_checked+=("$script")
       echo "${info_box}Running script $script after file sync"
     else

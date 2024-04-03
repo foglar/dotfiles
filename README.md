@@ -19,7 +19,7 @@
 - [ ] Add configuration for colours of terminal and validation of config file before installation
 - [x] Your own config files
 - [x] In block "scripts to run before file sync" remove scripts which are already in config file
-- [ ] Check if script ran with sudo priviledges or not 
+- [x] Check if script ran with sudo priviledges or not 
 - [ ] improve error message in the block "run after file sync becouse it in the user interaction part it will write skipping in any case, should add more checks to differentiate cases, file not exist, file already in list"
 - [x] install jq dependency
 - [x] create one file with helper functions
@@ -35,6 +35,9 @@
 - [ ] move nvchad_setup into one function, no duplicate code
 - [ ] add more skip messages so the user knows why something is not showing
 - [ ] in scripts check if the script is executed before or after or use chezmoi templates
+- [ ] ask if user wants to run script next time, if no, then edit config.json
+- [ ] maybe generate default config.json based on the users input and output_config.json if running for the first time
+- [ ] remake process of installing packages based on the https://www.chezmoi.io/user-guide/advanced/install-packages-declaratively/
 
 ## Credits
 

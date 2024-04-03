@@ -1,6 +1,6 @@
 [user]
-	email = "kohout.fi.2023@skola.ssps.cz"
-	name = foglar
+	email = {{ .email | quote }}
+	name = {{ .chezmoi.username | quote }}
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
