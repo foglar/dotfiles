@@ -22,13 +22,13 @@ fi
 packages=$(return_value "category" "${output_config_file}")
 if [ "$packages" = "minimal" ]; then
     echo "Variable 'packages' is equal to 'minimal'."
-    cp "${app_list_dir}'minimal.yaml'" ${app_install_file}
+    cp "${app_list_dir}minimal.yaml" "${app_install_file}"
 elif [ "$packages" = "base" ]; then
     echo "Variable 'packages' is equal to 'base'."
-    cp ${app_list_dir}"base.yaml" ${app_install_file}
+    cp "${app_list_dir}base.yaml" "${app_install_file}"
 elif [ "$packages" = "full" ]; then
     echo "Variable 'packages' is equal to 'full'."
-    cp ${app_list_dir}"full.yaml" ${app_install_file}
+    cp "${app_list_dir}full.yaml" "${app_install_file}"
 else
     echo "${error_box}Variable 'packages' is not equal to 'minimal', 'base', or 'full'."
 fi
