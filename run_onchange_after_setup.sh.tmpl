@@ -22,6 +22,9 @@ if [ "$skip_installation" == "true" ]; then
   exit 1
 fi
 
+{{ if eq .chezmoi.os "linux" }}
+  echo "Installation of applications"
+  {{ if eq .chezmoi.osRelease.id "arch" }}
 # Blackarch repository setup
 echo "${info_box}Setup blackarch repository"
 blackarch_repository_config=$(return_value "blackarch_repo")
@@ -29,6 +32,10 @@ if [ "$blackarch_repository_config" == "null" ]; then
   blackarch_repository_config=$(dialog "${question_box}Add blackarch repo$reset")
 fi
 echo "${info_box}Blackarch repository: ${blackarch_repository_config}"
+  {{ else }}
+    blackarch_repository_config="false"
+  {{ end }}
+{{ end }}
 
 # Applications to install setup
 echo "${info_box}Setup applications category"

@@ -8,9 +8,16 @@ if [ ! -f "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global
     exit 1
 fi
 
+
 echo "${info_box}Installing dependencies"
-sudo pacman -Syu --noconfirm --needed
-sudo pacman -S jq git --noconfirm --needed
+{{ if eq .chezmoi.os "linux" }}
+  {{ if eq .chezmoi.osRelease.id "arch" }}
+    sudo pacman -Syu --noconfirm --needed
+    sudo pacman -S jq git --noconfirm --needed
+  {{ else }}
+    echo "Currently unssuported linux distribution"
+  {{ end }}
+{{ end }}
 
 source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh"
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"

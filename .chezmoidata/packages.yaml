@@ -6,3 +6,5 @@ packages:
       - 'eza'
       - 'thefuck'
       - 'nano'
+      - 'jq'
+      - 'yq'
