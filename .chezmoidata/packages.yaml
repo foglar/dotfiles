@@ -1,10 +1,37 @@
 packages:
   linux:
-    terminal:
-      - 'zoxide'
-      - 'neovim'
-      - 'eza'
-      - 'thefuck'
-      - 'nano'
-      - 'jq'
-      - 'yq'
+    - "bash-completion"
+    - "bat"
+    - "btop"
+    - "chezmoi"
+    - "cmatrix"
+    - "eza"
+    - "figlet"
+    - "fzf"
+    - "htop"
+    - "jp2a"
+    - "jq"
+    - "lolcat"
+    - "man-db"
+    - "mdp"
+    - "ncdu"
+    - "neofetch"
+    - "neovim"
+    - "noto-fonts-emoji"
+    - "npm"
+    - "nvtop"
+    - "oh-my-posh"
+    - "openssh"
+    - "pfetch"
+    - "ranger"
+    - "ripgrep"
+    - "tldr"
+    - "ttf-jetbrains-mono-nerd"
+    - "tmux"
+    - "unzip"
+    - "w3m"
+    - "wget"
+    - "yt-dlp"
+    - "yq"
+    - "zoxide"
+
