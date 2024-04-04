@@ -1,0 +1,8 @@
+packages:
+  linux:
+    terminal:
+      - 'zoxide'
+      - 'neovim'
+      - 'eza'
+      - 'thefuck'
+      - 'nano'

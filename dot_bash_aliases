@@ -1,4 +1,4 @@
-alias vim=nvim
+alias vim="nvim"
 alias ls="exa --icons"
 alias ll="exa -alh --icons"
 alias tree="exa --tree --icons"

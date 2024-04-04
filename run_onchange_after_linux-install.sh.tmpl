@@ -1,0 +1,15 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "linux" }}
+  echo "Installation of applications"
+  {{ if eq .chezmoi.osRelease.id "arch" }}
+  echo "Arch detected"
+
+    sudo pacman -S --noconfirm --needed \
+    {{ range .packages.linux.terminal -}}
+      {{ . | quote }} \
+    {{ end -}}
+  {{ else if eq .chezmoi.osRelease.id "fedora" }}
+  echo "Fedora detected"
+  {{ end }}
+{{ end }}
