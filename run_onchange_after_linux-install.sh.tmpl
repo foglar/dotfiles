@@ -1,10 +1,42 @@
 #!/bin/bash
 
-{{ if eq .chezmoi.os "linux" }}
-  echo "Installation of applications"
-  {{ if eq .chezmoi.osRelease.id "arch" }}
-  echo "Arch detected"
+if [ ! -f "$HOME/.config/dotfiles/scripts/global.sh" ]; then
+    echo "Could not load global.sh, you've done something very bad."
+    echo "Try rerunning 'chezmoi update'"
+    exit 1
+fi
 
+source "$HOME/.config/dotfiles/scripts/global.sh"
+
+if [ $(id -u) = 0 ]; then
+  echo "${error_box}Please don't run this script as sudo, it will ask for permission by itself"
+  exit 1
+fi
+
+skip_installation=$(check_value "skip_script")
+if [ "$skip_installation" == "true" ]; then
+    echo "${error_box}Skipping script (if you don't expect this behaviour, edit your config file in ~/.config/scripts/config.json)$reset"
+    exit 1
+fi
+
+packages=$(return_value "category" "${output_config_file}")
+if [ "$packages" = "minimal" ]; then
+    echo "Variable 'packages' is equal to 'minimal'."
+    cp "${app_list_dir}'minimal.yaml'" ${app_install_file}
+elif [ "$packages" = "base" ]; then
+    echo "Variable 'packages' is equal to 'base'."
+    cp ${app_list_dir}"base.yaml" ${app_install_file}
+elif [ "$packages" = "full" ]; then
+    echo "Variable 'packages' is equal to 'full'."
+    cp ${app_list_dir}"full.yaml" ${app_install_file}
+else
+    echo "${error_box}Variable 'packages' is not equal to 'minimal', 'base', or 'full'."
+fi
+
+{{ if eq .chezmoi.os "linux" }}
+  echo "${info_box}Installation of applications"
+  {{ if eq .chezmoi.osRelease.id "arch" }}
+    echo "${blue}󰣇 Arch$reset detected"
     sudo pacman -S --noconfirm --needed \
     {{ range .packages.linux.terminal -}}
       {{ . | quote }} \

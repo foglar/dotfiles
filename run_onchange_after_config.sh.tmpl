@@ -42,7 +42,7 @@ echo "${info_box}Setup applications category"
 applications_to_install_config=$(return_value "category")
 if [[ "$applications_to_install_config" != "minimal" && "$applications_to_install_config" != "base" && "$applications_to_install_config" != "full" && "$applications_to_install_config" != "custom" ]]; then
   echo "$blue"
-  select category in minimal base full custom; do
+  select category in minimal base full; do
     echo "$reset"
     case "$REPLY" in
     1)
@@ -57,30 +57,30 @@ if [[ "$applications_to_install_config" != "minimal" && "$applications_to_instal
       echo "${info_box}Picked category Full$reset"
       break
       ;;
-    4)
-      echo "${info_box}Picked category Custom$reset"
-      break
-      ;;
-    *) echo "${error_box}Enter number 1-4:" ;;
+#    4)
+#      echo "${info_box}Picked category Custom$reset"
+#      break
+#      ;;
+    *) echo "${error_box}Enter number 1-3:" ;;
     esac
   done
   applications_to_install_config=$category
 fi
 echo "${info_box}Application category: ${applications_to_install_config}"
-if [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") != "null" ]]; then
-  json_data=$(return_value "categories_to_install")
-  categories_to_install_config=$(json_to_bash_array "$json_data")
-  read -r -a categories_to_install_config <<<"$categories_to_install_config"
-elif [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") == "null" ]]; then
-  categories=$(list_dir)
-  categories_to_install_config=()
-  for category_file in ${categories[@]}; do
-    ans=$(dialog "${question_box}Install packages from $category_file?$reset")
-    if [[ $ans == "true" ]]; then
-      categories_to_install_config+=("$category_file")
-    fi
-  done
-fi
+#if [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") != "null" ]]; then
+#  json_data=$(return_value "categories_to_install")
+#  categories_to_install_config=$(json_to_bash_array "$json_data")
+#  read -r -a categories_to_install_config <<<"$categories_to_install_config"
+#elif [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") == "null" ]]; then
+#  categories=$(list_dir)
+#  categories_to_install_config=()
+#  for category_file in ${categories[@]}; do
+#    ans=$(dialog "${question_box}Install packages from $category_file?$reset")
+#    if [[ $ans == "true" ]]; then
+#      categories_to_install_config+=("$category_file")
+#    fi
+#  done
+#fi
 
 # Which scripts to execute
 echo "${info_box}Setup scripts"

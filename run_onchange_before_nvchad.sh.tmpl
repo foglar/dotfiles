@@ -8,23 +8,23 @@ if [ ! -f "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global
     exit 1
 fi
 
-
-echo "${info_box}Installing dependencies"
-{{ if eq .chezmoi.os "linux" }}
-  {{ if eq .chezmoi.osRelease.id "arch" }}
-    sudo pacman -Syu --noconfirm --needed
-    sudo pacman -S jq git --noconfirm --needed
-  {{ else }}
-    echo "Currently unssuported linux distribution"
-  {{ end }}
-{{ end }}
-
 source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh"
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
 scripts_path="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
 
+echo "${info_box}Installing dependencies"
+{{ if eq .chezmoi.os "linux" }}
+  {{ if eq .chezmoi.osRelease.id "arch" }}
+    echo "${info_box}Detected ${red}ARCH Linux$reset"
+    sudo pacman -Syu --noconfirm --needed
+    sudo pacman -S jq git --noconfirm --needed
+  {{ else }}
+    echo "${error_box}Currently unssuported linux distribution"
+  {{ end }}
+{{ end }}
+
 if [ $(id -u) = 0 ]; then
-  echo "Please don't run this script as sudo, it will ask for permission by itself"
+  echo "${error_box}Please don't run this script as sudo, it will ask for permission by itself"
   exit 1
 fi
 
