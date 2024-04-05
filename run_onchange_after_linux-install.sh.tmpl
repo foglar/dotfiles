@@ -33,14 +33,14 @@ else
     echo "${error_box}Variable 'packages' is not equal to 'minimal', 'base', or 'full'."
 fi
 
-{{ if eq .chezmoi.os "linux" }}
+{{ if eq .chezmoi.os "linux" -}}
   echo "${info_box}Installation of applications"
-  {{ if eq .chezmoi.osRelease.id "arch" }}
+  {{ if eq .chezmoi.osRelease.id "arch" -}}
     echo "${blue}󰣇 Arch$reset detected"
-    {{range .packages.linux -}}
+    {{ range .packages.linux -}}
      sudo pacman -S --noconfirm --needed {{ . | quote }}
     {{ end -}}
   {{ else if eq .chezmoi.osRelease.id "fedora" }}
   echo "Fedora detected"
-  {{ end }}
-{{ end }}
+  {{ end -}}
+{{ end -}}
