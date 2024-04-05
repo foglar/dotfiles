@@ -14,8 +14,9 @@ scripts_path="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
 
 echo "${info_box}Installing dependencies"
 {{ if eq .chezmoi.os "linux" }}
+  echo "${info_box}󰌽 Linux detected"
   {{ if eq .chezmoi.osRelease.id "arch" }}
-    echo "${info_box}Detected ${red}ARCH Linux$reset"
+    echo "${blue}󰣇 Arch$reset detected"
     sudo pacman -Syu --noconfirm --needed
     sudo pacman -S jq git --noconfirm --needed
   {{ else }}
