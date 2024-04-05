@@ -43,7 +43,9 @@ fi
   echo "${info_box}Installation of applications"
   {{ if eq .chezmoi.osRelease.id "arch" -}}
     echo "${blue}󰣇 Arch$reset detected"
-
+    
+    echo $(check_value "blackarch_repo")
+    sleep 2
     if [[ $(check_value "blackarch_repo") == "true" ]]; then
       echo "$green[*]$blue Updating repositories$reset"
       sudo pacman -Syu
