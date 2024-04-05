@@ -45,36 +45,39 @@ fi
     echo "${blue}󰣇 Arch$reset detected"
     
     if [[ $(check_value "blackarch_repo" "${output_config_file}") == "true" ]]; then
-      echo "$green[*]$blue Updating repositories$reset"
-      sudo pacman -Syu
-      echo "$green[*]$blue Adding blackarch repositories$reset"
+      echo "${info_box} Updating repositories$reset"
+      sudo pacman -Syu --noconfirm
+      echo "${info_box} Adding blackarch repositories$reset"
       curl -O https://blackarch.org/strap.sh 
       echo 3f121404fd02216a053f7394b8dab67f105228e3 strap.sh | sha1sum -c 
       chmod +x strap.sh
       sudo ./strap.sh
-      sudo pacman -Syy
+      sudo pacman -Syy --noconfirm
     fi
 
     if [[ $(is_blackarch_repository) == "true" ]]; then
+      echo "${info_box}Succesfully added blackarch repositories"
       echo "${info_box}Installing paru aur helper from blackarch repositories"
-      sudo pacman -S paru
+      sudo pacman -S paru --noconfirm --needed
       installer="paru"
     fi
 
     if pkg_installed "paru" -eq 1; then
       echo "${error_box}Failed to install paru from repo, installing ${blue}paru${reset} aur helper manually"
-      sh "${scripts_path}install_aur.sh 'paru'"
+      sh "${scripts_path}install_aur.sh" "paru"
     fi
 
-    if [[ $(is_blackarch_repository) == "true" && $(pkg_installed "paru" -eq 1) ]]; then
+    if pkg_installed "paru" -eq 1; then
+      if [[ $(is_blackarch_repository) == "true" ]]; then
       echo "${error_box}Failed to install paru even manually, installing ${blue}yay${reset} from blackarch repositories"
-      sudo pacman -S yay
+      sudo pacman -S yay --noconfirm --needed
       installer="yay"
+      fi
     fi
 
     if pkg_installed "yay" -eq 1; then
       echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
-      sh "${scripts_path}install_aur.sh 'yay'"
+      sh "${scripts_path}install_aur.sh" "yay"
       installer="yay"
     fi
 
@@ -90,7 +93,7 @@ fi
     echo $(return_value "scripts_after" "${output_config_file}")
     if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after")
-      echo "${scripts_after})"
+      echo "${scripts_after}"
     fi
 
   {{ else if eq .chezmoi.osRelease.id "fedora" }}
