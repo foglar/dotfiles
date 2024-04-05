@@ -99,12 +99,14 @@ sleep 5
       fi
     {{ end -}}
     
-    if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
+    
+  {{ else if eq .chezmoi.osRelease.id "fedora" }}
+    echo "Fedora detected"
+  {{ end -}}
+
+  if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after")
       echo "${scripts_after}"
     fi
 
-  {{ else if eq .chezmoi.osRelease.id "fedora" }}
-    echo "Fedora detected"
-  {{ end -}}
 {{ end -}}
