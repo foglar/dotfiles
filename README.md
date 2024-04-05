@@ -34,12 +34,13 @@
     - [ ] ...
 - [ ] move nvchad_setup into one function, no duplicate code
 - [ ] add more skip messages so the user knows why something is not showing
-- [ ] in scripts check if the script is executed before or after or use chezmoi templates
+- [x] use chezmoi templates
 - [ ] ask if user wants to run script next time, if no, then edit config.json
 - [ ] maybe generate default config.json based on the users input and output_config.json if running for the first time
 - [ ] remake process of installing packages based on the https://www.chezmoi.io/user-guide/advanced/install-packages-declaratively/
 - [ ] check for installed dependencies if they are not installed install them, on the begginging of each script
-- [ ] add setup of hyprland with hyprdots option for arch linux
+- [ ] add setup of hyprland with hyprdots option for arch linux and nvidia detection and installation of drivers for it
+- [ ] maybe consider installation old way
 
 ## Credits
 

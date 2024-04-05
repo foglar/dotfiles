@@ -16,7 +16,7 @@ echo "${info_box}Installing dependencies"
 {{ if eq .chezmoi.os "linux" }}
   echo "${info_box}󰌽 Linux detected"
   {{ if eq .chezmoi.osRelease.id "arch" }}
-    echo "${blue}󰣇 Arch$reset detected"
+    echo "${info_box}${blue}󰣇 Arch$reset detected"
     sudo pacman -Syu --noconfirm --needed
     sudo pacman -S jq git --noconfirm --needed
   {{ else }}
