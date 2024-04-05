@@ -22,13 +22,13 @@ fi
 packages=$(return_value "category" "${output_config_file}")
 if [ "$packages" = "minimal" ]; then
     echo "${info_box}Minimal setup"
-    cp "${app_list_dir}minimal.yaml" "${app_install_file}"
+    cp "${app_list_dir}minimal.yaml" "${app_install_file}" -v
 elif [ "$packages" = "base" ]; then
     echo "${info_box}Base setup"
-    cp "${app_list_dir}base.yaml" "${app_install_file}"
+    cp "${app_list_dir}base.yaml" "${app_install_file}" -v
 elif [ "$packages" = "full" ]; then
     echo "${info_box}Full setup"
-    cp "${app_list_dir}full.yaml" "${app_install_file}"
+    cp "${app_list_dir}full.yaml" "${app_install_file}" -v
 else
     echo "${error_box}No valid setup"
     echo "${error_box}Edit ${output_config_file} or run setup script."
