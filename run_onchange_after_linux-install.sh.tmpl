@@ -44,9 +44,9 @@ fi
   {{ if eq .chezmoi.osRelease.id "arch" -}}
     echo "${blue}󰣇 Arch$reset detected"
     
-    echo $(check_value "blackarch_repo")
+    echo $(check_value "blackarch_repo" "${output_config_file}")
     sleep 2
-    if [[ $(check_value "blackarch_repo") == "true" ]]; then
+    if [[ $(check_value "blackarch_repo" "${output_config_file}") == "true" ]]; then
       echo "$green[*]$blue Updating repositories$reset"
       sudo pacman -Syu
       echo "$green[*]$blue Adding blackarch repositories$reset"
@@ -60,8 +60,9 @@ fi
     {{ range .packages.linux -}}
      sudo pacman -S --noconfirm --needed {{ . | quote }}
     {{ end -}}
-
-    if [[ $(check_value "scripts_after") != "null" ]]; then
+    
+    echo $(check_value "scripts_after" "${output_config_file}")
+    if [[ $(check_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after")
       echo "${scripts_after})"
     fi
