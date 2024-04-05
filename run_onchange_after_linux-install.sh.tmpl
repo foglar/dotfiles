@@ -62,30 +62,31 @@ fi
       installer="paru"
     fi
 
-    if pkg_installed "paru" -eq 1; then
+    
+    if ! pkg_installed paru; then
       echo "${error_box}Failed to install paru from repo, installing ${blue}paru${reset} aur helper manually"
       sh "${scripts_path}install_aur.sh" "paru"
     fi
-
-    if pkg_installed "paru" -eq 1; then
+    
+    if ! pkg_installed paru; then
       if [[ $(is_blackarch_repository) == "true" ]]; then
-      echo "${error_box}Failed to install paru even manually, installing ${blue}yay${reset} from blackarch repositories"
-      sudo pacman -S yay --noconfirm --needed
-      installer="yay"
+        echo "${error_box}Failed to install paru even manually, installing ${blue}yay${reset} from blackarch repositories"
+        sudo pacman -S yay --noconfirm --needed
+        installer="yay"
+      else
+        if ! pkg_installed yay; then
+          echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
+          sh "${scripts_path}install_aur.sh" "yay"
+          installer="yay"
+        fi
       fi
     fi
-
-    if pkg_installed "yay" -eq 1; then
-      echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
-      sh "${scripts_path}install_aur.sh" "yay"
-      installer="yay"
-    fi
-
-    if pkg_installed "yay" -eq 1; then
-      echo "${error_box}Failed to install yay, installing only basic repo packages with pacman, inatall aur helper yourself"
+    
+    if ! pkg_installed yay; then
+      echo "${error_box}Failed to install yay, installing only basic repo packages with pacman, install aur helper yourself"
       installer="pacman"
     fi
-
+    
     {{ range .packages.linux -}}
       sudo $installer -S --noconfirm --needed {{ . | quote }}
     {{ end -}}
