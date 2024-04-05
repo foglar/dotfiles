@@ -88,7 +88,11 @@ fi
     fi
     
     {{ range .packages.linux -}}
-      sudo $installer -S --noconfirm --needed {{ . | quote }}
+      if $installer == "paru"; then
+        sudo $installer -S --noconfirm --needed --skipreview {{ . | quote }}
+      else
+        sudo $installer -S --noconfirm --needed {{ . | quote }}
+      fi
     {{ end -}}
     
     echo $(return_value "scripts_after" "${output_config_file}")
