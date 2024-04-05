@@ -37,9 +37,8 @@ fi
   echo "${info_box}Installation of applications"
   {{ if eq .chezmoi.osRelease.id "arch" -}}
     echo "${blue}󰣇 Arch$reset detected"
-    sudo pacman -S --noconfirm --needed \
     {{ range .packages.linux -}}
-      {{ . | quote }} \
+     sudo pacman -S --noconfirm --needed {{ . | quote }}
     {{ end -}}
   {{ else if eq .chezmoi.osRelease.id "fedora" }}
   echo "Fedora detected"
