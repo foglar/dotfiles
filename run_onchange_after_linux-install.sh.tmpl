@@ -44,8 +44,6 @@ fi
   {{ if eq .chezmoi.osRelease.id "arch" -}}
     echo "${blue}󰣇 Arch$reset detected"
     
-    echo $(check_value "blackarch_repo" "${output_config_file}")
-    sleep 2
     if [[ $(check_value "blackarch_repo" "${output_config_file}") == "true" ]]; then
       echo "$green[*]$blue Updating repositories$reset"
       sudo pacman -Syu
@@ -57,12 +55,40 @@ fi
       sudo pacman -Syy
     fi
 
+    if [[ $(is_blackarch_repository) == "true" ]]; then
+      echo "${info_box}Installing paru aur helper from blackarch repositories"
+      sudo pacman -S paru
+      installer="paru"
+    fi
+
+    if pkg_installed "paru" -eq 1; then
+      echo "${error_box}Failed to install paru from repo, installing ${blue}paru${reset} aur helper manually"
+      sh "${scripts_path}install_aur.sh 'paru'"
+    fi
+
+    if [[ $(is_blackarch_repository) == "true" && $(pkg_installed "paru" -eq 1) ]]; then
+      echo "${error_box}Failed to install paru even manually, installing ${blue}yay${reset} from blackarch repositories"
+      sudo pacman -S yay
+      installer="yay"
+    fi
+
+    if pkg_installed "yay" -eq 1; then
+      echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
+      sh "${scripts_path}install_aur.sh 'yay'"
+      installer="yay"
+    fi
+
+    if pkg_installed "yay" -eq 1; then
+      echo "${error_box}Failed to install yay, installing only basic repo packages with pacman, inatall aur helper yourself"
+      installer="pacman"
+    fi
+
     {{ range .packages.linux -}}
-     sudo pacman -S --noconfirm --needed {{ . | quote }}
+      sudo $installer -S --noconfirm --needed {{ . | quote }}
     {{ end -}}
     
-    echo $(check_value "scripts_after" "${output_config_file}")
-    if [[ $(check_value "scripts_after" "${output_config_file}") != "null" ]]; then
+    echo $(return_value "scripts_after" "${output_config_file}")
+    if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after")
       echo "${scripts_after})"
     fi

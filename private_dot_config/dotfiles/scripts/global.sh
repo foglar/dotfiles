@@ -140,6 +140,17 @@ pkg_available()
     fi
 }
 
+is_blackarch_repository() {
+    # Check if the BlackArch repository is added to Pacman
+    if grep -q "^\[blackarch\]$" /etc/pacman.conf; then
+        echo "${info_box}BlackArch repository is succesfully added.">&2
+        echo "true"
+    else
+        echo "${error_box}Fail to add BlackArch repository">&2
+        echo "false"
+    fi
+}
+
 json_to_bash_array() {
     local json="$1"
     # Remove leading and trailing square brackets and quotes
