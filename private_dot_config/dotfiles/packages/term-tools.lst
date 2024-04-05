@@ -13,6 +13,7 @@ eza
 figlet
 fzf
 htop
+iftop
 jp2a
 lolcat
 man-db
@@ -20,6 +21,7 @@ mdp
 ncdu
 neofetch
 neovim
+noto-fonts-emoji 
 nvtop
 oh-my-posh
 oh-my-zsh-git
@@ -34,11 +36,11 @@ slurp
 snapper
 tldr
 tmux
+ttf-jetbrains-mono-nerd
 unzip
 w3m
 wget
+yq
 yt-dlp
 zoxide
 zsh
-noto-fonts-emoji 
-ttf-jetbrains-mono-nerd

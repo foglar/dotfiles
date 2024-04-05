@@ -21,17 +21,20 @@ fi
 
 packages=$(return_value "category" "${output_config_file}")
 if [ "$packages" = "minimal" ]; then
-    echo "Variable 'packages' is equal to 'minimal'."
+    echo "${info_box}Minimal setup"
     cp "${app_list_dir}minimal.yaml" "${app_install_file}"
 elif [ "$packages" = "base" ]; then
-    echo "Variable 'packages' is equal to 'base'."
+    echo "${info_box}Base setup"
     cp "${app_list_dir}base.yaml" "${app_install_file}"
 elif [ "$packages" = "full" ]; then
-    echo "Variable 'packages' is equal to 'full'."
+    echo "${info_box}Full setup"
     cp "${app_list_dir}full.yaml" "${app_install_file}"
 else
-    echo "${error_box}Variable 'packages' is not equal to 'minimal', 'base', or 'full'."
+    echo "${error_box}No valid setup"
+    echo "${error_box}Edit ${output_config_file} or run setup script."
 fi
+
+# install aur helper
 
 {{ if eq .chezmoi.os "linux" -}}
   echo "${info_box}Installation of applications"
