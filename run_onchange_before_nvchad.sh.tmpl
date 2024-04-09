@@ -11,7 +11,7 @@ fi
 {{ if eq .chezmoi.os "linux" }}
 {{ if eq .chezmoi.osRelease.id "arch" }}
 DISTRO="arch"
-{{ elif eq .chezmoi.osRelease.id "fedora" }}
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
 DISTRO="fedora"
 {{ else }}
 DISTRO="unkown"
