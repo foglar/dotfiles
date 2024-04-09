@@ -12,17 +12,16 @@ source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
 scripts_path="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
 
+# dependencies saved in the config file
 echo "${info_box}Installing dependencies"
-{{ if eq .chezmoi.os "linux" }}
-  echo "${info_box}󰌽 Linux detected"
-  {{ if eq .chezmoi.osRelease.id "arch" }}
+if "${DISTRO}" -eq "arch"; then
     echo "${info_box}${blue}󰣇 Arch$reset detected"
     sudo pacman -Syu --noconfirm --needed
     sudo pacman -S jq git --noconfirm --needed
-  {{ else }}
+else
     echo "${error_box}Currently unssuported linux distribution"
-  {{ end }}
-{{ end }}
+    echo "${skip_msg}Installing dependencies"
+fi
 
 if [ $(id -u) = 0 ]; then
   echo "${error_box}Please don't run this script as sudo, it will ask for permission by itself"

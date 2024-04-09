@@ -20,6 +20,16 @@ app_install_file="$HOME/.local/share/chezmoi/.chezmoidata/packages.yaml"
 scripts_path="$HOME/.config/dotfiles/scripts/"
 
 
+{{ if eq .chezmoi.os "linux" }}
+{{ if eq .chezmoi.osRelease.id "arch" }}
+DISTRO="arch"
+{{ elif eq .chezmoi.osRelease.id "fedora" }}
+DISTRO="fedora"
+{{ else }}
+DISTRO="unkown"
+{{ end }}
+{{ end }}
+
 check_value() {
   local param=$1
   local file=${2:-$config_file}
