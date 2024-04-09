@@ -24,7 +24,7 @@ scripts_path="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
 
 # dependencies saved in the config file
 echo "${info_box}Installing dependencies"
-if "${DISTRO}" -eq "arch"; then
+if [[ "${DISTRO}" -eq "arch" ]]; then
     echo "${info_box}${blue}󰣇 Arch$reset detected"
     sudo pacman -Syu --noconfirm --needed
     sudo pacman -S jq git --noconfirm --needed

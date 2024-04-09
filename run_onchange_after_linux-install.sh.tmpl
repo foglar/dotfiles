@@ -47,7 +47,7 @@ fi
 # think about how to manage packages lists to install on different distros
 
 echo "${info_box}Installation of applications"
-if "${DISTRO}" -eq "arch"; then
+if [[ "${DISTRO}" -eq "arch" ]]; then
   echo "${blue}󰣇 Arch$reset detected"
     
     if [[ $(check_value "blackarch_repo" "${output_config_file}") == "true" ]]; then

@@ -33,7 +33,7 @@ if [ "$skip_installation" == "true" ]; then
 fi
 
 echo "Installation of applications"
-if ${DISTRO} -eq "arch"; then
+if [[ ${DISTRO} -eq "arch" ]]; then
   # Blackarch repository setup
   echo "${info_box}Setup blackarch repository"
   blackarch_repository_config=$(return_value "blackarch_repo")
