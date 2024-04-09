@@ -1,5 +1,15 @@
 #!/bin/bash
 
+{{ if eq .chezmoi.os "linux" }}
+{{ if eq .chezmoi.osRelease.id "arch" }}
+DISTRO="arch"
+{{ elif eq .chezmoi.osRelease.id "fedora" }}
+DISTRO="fedora"
+{{ else }}
+DISTRO="unkown"
+{{ end }}
+{{ end }}
+
 if [ ! -f "$HOME/.config/dotfiles/scripts/global.sh" ]; then
     echo "Could not load global.sh, you've done something very bad."
     echo "Try rerunning 'chezmoi update'"

@@ -8,6 +8,16 @@ if [ ! -f "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global
     exit 1
 fi
 
+{{ if eq .chezmoi.os "linux" }}
+{{ if eq .chezmoi.osRelease.id "arch" }}
+DISTRO="arch"
+{{ elif eq .chezmoi.osRelease.id "fedora" }}
+DISTRO="fedora"
+{{ else }}
+DISTRO="unkown"
+{{ end }}
+{{ end }}
+
 source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh"
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
 scripts_path="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
