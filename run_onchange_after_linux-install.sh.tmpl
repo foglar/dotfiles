@@ -3,7 +3,7 @@
 {{ if eq .chezmoi.os "linux" }}
 {{ if eq .chezmoi.osRelease.id "arch" }}
 DISTRO="arch"
-{{ elif eq .chezmoi.osRelease.id "fedora" }}
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
 DISTRO="fedora"
 {{ else }}
 DISTRO="unkown"
@@ -17,6 +17,37 @@ if [ ! -f "$HOME/.config/dotfiles/scripts/global.sh" ]; then
 fi
 
 source "$HOME/.config/dotfiles/scripts/global.sh"
+
+install_category() {
+    local category="$1"
+    echo "$green[*]$blue Installing packages from $category$reset"
+    while IFS= read -r pkg; do
+        if [ -n "$pkg" ]; then
+            if pkg_installed "$pkg"; then
+                echo "$green[*]$blue skipping $pkg..."
+            elif pkg_available "$pkg"; then
+                echo "$green[*]$blue queueing $pkg from$green arch$blue repo..."
+                pkg_arch+=" $pkg"
+            elif aur_available "$pkg"; then
+                echo "$green[*]$blue queueing $pkg from$green aur$blue..."
+                pkg_aur+=" $pkg"
+            else
+                echo "$red[!] error: unknown package $pkg..."
+            fi
+        fi
+    done < <(cut -d '#' -f 1 "$category")
+
+
+    if [ -n "$pkg_arch" ]; then
+        echo "$green[*]$blue installing $pkg_arch from arch repo...$reset"
+        sudo pacman -S $pkg_arch --noconfirm
+    fi
+
+    if [ -n "$pkg_aur" ]; then
+        echo "$green[*]$blue installing $pkg_aur from aur...$reset"
+        "$installer" "${use_default}" -S $pkg_aur --noconfirm
+    fi
+}
 
 if [ $(id -u) = 0 ]; then
   echo "${error_box}Please don't run this script as sudo, it will ask for permission by itself"
@@ -91,16 +122,13 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
       echo "${error_box}Failed to install yay, installing only basic repo packages with pacman, install aur helper yourself"
       installer="pacman"
     fi
-    
-    {{ range .packages.linux -}}
-      if $installer == "paru"; then
-        $installer -S --noconfirm --needed --skipreview {{ . | quote }}
-      elif $installer == "yay"; then
-        $installer -S --noconfirm --needed {{ . | quote }}
-      else
-        sudo $installer -S --noconfirm --needed {{ . | quote }}
-      fi
-    {{ end -}}
+  
+    categories=$(return_value categories_to_install "${output_config_file}")
+    echo ${categories[@]}
+
+    for category_file in ${categories[@]}; do
+        install_category "$HOME/.config/dotfiles/packages/$category_file"
+    done
     
 else
   echo "${DISTRO} is unsupproted distribution, feel free to implement this yourself and contribute to this project."

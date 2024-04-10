@@ -40,6 +40,8 @@
 - [ ] check for installed dependencies if they are not installed install them, on the begginging of each script
 - [ ] add setup of hyprland with hyprdots option for arch linux and nvidia detection and installation of drivers for it
 - [ ] maybe consider installation old way
+- [ ] error with detecting package managers
+- [ ] create new naming conventions for package lists for linux distributions, minimal_arch.lst vs. minimal.lst
 
 ## Credits
 
