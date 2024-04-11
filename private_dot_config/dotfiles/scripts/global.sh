@@ -19,7 +19,6 @@ app_list_dir="$HOME/.config/dotfiles/packages/"
 app_install_file="$HOME/.local/share/chezmoi/.chezmoidata/packages.yaml"
 scripts_path="$HOME/.config/dotfiles/scripts/"
 
-
 check_value() {
   local param=$1
   local file=${2:-$config_file}

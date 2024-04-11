@@ -109,13 +109,13 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
         echo "${error_box}Failed to install paru even manually, installing ${blue}yay${reset} from blackarch repositories"
         sudo pacman -S yay --noconfirm --needed
         installer="yay"
-      else
-        if ! pkg_installed yay; then
-          echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
-          sh "${scripts_path}install_aur.sh" "yay"
-          installer="yay"
-        fi
       fi
+    fi
+
+    if ! pkg_installed yay; then
+        echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
+        sh "${scripts_path}install_aur.sh" "yay"
+        installer="yay"
     fi
     
     if ! pkg_installed yay; then
@@ -124,9 +124,9 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
     fi
   
     categories=$(return_value categories_to_install "${output_config_file}")
-    echo ${categories[@]}
+    categories_list=$(json_to_bash_array "${categories}")
 
-    for category_file in ${categories[@]}; do
+    for category_file in ${categories_list[@]}; do
         install_category "$HOME/.config/dotfiles/packages/$category_file"
     done
     
