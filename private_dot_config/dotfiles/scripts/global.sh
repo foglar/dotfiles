@@ -111,17 +111,43 @@ is_in_array() {
     echo "$ans"  # Value not found in the array
 }
 
+chk_aurh()
+{
+    if pkg_installed yay
+    then
+        aurhlpr="yay"
+    elif pkg_installed paru
+    then
+        aurhlpr="paru"
+    fi
+}
+
+aur_available()
+{
+    local PkgIn=$1
+    chk_aurh
+
+    if $aurhlpr -Si $PkgIn &> /dev/null
+    then
+        #echo "${PkgIn} available in aur repo..."
+        return 0
+    else
+        #echo "aur helper is not installed..."
+        return 1
+    fi
+}
+
 pkg_installed()
 {
     local PkgIn=$1
 
-    if pacman -Qi $PkgIn &> /dev/null
+    if pacman -Qi "$PkgIn" &> /dev/null
     then
         #echo "${PkgIn} is already installed..."
-        return 0
+        echo 0
     else
         #echo "${PkgIn} is not installed..."
-        return 1
+        echo 1
     fi
 }
 
