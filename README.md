@@ -44,7 +44,7 @@
 - [ ] create new naming conventions for package lists for linux distributions, minimal_arch.lst vs. minimal.lst
 - [ ] error with reading lists package
 - [ ] error saving config file
-
+- [ ] add template to the bashrc, so it would add conda only if user has conda installed
 ## Credits
 
 - inspired by https://github.com/prasanthrangan/hyprdots Aesthetic, dynamic and minimal dots for Arch hyprland by prasanthrangan
