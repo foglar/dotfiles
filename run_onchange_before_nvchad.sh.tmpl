@@ -22,6 +22,10 @@ source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
 scripts_path="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
 
+mkdir -p $HOME/.config/dotfiles/scripts/
+mkdir -p $HOME/.config/dotfiles/packages/
+touch "${output_config_file}"
+
 # dependencies saved in the config file
 echo "${info_box}Installing dependencies"
 if [[ "${DISTRO}" -eq "arch" ]]; then
