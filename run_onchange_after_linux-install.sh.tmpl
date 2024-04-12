@@ -35,7 +35,7 @@ install_category() {
                 echo "$red[!] error: unknown package $pkg..."
             fi
         fi
-    done < <(cut -d '#' -f 1 "$category")
+    done < <(cut -d '#' -f 1 "${default_app_list_dir}${category}")
 
 
     if [ -n "$pkg_arch" ]; then
@@ -133,7 +133,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
         install_category "${default_app_list_dir}/base.lst"
     elif [[ $(return_value category "${output_config_file}") == "full" ]]; then
         install_category "${default_app_list_dir}/full.lst"
-      elif [[ $(return_value category "${output_config_file}") == "custom" ]]; then
+    elif [[ $(return_value category "${output_config_file}") == "custom" ]]; then
         for category_file in ${categories_list[@]}; do
             install_category "$HOME/.config/dotfiles/packages/$category_file"
         done
