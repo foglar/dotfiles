@@ -23,7 +23,7 @@ install_category() {
     echo "$green[*]$blue Installing packages from $category$reset"
     while IFS= read -r pkg; do
         if [ -n "$pkg" ]; then
-            if pkg_installed "$pkg"; then
+          if [[ $(pkg_installed "$pkg") == 0 ]] ; then
                 echo "$green[*]$blue skipping $pkg..."
             elif pkg_available "$pkg"; then
                 echo "$green[*]$blue queueing $pkg from$green arch$blue repo..."
@@ -36,7 +36,6 @@ install_category() {
             fi
         fi
     done < <(cut -d '#' -f 1 "${category}")
-
 
     if [ -n "$pkg_arch" ]; then
         echo "$green[*]$blue installing $pkg_arch from arch repo...$reset"
