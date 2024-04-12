@@ -103,22 +103,21 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
       echo "${error_box}Failed to install paru from repo, installing ${blue}paru${reset} aur helper manually"
       sh "${scripts_path}install_aur.sh" "paru"
     fi
-    
+
     if [[ $(pkg_installed "paru") != 0 ]]; then
       if [[ $(is_blackarch_repository) == "true" ]]; then
-        echo "${error_box}Failed to install paru even manually, installing ${blue}yay${reset} from blackarch repositories"
+        echo "${error_box}Failed to install paru manually, installing ${blue}yay${blue} from blackarch repo"
         sudo pacman -S yay --noconfirm --needed
         installer="yay"
-      fi
     fi
 
-    if [[ $(pkg_installed "yay") != 0 ]]; then
+    if [[ $(pkg_installed "yay") != 0 && $(pkg_installed "paru") != 0 ]]; then
         echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
         sh "${scripts_path}install_aur.sh" "yay"
         installer="yay"
     fi
     
-    if [[ $(pkg_installed "yay") != 0 ]]; then
+    if [[ $(pkg_installed "yay") != 0 && $(pkg_installed "paru") != 0 ]]; then
       echo "${error_box}Failed to install yay, installing only basic repo packages with pacman, install aur helper yourself"
       installer="pacman"
     fi
