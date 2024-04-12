@@ -35,6 +35,7 @@ install_category() {
                 echo "$red[!] error: unknown package $pkg..."
             fi
         fi
+        sleep .5
     done < <(cut -d '#' -f 1 "${category}")
 
     if [ -n "$pkg_arch" ]; then
