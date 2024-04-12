@@ -109,6 +109,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
         echo "${error_box}Failed to install paru manually, installing ${blue}yay${blue} from blackarch repo"
         sudo pacman -S yay --noconfirm --needed
         installer="yay"
+      fi
     fi
 
     if [[ $(pkg_installed "yay") != 0 && $(pkg_installed "paru") != 0 ]]; then
@@ -137,4 +138,6 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after")
       echo "${scripts_after[@]}"
 fi
+
+echo "Installation finished"
 
