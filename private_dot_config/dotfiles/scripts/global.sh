@@ -131,13 +131,13 @@ is_in_array() {
 
 chk_aurh()
 {
-    if pkg_installed yay
+  if [[ $(pkg_installed yay) == 0 ]]
     then
         aurhlpr="yay"
-    elif pkg_installed paru
+  elif [[ $(pkg_installed paru) == 0 ]]
     then
         aurhlpr="paru"
-    fi
+  fi
 }
 
 aur_available()
