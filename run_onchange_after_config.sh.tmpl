@@ -50,7 +50,7 @@ echo "${info_box}Setup applications category"
 applications_to_install_config=$(return_value "category")
 if [[ "$applications_to_install_config" != "minimal" && "$applications_to_install_config" != "base" && "$applications_to_install_config" != "full" && "$applications_to_install_config" != "custom" && "$applications_to_install_config" != "skip" ]]; then
   echo "$blue"
-  select category in minimal base full custom; do
+  select category in minimal base full custom skip; do
     echo "$reset"
     case "$REPLY" in
     1)
@@ -69,7 +69,11 @@ if [[ "$applications_to_install_config" != "minimal" && "$applications_to_instal
       echo "${info_box}Picked category Custom$reset"
       break
       ;;
-    *) echo "${error_box}Enter number 1-4:" ;;
+    5)
+      echo "${info_box}Skipping installation of applications$reset"
+      break 
+      ;;
+    *) echo "${error_box}Enter number 1-5:" ;;
     esac
   done
   applications_to_install_config=$category
