@@ -48,7 +48,7 @@ fi
 # Applications to install setup
 echo "${info_box}Setup applications category"
 applications_to_install_config=$(return_value "category")
-if [[ "$applications_to_install_config" != "minimal" && "$applications_to_install_config" != "base" && "$applications_to_install_config" != "full" && "$applications_to_install_config" != "custom" ]]; then
+if [[ "$applications_to_install_config" != "minimal" && "$applications_to_install_config" != "base" && "$applications_to_install_config" != "full" && "$applications_to_install_config" != "custom" && "$applications_to_install_config" != "skip" ]]; then
   echo "$blue"
   select category in minimal base full custom; do
     echo "$reset"

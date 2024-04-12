@@ -11,7 +11,7 @@ reset=$(tput sgr0)
 
 set -e
 
-CloneDir=`dirname "$(dirname "$(realpath "$0")")"`
+CloneDir=$(dirname "$(dirname "$(realpath "$0")")")
 
 path_exists()
 {
@@ -93,7 +93,7 @@ aur_available()
 
 nvidia_detect()
 {
-    if [ `lspci -k | grep -A 2 -E "(VGA|3D)" | grep -invidia | wc -l` -gt 0 ]
+  if [ $(lspci -k | grep -A 2 -E "(VGA|3D)" | grep -invidia | wc -l` -gt 0) ]
     then
        #echo "nvidia card detected..."
         return 0

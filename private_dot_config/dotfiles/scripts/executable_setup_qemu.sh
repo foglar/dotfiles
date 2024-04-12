@@ -1,13 +1,14 @@
 #!/bin/bash
 source $HOME/.local/bin/setup_scripts/global_fn.sh
 
-echo """$blue
+echo """
+${blue}
   ____                   _____          ____     
  / __ \___ __ _  __ __  / ___/__  ___  / _(_)__ _
 / /_/ / -_)  ' \/ // / / /__/ _ \/ _ \/ _/ / _ \`/
 \___\_\__/_/_/_/\_,_/  \___/\___/_//_/_//_/\_, / 
                                           /___/  
-by$red foglar $reset
+by${red} foglar ${reset}
 """
 
 sleep 5

@@ -5,10 +5,10 @@ green=$(tput setaf 2)
 blue=$(tput setaf 4)
 reset=$(tput sgr0)
 
-info_box="$green[*] $reset"
-question_box="$blue[?] $reset"
-error_box="$red[!] $reset"
-skip_box="$green[-] $reset"
+info_box="${green}[*] ${reset}"
+question_box="${blue}[?] ${reset}"
+error_box="${red}[!] ${reset}"
+skip_box="${green}[-] ${reset}"
 yes_no="[y/n]"
 
 skip_msg="${skip_box}Skipping..."
@@ -92,6 +92,23 @@ list_scripts() {
     done
     # Print the list
     echo "${scripts[@]}"
+}
+
+
+list_lst_scripts() {
+    local search_dir="$1"
+    local lst_scripts=()
+
+    # List files with .lst extension
+    for lst_file in "$search_dir"/*.lst; do
+        if [ -f "$lst_file" ]; then
+            filename=$(basename "$lst_file")
+            lst_scripts+=("$filename")
+        fi
+    done
+
+    # Print the list
+    echo "${lst_scripts[@]}"
 }
 
 # Function to check if a value is present in an array
