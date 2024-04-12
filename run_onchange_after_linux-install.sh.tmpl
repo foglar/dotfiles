@@ -128,11 +128,11 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
 
     if [[ $(return_value category "${output_config_file}") == "minimal" ]]; then
       echo ""
-      install_category "$default_app_list_dir/minimal.lst"
+      install_category "${default_app_list_dir}/minimal.lst"
     elif [[ $(return_value category "${output_config_file}") == "base" ]]; then
-        install_category "$default_app_list_dir/base.lst"
+        install_category "${default_app_list_dir}/base.lst"
     elif [[ $(return_value category "${output_config_file}") == "full" ]]; then
-        install_category "$default_app_list_dir/full.lst"
+        install_category "${default_app_list_dir}/full.lst"
       elif [[ $(return_value category "${output_config_file}") == "custom" ]]; then
         for category_file in ${categories_list[@]}; do
             install_category "$HOME/.config/dotfiles/packages/$category_file"
