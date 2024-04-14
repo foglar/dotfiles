@@ -45,7 +45,12 @@ install_category() {
 
     if [ -n "$pkg_aur" ]; then
         echo "$green[*]$blue installing $pkg_aur from aur...$reset"
-        "$installer" "${use_default}" -S $pkg_aur --noconfirm
+        if [[ $installer == "paru" ]]; then
+          "$installer" "${use_default}" -S $pkg_aur --noconfirm --needed --skipreview
+        else
+           "$installer" "${use_default}" -S $pkg_aur --noconfirm --needed
+
+        fi
     fi
 }
 
