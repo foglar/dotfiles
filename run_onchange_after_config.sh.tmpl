@@ -103,6 +103,7 @@ echo "${info_box}Setup scripts"
 echo "${info_box}Scripts to run ${red}after${reset} file sync"
 scripts_to_run_after_config=$(return_value "scripts_after")
 scripts_to_run_after_checked=()
+
 if [[ $scripts_to_run_after_config != "null" ]]; then
   scripts_to_run_after_config=$(json_to_bash_array "$scripts_to_run_after_config")
   for script in ${scripts_to_run_after_config[@]}; do

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#set -x
+
 {{ if eq .chezmoi.os "linux" }}
 {{ if eq .chezmoi.osRelease.id "arch" }}
 DISTRO="arch"
@@ -35,7 +37,6 @@ install_category() {
                 echo "$red[!] error: unknown package $pkg..."
             fi
         fi
-        sleep .5
     done < <(cut -d '#' -f 1 "${category}")
 
     if [ -n "$pkg_arch" ]; then
@@ -46,9 +47,9 @@ install_category() {
     if [ -n "$pkg_aur" ]; then
         echo "$green[*]$blue installing $pkg_aur from aur...$reset"
         if [[ $installer == "paru" ]]; then
-          "$installer" "${use_default}" -S $pkg_aur --skipreview --noconfirm --needed
+          "$installer" -S $pkg_aur --skipreview --noconfirm --needed
         else
-           "$installer" "${use_default}" -S $pkg_aur --noconfirm --needed
+           "$installer" -S $pkg_aur --noconfirm --needed
 
         fi
     fi

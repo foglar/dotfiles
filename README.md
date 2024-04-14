@@ -46,6 +46,8 @@
 - [ ] remove unnecessary files and dependencies after install
 - [ ] create summary of all changes before install
 - [ ] in list of package lists should be only files with .lst name
+- [ ] scripts after stage didn't recognize any scripts to run
+- [ ] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 
 ## Credits
 
