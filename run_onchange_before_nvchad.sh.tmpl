@@ -20,7 +20,7 @@ DISTRO="unkown"
 
 source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh"
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
-scripts_path="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
+scripts_dir="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
 
 mkdir -p $HOME/.config/dotfiles/scripts/
 mkdir -p $HOME/.config/dotfiles/packages/
@@ -138,10 +138,10 @@ scripts_to_run_before_config=$(return_value "scripts_before")
 if [[ $scripts_to_run_before_config != "null" ]]; then
     scripts_to_run_before_config=$(json_to_bash_array "$scripts_to_run_before_config")
     for script in ${scripts_to_run_before_config[@]}; do
-        if [ -f "${scripts_path}${script}" ]; then
-            echo "${info_box}Executing script ${scripts_path}${script}"
-            chmod +x "${scripts_path}${script}"
-            sh "${scripts_path}/${script}"
+        if [ -f "${scripts_dir}${script}" ]; then
+            echo "${info_box}Executing script ${scripts_dir}${script}"
+            chmod +x "${scripts_dir}${script}"
+            sh "${scripts_dir}/${script}"
         else
             echo "${error_box}Script not detected in ~/.local/bin/setup_scripts/ move it into this directory."
         fi
@@ -150,12 +150,12 @@ fi
 
 # Interactive user
 if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts_before_dialog") == "null" ]]; then
-    scripts_to_execute=($(list_scripts "${scripts_path}"))
+    scripts_to_execute=($(list_scripts "${scripts_dir}"))
     for script in ${scripts_to_execute[@]}; do
-        if [[ $(dialog "${question_box}Run script $script?$reset") == "true" && -f "${scripts_path}${script}" ]]; then
+        if [[ $(dialog "${question_box}Run script $script?$reset") == "true" && -f "${scripts_dir}${script}" ]]; then
             echo "$info_box Executing script $script...$reset"
-            chmod +x "${scripts_path}${script}"
-            sh "$scripts_path$script"
+            chmod +x "${scripts_dir}${script}"
+            sh "$scripts_dir$script"
         else
             echo "${skip_msg} script $script"
         fi

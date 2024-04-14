@@ -106,7 +106,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
     
     if [[ $(pkg_installed "paru") != 0 ]]; then
       echo "${error_box}Failed to install paru from repo, installing ${blue}paru${reset} aur helper manually"
-      sh "${scripts_path}install_aur.sh" "paru"
+      sh "${scripts_dir}install_aur.sh" "paru"
     fi
 
     if [[ $(pkg_installed "paru") != 0 ]]; then
@@ -119,7 +119,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
 
     if [[ $(pkg_installed "yay") != 0 && $(pkg_installed "paru") != 0 ]]; then
         echo "${error_box}Failed to install yay, installing ${blue}yay${reset} aur helper manually instead"
-        sh "${scripts_path}install_aur.sh" "yay"
+        sh "${scripts_dir}install_aur.sh" "yay"
         installer="yay"
     fi
     
@@ -153,6 +153,14 @@ else
 fi 
 
 echo $(return_value "scripts_after" "${output_config_file}")
+
+if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
+      scripts=$(return_value "scripts_after")
+      echo "${scripts_after[@]}"
+      for script in ${scripts_after[@]}; do
+        sh $script
+      done
+fi
 
 echo "Installation finished"
 

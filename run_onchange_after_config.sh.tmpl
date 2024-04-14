@@ -107,7 +107,7 @@ if [[ $scripts_to_run_after_config != "null" ]]; then
   scripts_to_run_after_config=$(json_to_bash_array "$scripts_to_run_after_config")
   for script in ${scripts_to_run_after_config[@]}; do
     result=$(is_in_array "${script}" "${scripts_to_run_after_checked[@]}")
-    if [[ $result -eq 1 && -f "${scripts_path}${script}" ]]; then
+    if [[ $result -eq 1 && -f "${scripts_dir}${script}" ]]; then
       echo "${info_box}Running script$red ${script}$reset after file sync$reset"
       scripts_to_run_after_checked+=("$script")
     else
@@ -118,11 +118,11 @@ fi
 
 # User
 if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_after_dialog") == "null" ]]; then
-  scripts_to_execute=($(list_scripts "$scripts_path"))
+  scripts_to_execute=($(list_scripts "$scripts_dir"))
   scripts_to_execute_checked=()
   for script in ${scripts_to_execute[@]}; do
     result=$(is_in_array "${script}" "${scripts_to_run_after_checked[@]}")
-    if [[ $(dialog "${question_box}Run script $script after file sync?$reset") == "true" && -f "${scripts_path}${script}" && $result -eq 1 ]]; then
+    if [[ $(dialog "${question_box}Run script $script after file sync?$reset") == "true" && -f "${scripts_dir}${script}" && $result -eq 1 ]]; then
       scripts_to_run_after_checked+=("$script")
       echo "${info_box}Running script $script after file sync"
     else

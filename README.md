@@ -28,7 +28,7 @@
 - [ ] wallpapers are big, load them only if user agreed so
 - [ ] ask if user wants to install any applications or skip
 - [ ] Add configuration for colours of terminal and validation of config file before installation
-- [ ] improve error message in the block "run after file sync becouse it in the user interaction part it will write skipping in any case, should add more checks to differentiate cases, file not exist, file already in list"
+- [ ] improve error message in the block "run after file sync because it in the user interaction part it will write skipping in any case, should add more checks to differentiate cases, file not exist, file already in list"
 - [ ] add more functionalities:
     - [ ] grub theme
     - [ ] bluetooth
@@ -39,13 +39,13 @@
 - [ ] add more skip messages so the user knows why something is not showing
 - [ ] ask if user wants to run script next time, if no, then edit config.json
 - [ ] maybe generate default config.json based on the users input and output_config.json if running for the first time
-- [ ] check for installed dependencies if they are not installed install them, on the begginging of each script
+- [x] check for installed dependencies if they are not installed install them, on the begginging of each script
 - [ ] add setup of hyprland with hyprdots option for arch linux and nvidia detection and installation of drivers for it
 - [ ] create new naming conventions for package lists for linux distributions, minimal_arch.lst vs. minimal.lst
-- [ ] error with reading lists package
 - [ ] add template to the bashrc, so it would add conda only if user has conda installed
 - [ ] remove unnecessary files and dependencies after install
-
+- [ ] create summary of all changes before install
+- [ ] in list of package lists should be only files with .lst name
 
 ## Credits
 
