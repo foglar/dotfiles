@@ -46,7 +46,7 @@ install_category() {
     if [ -n "$pkg_aur" ]; then
         echo "$green[*]$blue installing $pkg_aur from aur...$reset"
         if [[ $installer == "paru" ]]; then
-          "$installer" "${use_default}" -S $pkg_aur --noconfirm --needed --skipreview
+          "$installer" "${use_default}" -S $pkg_aur --skipreview --noconfirm --needed
         else
            "$installer" "${use_default}" -S $pkg_aur --noconfirm --needed
 
@@ -151,11 +151,8 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
 else
   echo "${DISTRO} is unsupproted distribution, feel free to implement this yourself and contribute to this project."
 fi 
-    
-if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
-      scripts=$(return_value "scripts_after")
-      echo "${scripts_after[@]}"
-fi
+
+echo $(return_value "scripts_after" "${output_config_file}")
 
 echo "Installation finished"
 
