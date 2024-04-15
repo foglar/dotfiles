@@ -99,7 +99,6 @@ list_scripts() {
     echo "${scripts[@]}"
 }
 
-
 list_lst_scripts() {
     local search_dir="$1"
     local lst_scripts=()
@@ -112,9 +111,10 @@ list_lst_scripts() {
         fi
     done
 
-    # Print the list
+    # Return the array
     echo "${lst_scripts[@]}"
 }
+
 
 # Function to check if a value is present in an array
 is_in_array() {

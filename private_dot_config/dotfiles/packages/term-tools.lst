@@ -30,6 +30,7 @@ parallel
 paru
 paru-debug
 pfetch
+power-profiles-daemon
 ranger
 ripgrep
 slurp

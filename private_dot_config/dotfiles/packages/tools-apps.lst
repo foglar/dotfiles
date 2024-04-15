@@ -5,6 +5,7 @@ auto-cpufreq
 clamtk
 cups
 dolphin
+easyeda-bin
 easytag
 gimp
 gnome-disk-utility
@@ -19,6 +20,7 @@ loupe
 obs-studio
 openrocket
 qemu-full
+simple-scan
 spectacle
 spicetify-cli
 spicetify-themes-git

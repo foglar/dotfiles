@@ -5,10 +5,12 @@ beef
 bettercap
 blackarch-keyring
 ghidra
+gnu-netcat
 gobuster
 masscan
 nikto
 openbsd-netcat
+proxychains-ng
 sqlmap
 sublist3r
 termshark

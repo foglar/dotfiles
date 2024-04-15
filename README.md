@@ -19,6 +19,9 @@
 - [x] error with detecting yay package managers
 - [x] use chezmoi templates
 - [x] error saving config file
+- [x] in list of package lists should be only files with .lst name
+- [x] scripts after stage didn't recognize any scripts to run
+- [x] check for installed dependencies if they are not installed install them, on the begginging of each script
 
 - [ ] make your decisions on the beggining, no input after, config saved into file, then runned
     - [x] create a script before sync, which will ask user for all settings, saved all what can be done after into json file (you can also use your json to skip questions 
@@ -39,14 +42,11 @@
 - [ ] add more skip messages so the user knows why something is not showing
 - [ ] ask if user wants to run script next time, if no, then edit config.json
 - [ ] maybe generate default config.json based on the users input and output_config.json if running for the first time
-- [x] check for installed dependencies if they are not installed install them, on the begginging of each script
 - [ ] add setup of hyprland with hyprdots option for arch linux and nvidia detection and installation of drivers for it
 - [ ] create new naming conventions for package lists for linux distributions, minimal_arch.lst vs. minimal.lst
 - [ ] add template to the bashrc, so it would add conda only if user has conda installed
 - [ ] remove unnecessary files and dependencies after install
 - [ ] create summary of all changes before install
-- [ ] in list of package lists should be only files with .lst name
-- [ ] scripts after stage didn't recognize any scripts to run
 - [ ] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 
 ## Credits
