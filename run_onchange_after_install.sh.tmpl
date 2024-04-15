@@ -159,6 +159,7 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after")
       echo "${scripts_after[@]}"
       for script in ${scripts_after[@]}; do
+        echo "${info_box} Executing script ${scripts_dir}${script}"
         chmod +x "${scripts_dir}${script}"
         sh "${scripts_dir}${script}"
       done
