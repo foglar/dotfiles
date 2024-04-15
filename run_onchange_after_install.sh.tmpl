@@ -154,7 +154,8 @@ else
 fi 
 
 if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
-      scripts_after=$(return_value "scripts_after" "${output_config_file}")
+      scripts=$(return_value "scripts_after" "${output_config_file}")
+      scripts_after=$(json_to_bash_array "${scripts}")
       for script in ${scripts_after[@]}; do
         echo "${info_box} Executing script ${scripts_dir}${script}"
         chmod +x "${scripts_dir}${script}"
