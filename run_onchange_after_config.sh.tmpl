@@ -135,7 +135,14 @@ fi
 if [[ $(check_value "cleanup_after_install") == "null" ]]; then
   if [[ $(dialog "${question_box}Clean all not needed files after installation?${reset}") == "true" ]]; then 
       cleanup_after_install="true"
+  else
+      cleanup_after_install="false"
   fi
+elif [[ $(check_value "cleanup_after_install") == "true" ]]; then
+  echo "${info_box}Cleanup is set to true"
+  cleanup_after_install="true"
+else
+  echo "${info_box}Cleanup is set to false"
 fi
 
 # Save configuration
