@@ -45,7 +45,7 @@
 - [ ] add setup of hyprland with hyprdots option for arch linux and nvidia detection and installation of drivers for it
 - [ ] create new naming conventions for package lists for linux distributions, minimal_arch.lst vs. minimal.lst
 - [ ] add template to the bashrc, so it would add conda only if user has conda installed
-- [ ] remove unnecessary files and dependencies after install
+- [x] remove unnecessary files and dependencies after install
 - [ ] create summary of all changes before install
 - [ ] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 - [ ] in arch add icon themes installation

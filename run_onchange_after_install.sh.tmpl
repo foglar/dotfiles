@@ -149,7 +149,7 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
 fi
 
 # Post install cleanup
-if [[ $(return_value "cleanup_after_install") == "true" ]]; then
+if [[ $(return_value "cleanup" "${output_config_file}") == "true" ]]; then
   echo "rm -rfv strap.sh"
   #rm -rfv strap.sh
   echo "rm -rfv $HOME/README.md"
