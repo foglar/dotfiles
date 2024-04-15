@@ -6,7 +6,7 @@
 - [x] sudo
 - [x] pick from 4 categories **minimal.lst basic.lst full.lst** or **custom.lst** (pick for each category)
 - [x] fix nvim/NVChad config to load in new NVChad environment
-- [ ] ask if user wants to run script
+- [x] ask if user wants to run script
 - [x] Your own config files
 - [x] In block "scripts to run before file sync" remove scripts which are already in config file
 - [x] Check if script ran with sudo priviledges or not
@@ -48,6 +48,7 @@
 - [ ] remove unnecessary files and dependencies after install
 - [ ] create summary of all changes before install
 - [ ] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
+- [ ] in arch add icon themes installation
 
 ## Credits
 

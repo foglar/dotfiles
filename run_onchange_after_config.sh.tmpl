@@ -132,6 +132,12 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   done
 fi
 
+if [[ $(check_value "cleanup_after_install") == "null" ]]; then
+  if [[ $(dialog "${question_box}Clean all not needed files after installation?${reset}") == "true" ]]; then 
+      cleanup_after_install="true"
+  fi
+fi
+
 # Save configuration
 echo "${info_box}Saving configuration"
 if [[ "$applications_to_install_config" == "custom" ]]; then
@@ -140,13 +146,15 @@ if [[ "$applications_to_install_config" == "custom" ]]; then
     --arg category "$applications_to_install_config" \
     --argjson categories_to_install_config "$(printf '%s\n' "${categories_to_install_config[@]}" | jq -R . | jq -s .)" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
-    '{"blackarch_repo": $blackarch_repo, "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after}' \
+    --arg cleanup "$cleanup_after_install" \
+    '{"blackarch_repo": $blackarch_repo, "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup_after_install}' \
     >$output_config_file)
 else
   json=$(jq -n \
     --arg blackarch_repo "$blackarch_repository_config" \
     --arg category "$applications_to_install_config" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
-    '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after}' \
+    --arg cleanup "$cleanup_after_install" \
+    '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup_after_install}' \
     >$output_config_file)
 fi

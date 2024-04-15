@@ -86,14 +86,14 @@ if [ "$install_nvchad" == "true" ]; then
         echo "${info_box}Removing existing nvim config folder$reset"
         if [ $(check_value "nvchad_overwrite_dir") == "true" ]; then
             echo "${error_box}Removing NvChad configuration$reset"
-            #rm -rf ~/.config/nvim/
+            rm -rfv ~/.config/nvim/
             # Clone NvChad setup
             git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
         else
             ans=$(dialog "${question_box}Would you like to rewrite your nvim config?$reset")
             if [[ $ans == "true" ]]; then
                 echo "${error_box}Removing previous nvim configuration $reset"
-                #rm -rf ~/.config/nvim
+                rm -rfv ~/.config/nvim
                 # Clone NvChad setup
                 git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
             else
@@ -161,3 +161,5 @@ if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts
         fi
     done
 fi
+
+

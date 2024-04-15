@@ -66,23 +66,7 @@ if [ "$skip_installation" == "true" ]; then
     exit 1
 fi
 
-#packages=$(return_value "category" "${output_config_file}")
-#if [ "$packages" = "minimal" ]; then
-#    echo "${info_box}Minimal setup"
-#    cp "${app_list_dir}minimal.yaml" "${app_install_file}" -v
-#elif [ "$packages" = "base" ]; then
-#    echo "${info_box}Base setup"
-#    cp "${app_list_dir}base.yaml" "${app_install_file}" -v
-#elif [ "$packages" = "full" ]; then
-#    echo "${info_box}Full setup"
-#    cp "${app_list_dir}full.yaml" "${app_install_file}" -v
-#else
-#    echo "${error_box}No valid setup"
-#    echo "${error_box}Edit ${output_config_file} or run setup script."
-#fi
-
-# think about how to manage packages lists to install on different distros
-
+# Installation of applications
 echo "${info_box}Installation of applications"
 if [[ "${DISTRO}" -eq "arch" ]]; then
   echo "${blue}󰣇 Arch$reset detected"
@@ -153,6 +137,7 @@ else
   echo "${DISTRO} is unsupproted distribution, feel free to implement this yourself and contribute to this project."
 fi 
 
+# Executing scripts
 if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after" "${output_config_file}")
       scripts_after=$(json_to_bash_array "${scripts}")
@@ -161,6 +146,16 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
         chmod +x "${scripts_dir}${script}"
         sh "${scripts_dir}${script}"
       done
+fi
+
+# Post install cleanup
+if [[ $(return_value "cleanup_after_install") == "true" ]]; then
+  echo "rm -rfv strap.sh"
+  #rm -rfv strap.sh
+  echo "rm -rfv $HOME/README.md"
+  #rm -rfv $HOME/README.md
+  echo "rm -rfv $HOME/go"
+  #rm -rfv $HOME/go
 fi
 
 echo "Installation finished"

@@ -2,5 +2,6 @@
   "skip_script": 0,
   "nvchad_overwrite_dir": 0,
   "scripts_after_dialog": 1,
-  "scripts_before_dialog": 1
+  "scripts_before_dialog": 1,
+  "cleanup_after_install": 1
 }
