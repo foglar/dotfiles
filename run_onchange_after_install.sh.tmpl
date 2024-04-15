@@ -153,11 +153,8 @@ else
   echo "${DISTRO} is unsupproted distribution, feel free to implement this yourself and contribute to this project."
 fi 
 
-echo $(return_value "scripts_after" "${output_config_file}")
-
 if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
-      scripts=$(return_value "scripts_after")
-      echo "${scripts_after[@]}"
+      scripts_after=$(return_value "scripts_after" "${output_config_file}")
       for script in ${scripts_after[@]}; do
         echo "${info_box} Executing script ${scripts_dir}${script}"
         chmod +x "${scripts_dir}${script}"
