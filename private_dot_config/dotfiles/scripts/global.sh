@@ -13,12 +13,16 @@ yes_no="[y/n]"
 
 skip_msg="${skip_box}Skipping..."
 
-config_file="$HOME/.config/dotfiles/config.json"
-output_config_file="$HOME/.config/dotfiles/output_config.json"
-app_list_dir="$HOME/.config/dotfiles/packages/"
-default_app_list_dir="$HOME/.config/dotfiles/packages/default"
+home_config_directory="$HOME/.config/dotfiles/"
+
+config_file="${home_config_directory}config.json"
+output_config_file="${home_config_directory}output_config.json"
+
+app_list_dir="${home_config_directory}packages/"
+default_app_list_dir="${home_config_directory}packages/default"
+scripts_dir="${home_config_directory}scripts/"
+
 app_install_file="$HOME/.local/share/chezmoi/.chezmoidata/packages.yaml"
-scripts_path="$HOME/.config/dotfiles/scripts/"
 
 check_value() {
   local param=$1
