@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=War Thunder
+Exec=/opt/WarThunder/launcher
+
+Terminal=false
+Type=Application
+Icon=/opt/WarThunder/launcher.ico
+Categories=GNOME;GTK;Games
+StartupNotify=true

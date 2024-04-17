@@ -49,6 +49,8 @@
 - [ ] create summary of all changes before install
 - [ ] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 - [ ] in arch add icon themes installation
+- [x] add warthunder
+- [ ] add completing chezmoi.tmpl
 
 ## Credits
 

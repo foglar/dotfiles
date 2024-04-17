@@ -10,6 +10,7 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
+    "reload_style_on_change": true,
 
 
 // positions generated based on config.ctl //
@@ -48,7 +49,7 @@
     },
 
     "custom/cpuinfo": {
-        "exec": " /home/foglar/.config/hyprdots/scripts/cpuinfo.sh",
+        "exec": " cpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -58,18 +59,18 @@
     },
 
     "custom/gpuinfo": {
-        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh",
+        "exec": " gpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
         "interval": 5, // once every 5 seconds
         "tooltip": true,
         "max-length": 1000,
-        "on-click": "/home/foglar/.config/hyprdots/scripts/gpuinfo.sh --toggle",
+        "on-click": "gpuinfo.sh --toggle",
     },
 
     "custom/gpuinfo#nvidia": {
-        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh --use nvidia ",
+        "exec": " gpuinfo.sh --use nvidia ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -79,7 +80,7 @@
     },
 
     "custom/gpuinfo#amd": {
-        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh --use amd ",
+        "exec": " gpuinfo.sh --use amd ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -89,7 +90,7 @@
     },
 
     "custom/gpuinfo#intel": {
-        "exec": " /home/foglar/.config/hyprdots/scripts/gpuinfo.sh --use intel ",
+        "exec": " gpuinfo.sh --use intel ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -99,13 +100,14 @@
     },
 
     "custom/updates": {
-        "exec": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh",
+        "exec": "systemupdate.sh",
         "return-type": "json",
-        "format": "󰮯 {}",
+        "format": "{}",
         "rotate": 0,
-        "on-click": "/home/foglar/.config/hyprdots/scripts/systemupdate.sh up",
+        "on-click": "systemupdate.sh up",
         "interval": 86400, // once every day
         "tooltip": true,
+        "signal": 20,
     },
 
     "idle_inhibitor": {
@@ -150,8 +152,8 @@
         "on-click": "playerctl play-pause --player spotify",
         "on-click-right": "playerctl next --player spotify",
         "on-click-middle": "playerctl previous --player spotify",
-        "on-scroll-up": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -p spotify i",
-        "on-scroll-down": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -p spotify d",
+        "on-scroll-up": "volumecontrol.sh -p spotify i",
+        "on-scroll-down": "volumecontrol.sh -p spotify d",
         "max-length": 25,
         "escape": true,
         "tooltip": true
@@ -163,6 +165,9 @@
         "all-outputs": true,
         "active-only": false,
         "on-click": "activate",
+        "disable-scroll": false,
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
         "persistent-workspaces": {
         }
     },
@@ -227,9 +232,9 @@
         "rotate": 0,
         "format-muted": "婢",
         "on-click": "pavucontrol -t 3",
-        "on-click-middle": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -o m",
-        "on-scroll-up": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -o i",
-        "on-scroll-down": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -o d",
+        "on-click-middle": "volumecontrol.sh -o m",
+        "on-scroll-up": "volumecontrol.sh -o i",
+        "on-scroll-down": "volumecontrol.sh -o d",
         "tooltip-format": "{icon} {desc} // {volume}%",
         "scroll-step": 5,
         "format-icons": {
@@ -249,9 +254,9 @@
         "format-source": "",
         "format-source-muted": "",
         "on-click": "pavucontrol -t 4",
-        "on-click-middle": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -i m",
-        "on-scroll-up": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -i i",
-        "on-scroll-down": "/home/foglar/.config/hyprdots/scripts/volumecontrol.sh -i d",
+        "on-click-middle": "volumecontrol.sh -i m",
+        "on-scroll-up": "volumecontrol.sh -i i",
+        "on-scroll-down": "volumecontrol.sh -i d",
         "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
@@ -259,7 +264,7 @@
     "custom/keybindhint": {
         "format": " ",
         "rotate": 0,
-        "on-click": "/home/foglar/.config/hyprdots/scripts/keybinds_hint.sh"
+        "on-click": "keybinds_hint.sh"
     },
 
     "tray": {
@@ -286,9 +291,9 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo 󰅇 clipboard history",
-        "on-click": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/cliphist.sh c",
-        "on-click-right": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/cliphist.sh d",
-        "on-click-middle": "sleep 0.1 && /home/foglar/.config/hyprdots/scripts/cliphist.sh w",
+        "on-click": "sleep 0.1 && cliphist.sh c",
+        "on-click-right": "sleep 0.1 && cliphist.sh d",
+        "on-click-middle": "sleep 0.1 && cliphist.sh w",
         "interval" : 86400, // once every day
         "tooltip": true
     },
@@ -297,8 +302,8 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo  logout",
-        "on-click": "/home/foglar/.config/hyprdots/scripts/logoutlaunch.sh 2",
-        "on-click-right": "/home/foglar/.config/hyprdots/scripts/logoutlaunch.sh 1",
+        "on-click": "logoutlaunch.sh 2",
+        "on-click-right": "logoutlaunch.sh 1",
         "interval" : 86400, // once every day
         "tooltip": true
     },
