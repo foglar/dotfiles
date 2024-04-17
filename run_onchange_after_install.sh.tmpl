@@ -148,6 +148,19 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       done
 fi
 
+if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
+  echo "${info_box}Installing WarThunder launcher"
+  wget "https://warthunder.com/download/launcherLinux/" --output-document wt.tar.gz
+  tar xvf wt.tar.gz
+  chmod -R +x WarThunder/
+  sudo mv WarThunder /opt/
+  #rm -v wt.tar.gz
+fi
+
+if [[ $(return_value "gh_copilot") == "true" ]]; then
+  gh auth login && gh extension install github/gh-copilot && echo 'eval "$(gh copilot alias -- bash)"' >> ~/.bashrc
+fi
+
 # Post install cleanup
 if [[ $(return_value "cleanup" "${output_config_file}") == "true" ]]; then
   echo "rm -rfv strap.sh"

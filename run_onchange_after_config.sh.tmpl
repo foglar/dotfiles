@@ -135,8 +135,30 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   done
 fi
 
+# Warthunder
+if [[ $(check_value "warthunder") == "null" ]]; then
+  if [[ $(dialog "Would you like to install WarThunder launcher?") == "false" ]]; then
+    warthunder="false"
+  else
+      warthunder="true"
+  fi
+elif [[ $(check_value "warthunder") == "true" ]]; then
+  warthunder="true"
+else
+  warthunder="false"
+fi
+
+if [[ $(check_value "gh_copilot") == "true" ]]; then
+  gh_copilot="true"
+elif [[ $(check_value "gh_copilot") == "null" ]]; then
+  if [[ $(dialog "Would you like to setup gh copilot in cli?") == "false" ]]; then
+    gh_copilot="false"
+  else
+      gh_copilot="true"
+  fi
+fi
+
 # Cleanup
-cleanup_after_install="false"
 if [[ $(check_value "cleanup_after_install") == "null" ]]; then
   if [[ $(dialog "${question_box}Clean all not needed files after installation?${reset}") == "true" ]]; then 
       cleanup_after_install="true"
@@ -151,10 +173,6 @@ else
   cleanup_after_install="false"
 fi
 
-# war thunder
-warthunder="true"
-if [[ $(check_value "warthunder") == "true" || $(check_value "warthunder") == "null" ]]
-
 # Save configuration
 echo "${info_box}Saving configuration"
 if [[ "$applications_to_install_config" == "custom" ]]; then
@@ -164,7 +182,8 @@ if [[ "$applications_to_install_config" == "custom" ]]; then
     --argjson categories_to_install_config "$(printf '%s\n' "${categories_to_install_config[@]}" | jq -R . | jq -s .)" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     --arg cleanup "$cleanup_after_install" \
-    '{"blackarch_repo": $blackarch_repo, "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup}' \
+    --arg warthunder "$warthunder" \
+    '{"blackarch_repo": $blackarch_repo, "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder}' \
     >$output_config_file)
 else
   json=$(jq -n \
@@ -172,6 +191,7 @@ else
     --arg category "$applications_to_install_config" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     --arg cleanup "$cleanup_after_install" \
-    '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup}' \
+    --arg warthunder "$warthunder" \
+    '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder}' \
     >$output_config_file)
 fi
