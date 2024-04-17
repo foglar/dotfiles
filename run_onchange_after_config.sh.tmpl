@@ -33,6 +33,8 @@ if [ "$skip_installation" == "true" ]; then
 fi
 
 echo "Installation of applications"
+
+# If arch linux ask for blackarch
 if [[ ${DISTRO} -eq "arch" ]]; then
   # Blackarch repository setup
   echo "${info_box}Setup blackarch repository"
@@ -78,6 +80,8 @@ if [[ "$applications_to_install_config" != "minimal" && "$applications_to_instal
   done
   applications_to_install_config=$category
 fi
+
+# Custom lists
 echo "${info_box}Application category: ${applications_to_install_config}"
 if [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") != "null" ]]; then
   json_data=$(return_value "categories_to_install")
@@ -96,7 +100,6 @@ fi
 
 # Which scripts to execute
 echo "${info_box}Setup scripts"
-# Before
 # After
 
 # Config
@@ -131,6 +134,8 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
     fi
   done
 fi
+
+# Cleanup
 cleanup_after_install="false"
 if [[ $(check_value "cleanup_after_install") == "null" ]]; then
   if [[ $(dialog "${question_box}Clean all not needed files after installation?${reset}") == "true" ]]; then 
@@ -145,6 +150,10 @@ else
   echo "${info_box}Cleanup is set to false"
   cleanup_after_install="false"
 fi
+
+# war thunder
+warthunder="true"
+if [[ $(check_value "warthunder") == "true" || $(check_value "warthunder") == "null" ]]
 
 # Save configuration
 echo "${info_box}Saving configuration"

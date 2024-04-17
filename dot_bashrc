@@ -22,6 +22,7 @@ source ~/.bash_aliases
 
 eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/kali.omp.json)"
 eval "$(zoxide init bash)"
+eval "$(gh copilot alias -- bash)"
 
 # Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
