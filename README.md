@@ -22,12 +22,14 @@
 - [x] in list of package lists should be only files with .lst name
 - [x] scripts after stage didn't recognize any scripts to run
 - [x] check for installed dependencies if they are not installed install them, on the begginging of each script
+- [x] remove unnecessary files and dependencies after install
+- [x] add warthunder
+- [x] setup gh copilot $ gh extension install github/gh-copilot
 
 - [ ] make your decisions on the beggining, no input after, config saved into file, then runned
     - [x] create a script before sync, which will ask user for all settings, saved all what can be done after into json file (you can also use your json to skip questions 
     - [x] then do everything what should be done before sync, and things with prompts, sync files
     - [ ] finally run all things from json (using jq) file) with after script
-- [ ] make it more error resistent, so it wouldn't stop, but try to continue
 - [ ] wallpapers are big, load them only if user agreed so
 - [ ] ask if user wants to install any applications or skip
 - [ ] Add configuration for colours of terminal and validation of config file before installation
@@ -45,14 +47,14 @@
 - [ ] add setup of hyprland with hyprdots option for arch linux and nvidia detection and installation of drivers for it
 - [ ] create new naming conventions for package lists for linux distributions, minimal_arch.lst vs. minimal.lst
 - [ ] add template to the bashrc, so it would add conda only if user has conda installed
-- [x] remove unnecessary files and dependencies after install
 - [ ] create summary of all changes before install
-- [ ] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
+- [x] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 - [ ] in arch add icon themes installation
-- [x] add warthunder
-- [x] setup gh copilot $ gh extension install github/gh-copilot
 - [ ] add completing chezmoi.tmpl
-- [x] add hyprlock
+- [ ] turn off the bell
+- [ ] setup buttons in logind
+- [ ] paru BottomUp settings
+- [ ] hyprland, kde, gnome
 
 ## Credits
 

@@ -12,6 +12,7 @@ go
 jdk-openjdk
 jdk17-openjdk
 jq
+jetbrains-toolbox
 kitty
 konsole
 mingw-w64-gcc
@@ -19,3 +20,4 @@ neovim
 npm
 termius
 visual-studio-code-bin
+anaconda

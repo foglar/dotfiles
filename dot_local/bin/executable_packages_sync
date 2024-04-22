@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory containing package lists
-lists_directory="$HOME/.local/share/packages"
+lists_directory="$HOME/.config/dotfiles/packages/"
 
 # Function to check if a package is in any list
 check_package() {

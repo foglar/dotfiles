@@ -5,8 +5,10 @@
 {{ if eq .chezmoi.os "linux" }}
 {{ if eq .chezmoi.osRelease.id "arch" }}
 DISTRO="arch"
+INSTALLER="sudo pacman -S"
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
 DISTRO="fedora"
+INSTALLER="sudo dnf install"
 {{ else }}
 DISTRO="unkown"
 {{ end }}
@@ -41,7 +43,7 @@ install_category() {
 
     if [ -n "$pkg_arch" ]; then
         echo "$green[*]$blue installing $pkg_arch from arch repo...$reset"
-        sudo pacman -S $pkg_arch --noconfirm
+        $(${INSTALLER} $pkg_arch --noconfirm)
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -85,7 +87,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
     if [[ $(is_blackarch_repository) == "true" ]]; then
       echo "${info_box}Succesfully added blackarch repositories"
       echo "${info_box}Installing paru aur helper from blackarch repositories"
-      sudo pacman -S paru --noconfirm --needed
+      install paru ${DISTRO}
       installer="paru"
     fi
     
@@ -97,7 +99,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
     if [[ $(pkg_installed "paru") != 0 ]]; then
       if [[ $(is_blackarch_repository) == "true" ]]; then
         echo "${error_box}Failed to install paru manually, installing ${blue}yay${blue} from blackarch repo"
-        sudo pacman -S yay --noconfirm --needed
+        install yay ${DISTRO}
         installer="yay"
       fi
     fi
@@ -111,6 +113,19 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
     if [[ $(pkg_installed "yay") != 0 && $(pkg_installed "paru") != 0 ]]; then
       echo "${error_box}Failed to install yay, installing only basic repo packages with pacman, install aur helper yourself"
       installer="pacman"
+    fi
+
+    desktop_environment=$(return_value "desktop_environment" "${output_config_file}")
+    if [[ ${desktop_environment} != "skip" ]]; then
+      echo "${info_box}Installing desktop environment ${desktop_environment}"
+      if [[ ${desktop_environment} == "kde" ]]; then
+        echo "${info_box}Installing KDE Plasma"
+        install plasma-meta ${DISTRO}
+      elif [[ ${desktop_environment} == "gnome" ]]; then
+        echo "${info_box}Installing GNOME"
+        install gnome ${DISTRO}
+      elif [[ ${desktop_environment} == "hyprland" ]]; then
+        install hyprland ${DISTRO} 
     fi
   
     categories=$(return_value categories_to_install "${output_config_file}")
@@ -133,6 +148,9 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
       echo "${error_box}Invalid category skipping installation"
     fi
 
+    if [[ $(check_value "nvidia" ${output_config_file}) == "true" ]]; then
+      install "nvidia cuda" ${DISTRO}
+    fi
 else
   echo "${DISTRO} is unsupproted distribution, feel free to implement this yourself and contribute to this project."
 fi 

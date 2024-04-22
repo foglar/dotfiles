@@ -47,6 +47,36 @@ else
   blackarch_repository_config="false"
 fi
 
+# Install KDE GNOME or Hyprland
+echo "${info_box}Setup desktop environment"
+desktop_environment_config=$(return_value "desktop_environment")
+if [[ "$desktop_environment_config" != "kde" && "$desktop_environment_config" != "gnome" && "$desktop_environment_config" != "hyprland" && "$desktop_environment_config" != "skip" ]]; then
+  echo "$blue"
+  select desktop in kde gnome hyprland skip; do
+    echo "$reset"
+    case "$REPLY" in
+    1)
+      echo "${info_box}Picked KDE$reset"
+      break
+      ;;
+    2)
+      echo "${info_box}Picked GNOME$reset"
+      break
+      ;;
+    3)
+      echo "${info_box}Picked Hyprland$reset"
+      break
+      ;;
+    4)
+      echo "${info_box}Skipping desktop environment$reset"
+      break
+      ;;
+    *) echo "${error_box}Enter number 1-4:" ;;
+    esac
+  done
+  desktop_environment_config=$desktop
+fi
+
 # Applications to install setup
 echo "${info_box}Setup applications category"
 applications_to_install_config=$(return_value "category")
@@ -135,6 +165,20 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   done
 fi
 
+# Nvidia
+if [[ $(check_value "nvidia") != "false" ]]; then
+    if [[ $(nvidia_detect) == "true" ]]; then
+      echo "${info_box}Nvidia GPU detected"
+      if [[ $(dialog "${question_box}Would you like to install nvidia drivers?") == "true" ]]; then
+        nvidia="true"
+        else
+          nvidia="false"
+      fi
+    fi
+else
+    nvidia="false"
+fi
+
 # Warthunder
 if [[ $(check_value "warthunder") == "null" ]]; then
   if [[ $(dialog "Would you like to install WarThunder launcher?") == "false" ]]; then
@@ -148,6 +192,7 @@ else
   warthunder="false"
 fi
 
+# Github copilot
 if [[ $(check_value "gh_copilot") == "true" ]]; then
   gh_copilot="true"
 elif [[ $(check_value "gh_copilot") == "null" ]]; then
@@ -178,20 +223,26 @@ echo "${info_box}Saving configuration"
 if [[ "$applications_to_install_config" == "custom" ]]; then
   json=$(jq -n \
     --arg blackarch_repo "$blackarch_repository_config" \
+    --arg desktop_environment "$desktop_environment_config" \
     --arg category "$applications_to_install_config" \
     --argjson categories_to_install_config "$(printf '%s\n' "${categories_to_install_config[@]}" | jq -R . | jq -s .)" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     --arg cleanup "$cleanup_after_install" \
     --arg warthunder "$warthunder" \
-    '{"blackarch_repo": $blackarch_repo, "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder}' \
+    --arg nvidia "$nvidia" \
+    --arg gh_copilot "$gh_copilot" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot}' \
     >$output_config_file)
 else
   json=$(jq -n \
     --arg blackarch_repo "$blackarch_repository_config" \
+    --arg desktop_environment "$desktop_environment_config" \
     --arg category "$applications_to_install_config" \
     --argjson scripts_after "$(printf '%s\n' "${scripts_to_run_after_checked[@]}" | jq -R . | jq -s .)" \
     --arg cleanup "$cleanup_after_install" \
     --arg warthunder "$warthunder" \
-    '{"blackarch_repo": $blackarch_repo, "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder}' \
+    --arg nvidia "$nvidia" \
+    --arg gh_copilot "$gh_copilot" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot}' \
     >$output_config_file)
 fi

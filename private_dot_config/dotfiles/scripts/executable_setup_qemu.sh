@@ -1,5 +1,5 @@
 #!/bin/bash
-source $HOME/.local/bin/setup_scripts/global_fn.sh
+source $HOME/.config/dotfiles/scripts/global_fn.sh
 
 echo """
 ${blue}
