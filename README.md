@@ -54,7 +54,18 @@
 - [ ] turn off the bell
 - [ ] setup buttons in logind
 - [ ] paru BottomUp settings
-- [ ] hyprland, kde, gnome
+- [x] hyprland, kde, gnome
+- [ ] warthunder keymap atd.
+- [ ] Add sddm theme
+- [x] Change shell to bash
+- [ ] Remove code and install its proprietary variant
+- [x] Install hyprlock and remove swaylock
+- [ ] Fix conda install script
+- [ ] Save all files to temp directory
+- [ ] sudo systemctl start docker.service
+- [ ] sudo systemctl enable docker.service
+- [ ] sudo usermod -aG docker $USER
+- [ ] filetree
 
 ## Credits
 

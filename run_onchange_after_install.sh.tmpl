@@ -43,7 +43,7 @@ install_category() {
 
     if [ -n "$pkg_arch" ]; then
         echo "$green[*]$blue installing $pkg_arch from arch repo...$reset"
-        $(${INSTALLER} $pkg_arch --noconfirm)
+        sudo pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -125,7 +125,9 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
         echo "${info_box}Installing GNOME"
         install gnome ${DISTRO}
       elif [[ ${desktop_environment} == "hyprland" ]]; then
-        install hyprland ${DISTRO} 
+        install hyprland ${DISTRO}
+        install hyprlock ${DISTRO}
+      fi
     fi
   
     categories=$(return_value categories_to_install "${output_config_file}")
@@ -155,6 +157,33 @@ else
   echo "${DISTRO} is unsupproted distribution, feel free to implement this yourself and contribute to this project."
 fi 
 
+# Change default shell
+if [[ $(return_value "change_shell" "${output_config_file}") == "true" ]]; then
+  echo "${info_box}Changing default shell to bash"
+  chsh -s /bin/bash
+fi
+
+# Configure pacman
+# pacman and paru
+#if [ -f /etc/pacman.conf ] && [ ! -f /etc/pacman.conf.t2.bkp ]; then
+#    echo -e "\033[0;32m[PACMAN]\033[0m adding extra spice to pacman..."
+#
+#    sudo cp /etc/pacman.conf /etc/pacman.conf.t2.bkp
+#    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+#
+#    sudo pacman -Syyu
+#    sudo pacman -Fy
+#
+#else
+#    echo -e "\033[0;33m[SKIP]\033[0m pacman is already configured..."
+#fi
+
+# Change sddm theme
+#if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then
+#  echo "${info_box}Changing SDDM theme"
+#  git clone https://github.com/MarianArlt/kde-plasma-chili /usr/share/sddm/themes/chili
+#fi
+
 # Executing scripts
 if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after" "${output_config_file}")
@@ -176,7 +205,7 @@ if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
 fi
 
 if [[ $(return_value "gh_copilot") == "true" ]]; then
-  gh auth login && gh extension install github/gh-copilot && echo 'eval "$(gh copilot alias -- bash)"' >> ~/.bashrc
+  gh auth login && gh extension install github/gh-copilot #&& echo 'eval "$(gh copilot alias --bash)"' > ~/.bashrc
 fi
 
 # Post install cleanup

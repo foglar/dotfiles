@@ -24,6 +24,17 @@ scripts_dir="${home_config_directory}scripts/"
 
 app_install_file="$HOME/.local/share/chezmoi/.chezmoidata/packages.yaml"
 
+install () {
+    local package=$1
+    local distro=$2
+
+    if [[ $distro == "arch" ]]; then
+        sudo pacman -S --noconfirm --needed $package
+    elif [[ $distro == "debian" ]]; then
+        sudo apt install -y $package
+    fi
+}
+
 check_value() {
   local param=$1
   local file=${2:-$config_file}

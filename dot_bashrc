@@ -29,14 +29,14 @@ eval "$(zoxide init bash)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/foglar/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/foglar/.local/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/foglar/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/foglar/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/foglar/.local/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/foglar/.local/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/foglar/anaconda3/bin:$PATH"
+        export PATH="/home/foglar/.local/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -53,5 +53,4 @@ PATH=$PATH:~/.local/bin/
 PATH=~/.console-ninja/.bin:$PATH
 
 export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
-#export PATH="$PATH:$HOME/.local/bin/setup_scripts"
 

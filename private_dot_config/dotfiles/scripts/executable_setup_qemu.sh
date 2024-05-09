@@ -11,7 +11,6 @@ ${blue}
 by${red} foglar ${reset}
 """
 
-sleep 5
 sudo pacman -Syy
 sudo pacman -S archlinux-keyring qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode ebtables iptables libguestfs --needed
 
