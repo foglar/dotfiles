@@ -47,10 +47,14 @@ export GOOS=linux
 export GOARCH=amd64
 
 export EDITOR=nvim
+export GRUB_BTRFS_GRUB_DIRNAME="/boot/grub/"
+
+export PICO_SDK_PATH=~/Documents/Programming/Projects/pico-sdk/
 
 #PATH
-PATH=$PATH:~/.local/bin/
-PATH=~/.console-ninja/.bin:$PATH
-
+PATH=$PATH:~/.local/bin/:~/.console-ninja/.bin/
 export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 
+if [ -f "/home/foglar/.config/fabric/fabric-bootstrap.inc" ]; then . "/home/foglar/.config/fabric/fabric-bootstrap.inc"; fi
+
+PATH=~/.console-ninja/.bin:$PATH
