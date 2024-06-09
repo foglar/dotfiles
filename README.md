@@ -66,7 +66,7 @@
 - [ ] sudo systemctl enable docker.service
 - [ ] sudo usermod -aG docker $USER
 - [ ] filetree
-
+- [ ] hyprpm and setup plugins
 ## Credits
 
 - inspired by https://github.com/prasanthrangan/hyprdots Aesthetic, dynamic and minimal dots for Arch hyprland by prasanthrangan
