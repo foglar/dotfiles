@@ -148,6 +148,21 @@ if [[ $scripts_to_run_before_config != "null" ]]; then
     done
 fi
 
+# Complete user templates
+echo "${info_box}Complete template file"
+if [[ $(check_value "config_template") != "false" ]]; then
+  if [[ -f ${template_config_file} ]]; then
+    echo "${error_box}File already exist."
+    backup_file(template_config_file)
+  fi
+  
+  #TODO: Copy file from directory and fill every variables in it
+  echo "${question_box}Enter your git email for .gitignore:"
+  read -r $email
+  create_chezmoi_toml($email) 
+
+fi
+
 # Interactive user
 if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts_before_dialog") == "null" ]]; then
     scripts_to_execute=($(list_scripts "${scripts_dir}"))

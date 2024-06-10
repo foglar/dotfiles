@@ -50,12 +50,12 @@
 - [ ] create summary of all changes before install
 - [x] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 - [ ] in arch add icon themes installation
-- [ ] add completing chezmoi.tmpl
+- [x] add completing chezmoi.tmpl
 - [ ] turn off the bell
 - [ ] setup buttons in logind
 - [ ] paru BottomUp settings
 - [x] hyprland, kde, gnome
-- [ ] warthunder keymap atd.
+- [x] warthunder keymap atd.
 - [ ] Add sddm theme
 - [x] Change shell to bash
 - [ ] Remove code and install its proprietary variant
@@ -67,6 +67,8 @@
 - [ ] sudo usermod -aG docker $USER
 - [ ] filetree
 - [ ] hyprpm and setup plugins
+- [ ] install monaspace font
+
 ## Credits
 
 - inspired by https://github.com/prasanthrangan/hyprdots Aesthetic, dynamic and minimal dots for Arch hyprland by prasanthrangan

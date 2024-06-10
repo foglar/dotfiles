@@ -49,7 +49,7 @@ fi
 
 # Change default shell
 if [[ $(check_value "change_shell") == "null" ]]; then
-  if [[ $(dialog "${question_box}Change default shell to bash?") == "true" ]]; then
+ if [[ $(dialog "${question_box}Change default shell to bash?") == "true" ]]; then
     change_shell="true"
   else
     change_shell="false"
@@ -58,6 +58,16 @@ elif [[ $(check_value "change_shell") == "true" ]]; then
   change_shell="true"
 else
   change_shell="false"
+fi
+
+if [[ $(check_value "default-browser") == "null" ]]; then
+  if [[ $(dialog "${question_box}Change default browser to librewolf?") == "true" ]]; then
+      default_browser="true"
+  else
+      default_browser="false"
+  fi
+else
+    default-browser=$(check_value "default-browser")
 fi
 
 # Install KDE GNOME or Hyprland
@@ -178,6 +188,21 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   done
 fi
 
+# What groups should add user
+# add to groups from config file, check if value in config file is set to true, if 
+if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") == "null" ]]; then
+  echo "${info_box} To be added soon"
+  # TODO: this
+  groups_to_add=()
+  while true; do
+    if [[ $(dialog "${question_box}Create group for user?$reset") == "true" ]]; then
+      groups_to_add+=("$group")
+    else
+        break
+    fi
+  done
+fi
+
 # SDDM dialog
 if [[ $(check_value "sddm_theme") != "false" ]]; then
   if [[ $(dialog "${question_box}Would you like to install sddm theme?") == "true" ]]; then
@@ -257,7 +282,8 @@ if [[ "$applications_to_install_config" == "custom" ]]; then
     --arg gh_copilot "$gh_copilot" \
     --arg change_shell "$change_shell" \
     --arg sddm_theme "$sddm_theme" \
-    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme}' \
+    --arg default_browser "$default_browser" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser}' \
     >$output_config_file)
 else
   json=$(jq -n \
@@ -271,6 +297,7 @@ else
     --arg gh_copilot "$gh_copilot" \
     --arg change_shell "$change_shell" \
     --arg sddm_theme "$sddm_theme" \
-    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell "sddm_theme": $sddm_theme}' \
+    --arg default_browser "$default_browser" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell "sddm_theme": $sddm_theme, "default_browser": $default_browser}' \
     >$output_config_file)
 fi

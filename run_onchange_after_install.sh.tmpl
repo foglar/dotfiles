@@ -163,6 +163,12 @@ if [[ $(return_value "change_shell" "${output_config_file}") == "true" ]]; then
   chsh -s /bin/bash
 fi
 
+if [[ $(check_value "default_browser") == "true" ]]; then
+  echo "${info_box}Changing default browser to librewolf"
+  install "xdg-utils" ${DISTRO}
+  xdg-settings set default-web-browser librewolf.desktop
+fi
+
 # Configure pacman
 # pacman and paru
 #if [ -f /etc/pacman.conf ] && [ ! -f /etc/pacman.conf.t2.bkp ]; then
@@ -205,7 +211,17 @@ if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
 fi
 
 if [[ $(return_value "gh_copilot") == "true" ]]; then
+  install "github-cli" ${DISTRO}
   gh auth login && gh extension install github/gh-copilot #&& echo 'eval "$(gh copilot alias --bash)"' > ~/.bashrc
+fi
+
+if [[ $(return_value "groups") == "true" ]]; then
+  groups=$(return_value "groups_list" "${output_config_file}")
+  groups_list=$(json_to_bash_array "${groups}")
+  for group in ${groups_list[@]}; do
+    echo "${info_box}Adding ${USER} to group ${group}"
+    add_user_to_group("$group")
+  done
 fi
 
 # Post install cleanup
