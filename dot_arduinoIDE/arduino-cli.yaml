@@ -6,11 +6,14 @@ build_cache:
 daemon:
     port: "50051"
 directories:
+    builtin:
+        libraries: /home/foglar/.arduino15/libraries
     data: /home/foglar/.arduino15
     downloads: /home/foglar/.arduino15/staging
-    user: /home/foglar/Documents/Programming/Arduino
+    user: /home/foglar/Programming/Arduino
 library:
     enable_unsafe_install: false
+locale: en
 logging:
     file: ""
     format: text

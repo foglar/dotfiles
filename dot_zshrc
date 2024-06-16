@@ -1,0 +1,98 @@
+# Path to your oh-my-zsh installation.
+ZSH=/usr/share/oh-my-zsh/
+
+# List of plugins used
+plugins=( git sudo zsh-256color zsh-autosuggestions zsh-syntax-highlighting )
+source $ZSH/oh-my-zsh.sh
+
+# In case a command is not found, try to find the package that has it
+function command_not_found_handler {
+    local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
+    printf 'zsh: command not found: %s\n' "$1"
+    local entries=( ${(f)"$(/usr/bin/pacman -F --machinereadable -- "/usr/bin/$1")"} )
+    if (( ${#entries[@]} )) ; then
+        printf "${bright}$1${reset} may be found in the following packages:\n"
+        local pkg
+        for entry in "${entries[@]}" ; do
+            local fields=( ${(0)entry} )
+            if [[ "$pkg" != "${fields[2]}" ]] ; then
+                printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
+            fi
+            printf '    /%s\n' "${fields[4]}"
+            pkg="${fields[2]}"
+        done
+    fi
+    return 127
+}
+
+# Detect the AUR wrapper
+if pacman -Qi yay &>/dev/null ; then
+   aurhelper="yay"
+elif pacman -Qi paru &>/dev/null ; then
+   aurhelper="paru"
+fi
+
+function in {
+    local -a inPkg=("$@")
+    local -a arch=()
+    local -a aur=()
+
+    for pkg in "${inPkg[@]}"; do
+        if pacman -Si "${pkg}" &>/dev/null ; then
+            arch+=("${pkg}")
+        else 
+            aur+=("${pkg}")
+        fi
+    done
+
+    if [[ ${#arch[@]} -gt 0 ]]; then
+        sudo pacman -S "${arch[@]}"
+    fi
+
+    if [[ ${#aur[@]} -gt 0 ]]; then
+        ${aurhelper} -S "${aur[@]}"
+    fi
+}
+
+source ~/.bash_aliases
+
+eval "$(oh-my-posh init zsh -c ~/.config/oh-my-posh/minimal.omp.toml)"
+eval "$(zoxide init bash)"
+
+if type pfetch >/dev/null 2>&1
+then
+  pfetch
+fi
+
+unsetopt BEEP
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/foglar/.local/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/foglar/.local/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/foglar/.local/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/foglar/.local/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export GOPATH=~/Documents/Programming/Go/
+export GOOS=linux
+export GOARCH=amd64
+
+export EDITOR=nvim
+export GRUB_BTRFS_GRUB_DIRNAME="/boot/grub/"
+
+export PICO_SDK_PATH=~/Documents/Programming/Projects/pico-sdk/
+export TERMINAL=/usr/bin/kitty
+
+PATH=~/.console-ninja/.bin:$PATH
+PATH=~/.local/bin/:$PATH
+
+if [ -f "/home/foglar/.config/fabric/fabric-bootstrap.inc" ]; then . "/home/foglar/.config/fabric/fabric-bootstrap.inc"; fi
+
