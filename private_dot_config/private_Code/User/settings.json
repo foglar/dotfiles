@@ -1,5 +1,4 @@
 {
-  "workbench.colorTheme": "One Dark Pro Darker",
   "window.menuBarVisibility": "toggle",
   "editor.fontSize": 16,
   "editor.scrollbar.vertical": "hidden",
@@ -9,6 +8,7 @@
   "security.workspace.trust.enabled": false,
   "editor.minimap.side": "left",
   "editor.fontFamily": "'Monaspace Neon','JetBrainsMono Nerd Font','Maple Mono', 'monospace'",
+  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'liga'",
   "extensions.autoUpdate": false,
   "workbench.statusBar.visible": false,
   "terminal.external.linuxExec": "kitty",
@@ -84,5 +84,6 @@
   "cmake.pinnedCommands": [
     "workbench.action.tasks.configureTaskRunner",
     "workbench.action.tasks.runTask"
-  ]
+  ],
+  "workbench.colorTheme": "wallbash"
 }

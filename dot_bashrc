@@ -27,6 +27,8 @@ eval "$(zoxide init bash)"
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
     . /usr/share/bash-completion/bash_completion
 
+if [ -f "/home/foglar/.config/fabric/fabric-bootstrap.inc" ]; then . "/home/foglar/.config/fabric/fabric-bootstrap.inc"; fi
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/foglar/.local/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -50,11 +52,8 @@ export EDITOR=nvim
 export GRUB_BTRFS_GRUB_DIRNAME="/boot/grub/"
 
 export PICO_SDK_PATH=~/Documents/Programming/Projects/pico-sdk/
+export TERMINAL=/usr/bin/kitty
 
-#PATH
-PATH=$PATH:~/.local/bin/:~/.console-ninja/.bin/
-export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
-
-if [ -f "/home/foglar/.config/fabric/fabric-bootstrap.inc" ]; then . "/home/foglar/.config/fabric/fabric-bootstrap.inc"; fi
+export PATH=$PATH:~/.local/bin/:~/.console-ninja/.bin/:${HOME}/.local/share/JetBrains/Toolbox/scripts
 
 PATH=~/.console-ninja/.bin:$PATH

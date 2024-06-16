@@ -2,11 +2,14 @@
 ark
 audacity
 auto-cpufreq
+blender
 clamtk
 cups
+distrobox
 dolphin
 easyeda-bin
 easytag
+ferdium-bin
 gimp
 gnome-disk-utility
 grub-customizeraudacity
@@ -26,6 +29,7 @@ spicetify-cli
 spicetify-themes-git
 spotify-launcher
 spotube
+spotube-bin
 stellarium
 virt-install
 virt-manager

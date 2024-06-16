@@ -57,7 +57,7 @@ function in {
 source ~/.bash_aliases
 
 eval "$(oh-my-posh init zsh -c ~/.config/oh-my-posh/minimal.omp.toml)"
-eval "$(zoxide init bash)"
+eval "$(zoxide init zsh)"
 
 if type pfetch >/dev/null 2>&1
 then

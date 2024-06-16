@@ -10,3 +10,13 @@ alias diff="diff --color"
 alias cd="z"
 alias arduino-cli="arduino-ports-enable ; arduino-cli"
 alias respawn="clear; pfetch"
+alias  c='clear' # clear terminal
+alias  l='eza -lh  --icons=auto' # long list
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+alias mkdir='mkdir -p'
+alias hacking_mode="bash"
+alias minimal_mode="zsh"

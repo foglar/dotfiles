@@ -1,6 +1,7 @@
 1password-cli
 bash-completion
 bat
+bc
 bluez
 bluez-utils
 btop
@@ -10,6 +11,7 @@ entr
 espeak-ng
 evince
 eza
+fastfetch
 figlet
 fzf
 htop
@@ -29,6 +31,7 @@ openssh
 parallel
 paru
 paru-debug
+pbcli
 pfetch
 power-profiles-daemon
 ranger
