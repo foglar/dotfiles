@@ -51,7 +51,7 @@ install_category() {
         if [[ $installer == "paru" ]]; then
           "$installer" -S $pkg_aur --skipreview --noconfirm --needed
         else
-           "$installer" -S $pkg_aur --noconfirm --needed
+          "$installer" -S $pkg_aur --noconfirm --needed
 
         fi
     fi
@@ -160,7 +160,10 @@ fi
 # Change default shell
 if [[ $(return_value "change_shell" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Changing default shell to bash"
-  chsh -s /bin/bash
+  sudo chsh -s /bin/zsh
+else
+  echo "${info_box}Default shell is bash"
+  sudo chsh -s /bin/bash
 fi
 
 if [[ $(check_value "default_browser") == "true" ]]; then
@@ -168,21 +171,6 @@ if [[ $(check_value "default_browser") == "true" ]]; then
   install "xdg-utils" ${DISTRO}
   xdg-settings set default-web-browser librewolf.desktop
 fi
-
-# Configure pacman
-# pacman and paru
-#if [ -f /etc/pacman.conf ] && [ ! -f /etc/pacman.conf.t2.bkp ]; then
-#    echo -e "\033[0;32m[PACMAN]\033[0m adding extra spice to pacman..."
-#
-#    sudo cp /etc/pacman.conf /etc/pacman.conf.t2.bkp
-#    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
-#
-#    sudo pacman -Syyu
-#    sudo pacman -Fy
-#
-#else
-#    echo -e "\033[0;33m[SKIP]\033[0m pacman is already configured..."
-#fi
 
 # Change sddm theme
 #if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then

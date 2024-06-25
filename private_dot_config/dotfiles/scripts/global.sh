@@ -35,6 +35,15 @@ install () {
     fi
 }
 
+create_chezmoi_toml() {
+    email = $1
+
+    cat <<EOF > "$HOME/.config/chezmoi/chezmoi.toml"
+    [data]
+    email = "$email"
+EOF
+}
+
 check_value() {
   local param=$1
   local file=${2:-$config_file}
