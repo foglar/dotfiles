@@ -209,7 +209,7 @@ if [[ $(return_value "groups") == "true" ]]; then
   groups_list=$(json_to_bash_array "${groups}")
   for group in ${groups_list[@]}; do
     echo "${info_box}Adding ${USER} to group ${group}"
-    add_user_to_group("$group")
+    add_user_to_group "$group"
   done
 fi
 
