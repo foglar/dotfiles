@@ -198,7 +198,7 @@ if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") =
     if [[ $(dialog "${question_box}Create group for user?$reset") == "true" ]]; then
       groups_to_add+=("$group")
     else
-        break
+        echo "${info_box}Skipping group creation"
     fi
   done
 fi
@@ -216,7 +216,7 @@ fi
 
 # Nvidia
 if [[ $(check_value "nvidia") != "false" ]]; then
-    if [[ $(nvidia_detect) == "true" ]]; then
+    if [[ $(nvidia_detect) == "0" ]]; then
       echo "${info_box}Nvidia GPU detected"
       if [[ $(dialog "${question_box}Would you like to install nvidia drivers?") == "true" ]]; then
         nvidia="true"

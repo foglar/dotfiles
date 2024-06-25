@@ -191,6 +191,7 @@ fi
 
 if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Installing WarThunder launcher"
+  install "wget" ${DISTRO}
   wget "https://warthunder.com/download/launcherLinux/" --output-document wt.tar.gz
   tar xvf wt.tar.gz
   chmod -R +x WarThunder/

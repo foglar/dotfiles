@@ -44,6 +44,28 @@ create_chezmoi_toml() {
 EOF
 }
 
+nvidia_detect() {
+    # Detect Nvidia graphics card
+    readarray -t dGPU < <(lspci -k | grep -E "(VGA|3D)" | awk -F ': ' '{print $NF}')
+    if [ "${1}" == "--verbose" ]; then
+        for indx in "${!dGPU[@]}"; do
+            echo -e "\033[0;32m[gpu$indx]\033[0m detected // ${dGPU[indx]}"
+        done
+        echo 0
+    fi
+    if [ "${1}" == "--drivers" ]; then
+        while read -r -d ' ' nvcode ; do
+            awk -F '|' -v nvc="${nvcode}" 'substr(nvc,1,length($3)) == $3 {split(FILENAME,driver,"/"); print driver[length(driver)],"\nnvidia-utils"}' "${scrDir}"/.nvidia/nvidia*dkms
+        done <<< "${dGPU[@]}"
+        echo 0
+    fi
+    if grep -iq nvidia <<< "${dGPU[@]}"; then
+        echo 0
+    else
+        echo 1
+    fi
+}
+
 check_value() {
   local param=$1
   local file=${2:-$config_file}
