@@ -62,12 +62,12 @@ fi
 
 if [[ $(check_value "default_browser") == "null" ]]; then
   if [[ $(dialog "${question_box}Change default browser to librewolf?") == "true" ]]; then
-      default_browser="true"
+    default_browser="true"
   else
-      default_browser="false"
+    default_browser="false"
   fi
 else
-    default-browser=$(check_value "default_browser")
+  default-browser=$(check_value "default_browser")
 fi
 
 # Install KDE GNOME or Hyprland
@@ -126,7 +126,7 @@ if [[ "$applications_to_install_config" != "minimal" && "$applications_to_instal
       ;;
     5)
       echo "${info_box}Skipping installation of applications$reset"
-      break 
+      break
       ;;
     *) echo "${error_box}Enter number 1-5:" ;;
     esac
@@ -189,7 +189,7 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
 fi
 
 # What groups should add user
-# add to groups from config file, check if value in config file is set to true, if 
+# add to groups from config file, check if value in config file is set to true, if
 if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") == "null" ]]; then
   echo "${info_box} To be added soon"
   # TODO: this
@@ -198,8 +198,8 @@ if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") =
     if [[ $(dialog "${question_box}Create group for user?$reset") == "true" ]]; then
       groups_to_add+=("$group")
     else
-        echo "${info_box}Skipping group creation"
-        break
+      echo "${info_box}Skipping group creation"
+      break
     fi
   done
 fi
@@ -209,24 +209,24 @@ if [[ $(check_value "sddm_theme") != "false" ]]; then
   if [[ $(dialog "${question_box}Would you like to install sddm theme?") == "true" ]]; then
     sddm_theme="true"
   else
-      sddm_theme="false"
+    sddm_theme="false"
   fi
 else
-    sddm_theme="true"
+  sddm_theme="true"
 fi
 
 # Nvidia
 if [[ $(check_value "nvidia") != "false" ]]; then
-    if [[ $(nvidia_detect) == "0" ]]; then
-      echo "${info_box}Nvidia GPU detected"
-      if [[ $(dialog "${question_box}Would you like to install nvidia drivers?") == "true" ]]; then
-        nvidia="true"
-        else
-          nvidia="false"
-      fi
+  if [[ $(nvidia_detect) == "0" ]]; then
+    echo "${info_box}Nvidia GPU detected"
+    if [[ $(dialog "${question_box}Would you like to install nvidia drivers?") == "true" ]]; then
+      nvidia="true"
+    else
+      nvidia="false"
     fi
+  fi
 else
-    nvidia="false"
+  nvidia="false"
 fi
 
 # Warthunder
@@ -234,7 +234,7 @@ if [[ $(check_value "warthunder") == "null" ]]; then
   if [[ $(dialog "Would you like to install WarThunder launcher?") == "false" ]]; then
     warthunder="false"
   else
-      warthunder="true"
+    warthunder="true"
   fi
 elif [[ $(check_value "warthunder") == "true" ]]; then
   warthunder="true"
@@ -249,16 +249,16 @@ elif [[ $(check_value "gh_copilot") == "null" ]]; then
   if [[ $(dialog "Would you like to setup gh copilot in cli?") == "false" ]]; then
     gh_copilot="false"
   else
-      gh_copilot="true"
+    gh_copilot="true"
   fi
 fi
 
 # Cleanup
 if [[ $(check_value "cleanup_after_install") == "null" ]]; then
-  if [[ $(dialog "${question_box}Clean all not needed files after installation?${reset}") == "true" ]]; then 
-      cleanup_after_install="true"
+  if [[ $(dialog "${question_box}Clean all not needed files after installation?${reset}") == "true" ]]; then
+    cleanup_after_install="true"
   else
-      cleanup_after_install="false"
+    cleanup_after_install="false"
   fi
 elif [[ $(check_value "cleanup_after_install") == "true" ]]; then
   echo "${info_box}Cleanup is set to true"
@@ -299,6 +299,6 @@ else
     --arg change_shell "$change_shell" \
     --arg sddm_theme "$sddm_theme" \
     --arg default_browser "$default_browser" \
-    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell "sddm_theme": $sddm_theme, "default_browser": $default_browser}' \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser}' \
     >$output_config_file)
 fi
