@@ -199,6 +199,7 @@ if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") =
       groups_to_add+=("$group")
     else
         echo "${info_box}Skipping group creation"
+        break
     fi
   done
 fi
