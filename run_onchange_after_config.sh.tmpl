@@ -192,16 +192,16 @@ fi
 # add to groups from config file, check if value in config file is set to true, if
 if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") == "null" ]]; then
   echo "${info_box} To be added soon"
-  # TODO: this
-  groups_to_add=()
-  while true; do
-    if [[ $(dialog "${question_box}Create group for user?$reset") == "true" ]]; then
-      groups_to_add+=("$group")
-    else
-      echo "${info_box}Skipping group creation"
-      break
-    fi
-  done
+  ## TODO: this
+  #groups_to_add=()
+  #while true; do
+  #  if [[ $(dialog "${question_box}Create group for user?$reset") == "true" ]]; then
+  #    groups_to_add+=("$group")
+  #  else
+  #    echo "${info_box}Skipping group creation"
+  #    break
+  #  fi
+  #done
 fi
 
 # SDDM dialog
@@ -231,7 +231,7 @@ fi
 
 # Warthunder
 if [[ $(check_value "warthunder") == "null" ]]; then
-  if [[ $(dialog "Would you like to install WarThunder launcher?") == "false" ]]; then
+  if [[ $(dialog "${question_box}Would you like to install WarThunder launcher?") == "false" ]]; then
     warthunder="false"
   else
     warthunder="true"
@@ -246,7 +246,7 @@ fi
 if [[ $(check_value "gh_copilot") == "true" ]]; then
   gh_copilot="true"
 elif [[ $(check_value "gh_copilot") == "null" ]]; then
-  if [[ $(dialog "Would you like to setup gh copilot in cli?") == "false" ]]; then
+  if [[ $(dialog "${question_box}Would you like to setup gh copilot in cli?") == "false" ]]; then
     gh_copilot="false"
   else
     gh_copilot="true"
