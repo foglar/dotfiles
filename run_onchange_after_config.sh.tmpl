@@ -49,7 +49,7 @@ fi
 
 # Change default shell
 if [[ $(check_value "change_shell") == "null" ]]; then
- if [[ $(dialog "${question_box}Change default shell to bash?") == "true" ]]; then
+  if [[ $(dialog "${question_box}Change default shell to zsh (or stay bash)?") == "true" ]]; then
     change_shell="true"
   else
     change_shell="false"
