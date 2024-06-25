@@ -60,14 +60,14 @@ else
   change_shell="false"
 fi
 
-if [[ $(check_value "default-browser") == "null" ]]; then
+if [[ $(check_value "default_browser") == "null" ]]; then
   if [[ $(dialog "${question_box}Change default browser to librewolf?") == "true" ]]; then
       default_browser="true"
   else
       default_browser="false"
   fi
 else
-    default-browser=$(check_value "default-browser")
+    default-browser=$(check_value "default_browser")
 fi
 
 # Install KDE GNOME or Hyprland
