@@ -195,7 +195,7 @@ if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") =
   # TODO: this
   groups_to_add=()
   while true; do
-    if [[ $(dialog "${question_box}Create group for user?$reset") == "true" ]]; then
+    if [[ $(dialog "${question_box}Create group ${group} for user?$reset") == "true" ]]; then
       groups_to_add+=("$group")
     else
       echo "${info_box}Skipping group creation"
