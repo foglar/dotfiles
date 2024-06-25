@@ -36,11 +36,11 @@ install () {
 }
 
 create_chezmoi_toml() {
-    email = $1
+    local email=$1
 
     cat <<EOF > "$HOME/.config/chezmoi/chezmoi.toml"
     [data]
-    email = "$email"
+    email = "${email}"
 EOF
 }
 
