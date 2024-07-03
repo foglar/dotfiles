@@ -228,7 +228,7 @@ else
   sddm_theme="true"
 fi
 
-# Nvidia - logic flaw in dialog
+# Nvidia
 if [[ $(check_value "nvidia") != "false" ]]; then
   if [[ $(nvidia_detect) == "0" ]]; then
     echo "${info_box}Nvidia GPU detected"
@@ -238,6 +238,8 @@ if [[ $(check_value "nvidia") != "false" ]]; then
       nvidia="false"
     fi
   fi
+elif [[ $(check_value "nvidia") == "true" ]]; then
+    nvidia="true"
 else
   nvidia="false"
 fi
@@ -297,7 +299,8 @@ if [[ "$applications_to_install_config" == "custom" ]]; then
     --arg change_shell "$change_shell" \
     --arg sddm_theme "$sddm_theme" \
     --arg default_browser "$default_browser" \
-    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser}' \
+    --arg grub_theme "$grub_theme" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser, "grub_theme": $grub_theme}' \
     >$output_config_file)
 else
   json=$(jq -n \
@@ -312,6 +315,7 @@ else
     --arg change_shell "$change_shell" \
     --arg sddm_theme "$sddm_theme" \
     --arg default_browser "$default_browser" \
-    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser}' \
+    --arg grub_theme "$grub_theme" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser, "grub_theme": $grub_theme}' \
     >$output_config_file)
 fi

@@ -20,6 +20,8 @@ if [ ! -f "$HOME/.config/dotfiles/scripts/global.sh" ]; then
     exit 1
 fi
 
+USERNAME=$(echo $USER)
+
 source "$HOME/.config/dotfiles/scripts/global.sh"
 
 install_category() {
@@ -160,10 +162,10 @@ fi
 # Change default shell
 if [[ $(return_value "change_shell" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Changing default shell to bash"
-  sudo chsh -s /bin/zsh
+  sudo chsh -s /bin/zsh $USERNAME
 else
   echo "${info_box}Default shell is bash"
-  sudo chsh -s /bin/bash
+  sudo chsh -s /bin/bash $USERNAME
 fi
 
 # Change default browser
