@@ -205,7 +205,7 @@ if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") =
 fi
 
 # Setup GRUB theme
-if [[ $(check_value "grub_theme") == "none" ]]; then
+if [[ $(check_value "grub_theme") == "null" ]]; then
   if [[ $(dialog "${question_box}Would you like to setup GRUB theme?") == "true" ]]; then 
     grub_theme="true"
   else
