@@ -191,8 +191,8 @@ fi
 # What groups should add user
 # add to groups from config file, check if value in config file is set to true, if
 if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") == "null" ]]; then
-  echo "${info_box} To be added soon"
-  # TODO: this
+  groups = $(list_groups)
+
   groups_to_add=()
   while true; do
     if [[ $(dialog "${question_box}Create group ${group} for user?$reset") == "true" ]]; then
@@ -204,8 +204,21 @@ if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") =
   done
 fi
 
+# Setup GRUB theme
+if [[ $(check_value "grub_theme") == "none" ]]; then
+  if [[ $(dialog "${question_box}Would you like to setup GRUB theme?") == "true" ]]; then 
+    grub_theme="true"
+  else
+    grub_theme="false"
+  fi
+elif [[ $(check_value "grub_theme") == "true" ]]; then
+    grub_theme="true"
+else
+  grub_theme="false"
+fi
+
 # SDDM dialog
-if [[ $(check_value "sddm_theme") != "false" ]]; then
+if [[ $(check_value "sddm_theme") == "none" ]]; then
   if [[ $(dialog "${question_box}Would you like to install sddm theme?") == "true" ]]; then
     sddm_theme="true"
   else
@@ -215,11 +228,11 @@ else
   sddm_theme="true"
 fi
 
-# Nvidia
+# Nvidia - logic flaw in dialog
 if [[ $(check_value "nvidia") != "false" ]]; then
   if [[ $(nvidia_detect) == "0" ]]; then
     echo "${info_box}Nvidia GPU detected"
-    if [[ $(dialog "${question_box}Would you like to install nvidia drivers?") == "true" ]]; then
+    if [[ $(check_value "nvidia") != "true" && $(dialog "${question_box}Would you like to install nvidia drivers?") == "true" ]]; then
       nvidia="true"
     else
       nvidia="false"

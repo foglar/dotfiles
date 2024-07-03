@@ -20,3 +20,4 @@ alias .5='cd ../../../../..'
 alias mkdir='mkdir -p'
 alias hacking_mode="bash"
 alias minimal_mode="zsh"
+alias update='sudo VencordInstallerCli-linux -repair -location /opt/discord;paru -Syu'

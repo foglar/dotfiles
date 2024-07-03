@@ -44,7 +44,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export GOPATH=~/Documents/Programming/Go/
+export GOPATH=~/Programming/Go/
 export GOOS=linux
 export GOARCH=amd64
 

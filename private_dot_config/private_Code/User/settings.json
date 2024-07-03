@@ -85,5 +85,6 @@
     "workbench.action.tasks.configureTaskRunner",
     "workbench.action.tasks.runTask"
   ],
-  "workbench.colorTheme": "wallbash"
+  "workbench.colorTheme": "wallbash",
+  "sourcegraph.basePath": "/home/foglar/Programming/"
 }

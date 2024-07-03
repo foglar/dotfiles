@@ -66,6 +66,13 @@ nvidia_detect() {
     fi
 }
 
+list_groups() {
+    return_value "groups"
+    # Convert to bash array
+    json_to_bash_array "$groups"
+    echo "${groups[@]}"
+}
+
 check_value() {
   local param=$1
   local file=${2:-$config_file}

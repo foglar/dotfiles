@@ -104,12 +104,11 @@
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
-        "on-click": "systemupdate.sh up",
+        "on-click": "hyprctl dispatch exec 'systemupdate.sh up'",
         "interval": 86400, // once every day
         "tooltip": true,
         "signal": 20,
     },
-
     "idle_inhibitor": {
         "format": "{icon}",
         "rotate": 0,
@@ -145,7 +144,7 @@
     },
 
     "custom/spotify": {
-        "exec": "/usr/bin/env python3 /home/foglar/.config/waybar/modules/mediaplayer.py --player spotify",
+        "exec": "mediaplayer.py --player spotify",
         "format": " {}",
         "rotate": 0,
         "return-type": "json",

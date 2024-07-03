@@ -68,7 +68,7 @@
 - [ ] filetree
 - [ ] hyprpm and setup plugins
 - [ ] install monaspace font
-- [ ] add vencord install
+- [x] add vencord install
 
 ## Credits
 

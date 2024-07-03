@@ -166,10 +166,18 @@ else
   sudo chsh -s /bin/bash
 fi
 
+# Change default browser
 if [[ $(check_value "default_browser") == "true" ]]; then
   echo "${info_box}Changing default browser to librewolf"
   install "xdg-utils" ${DISTRO}
   xdg-settings set default-web-browser librewolf.desktop
+fi
+
+# Change grub theme
+if [[ $(check_value "grub_theme") == "true" ]]; then
+  echo "${info_box}Setting up your grub theme"
+  install grub-customizer ${DISTRO}
+  sudo ~/.config/dotfiles/grub-theme/install.sh
 fi
 
 # Change sddm theme
@@ -189,12 +197,19 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       done
 fi
 
+if [[ $(return_value "vencord") == "true" ]]; then
+  curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+  sudo VencordInstallerCli-linux -install -location /opt/discord
+fi
+
 if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Installing WarThunder launcher"
   install "wget" ${DISTRO}
+  install "gtk3" ${DISTRO}
   wget "https://warthunder.com/download/launcherLinux/" --output-document wt.tar.gz
   tar xvf wt.tar.gz
   chmod -R +x WarThunder/
+  sudo rm -rf /opt/WarThunder
   sudo mv WarThunder /opt/
   #rm -v wt.tar.gz
 fi
