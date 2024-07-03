@@ -169,14 +169,14 @@ else
 fi
 
 # Change default browser
-if [[ $(check_value "default_browser") == "true" ]]; then
+if [[ $(check_value "default_browser" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Changing default browser to librewolf"
   install "xdg-utils" ${DISTRO}
   xdg-settings set default-web-browser librewolf.desktop
 fi
 
 # Change grub theme
-if [[ $(check_value "grub_theme") == "true" ]]; then
+if [[ $(check_value "grub_theme" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Setting up your grub theme"
   install grub-customizer ${DISTRO}
   sudo ~/.config/dotfiles/grub-theme/install.sh
