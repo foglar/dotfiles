@@ -85,7 +85,7 @@ if [[ "$applications_to_install_config" == "Custom" && $(return_value "categorie
   json_data=$(return_value "categories_to_install")
   categories_to_install_config=$(json_to_bash_array "$json_data")
   read -r -a categories_to_install_config <<<"$categories_to_install_config"
-elif [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") == "null" ]]; then
+elif [[ "$applications_to_install_config" == "Custom" && $(return_value "categories_to_install") == "null" ]]; then
   categories=($(list_lst_scripts "$HOME/.config/dotfiles/packages"))
   echo "LIST SCRIPTS"
   for c in "${categories[@]}"; do
