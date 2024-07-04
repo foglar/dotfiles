@@ -49,26 +49,21 @@ fi
 
 # Change default shell
 if [[ $(check_value "change_shell") == "null" ]]; then
-  if [[ $(dialog "${question_box}Change default shell to zsh (or stay bash)?") == "true" ]]; then
-    change_shell="true"
-  else
-    change_shell="false"
-  fi
-elif [[ $(check_value "change_shell") == "true" ]]; then
-  change_shell="true"
+  change_shell=$(gum choose --height 5 --header "${question_box}What shell do you prefer?" bash zsh fish)
+elif [[ $(return_value "change_shell") != "null" ]]; then
+  change_shell=$(return_value "change_shell")
 else
-  change_shell="false"
+  change_shell="null"
 fi
+echo "${info_box} Selecting shell ${change_shell}"
 
-if [[ $(check_value "default_browser") == "null" ]]; then
-  if [[ $(dialog "${question_box}Change default browser to librewolf?") == "true" ]]; then
-    default_browser="true"
-  else
-    default_browser="false"
-  fi
+
+if [[ $(return_value "default_browser") == "null" ]]; then
+  default_browser=$(gum choose --height 5 --header "${question_box}What browser do you prefer?" firefox librewolf brave)
 else
-  default-browser=$(check_value "default_browser")
+  default_browser=$(return_value "default_browser")
 fi
+echo "${info_box}Selected browser ${default_browser}"
 
 # Install KDE GNOME or Hyprland
 echo "${info_box}Setup desktop environment"

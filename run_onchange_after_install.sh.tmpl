@@ -160,19 +160,22 @@ else
 fi 
 
 # Change default shell
-if [[ $(return_value "change_shell" "${output_config_file}") == "true" ]]; then
-  echo "${info_box}Changing default shell to bash"
-  sudo chsh -s /bin/zsh $USERNAME
-else
-  echo "${info_box}Default shell is bash"
-  sudo chsh -s /bin/bash $USERNAME
+shell=$(return_value "change_shell" "${output_config_file}")
+if [[ $shell != "null" ]]; then
+  echo "${info_box}Changing default shell to ${shell}"
+  sudo chsh -s /bin/${shell} $USERNAME
 fi
 
 # Change default browser
-if [[ $(check_value "default_browser" "${output_config_file}") == "true" ]]; then
-  echo "${info_box}Changing default browser to librewolf"
+browser=$(return_value "default_browser" "${output_config_file}")
+if [[ $browser != "null" ]]; then
+  echo "${info_box}Changing default browser to ${browser}"
   install "xdg-utils" ${DISTRO}
-  xdg-settings set default-web-browser librewolf.desktop
+  if [[ ${browser} == "brave" ]]; then
+    xdg-settings set default-web-browser ${browser}-browser.desktop
+  else
+    xdg-settings set default-web-browser ${browser}.desktop
+  fi
 fi
 
 # Change grub theme
