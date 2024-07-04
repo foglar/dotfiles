@@ -223,7 +223,7 @@ fi
 
 if [[ $(return_value "gh_copilot") == "true" ]]; then
   install "github-cli" ${DISTRO}
-  gh auth login && gh extension install github/gh-copilot #&& echo 'eval "$(gh copilot alias --bash)"' > ~/.bashrc
+  gh auth login && gh extension install github/gh-copilot 
 fi
 
 if [[ $(return_value "groups") == "true" ]]; then

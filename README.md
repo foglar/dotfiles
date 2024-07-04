@@ -25,12 +25,17 @@
 - [x] remove unnecessary files and dependencies after install
 - [x] add warthunder
 - [x] setup gh copilot $ gh extension install github/gh-copilot
+- [x] add vencord install
+- [x] add completing chezmoi.tmpl
+- [x] hyprland, kde, gnome
+- [x] warthunder keymap atd.
+- [x] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 
 - [ ] make your decisions on the beggining, no input after, config saved into file, then runned
     - [x] create a script before sync, which will ask user for all settings, saved all what can be done after into json file (you can also use your json to skip questions 
     - [x] then do everything what should be done before sync, and things with prompts, sync files
     - [ ] finally run all things from json (using jq) file) with after script
-- [ ] wallpapers are big, load them only if user agreed so
+- [x] wallpapers are big, load them only if user agreed so
 - [ ] ask if user wants to install any applications or skip
 - [ ] Add configuration for colours of terminal and validation of config file before installation
 - [ ] improve error message in the block "run after file sync because it in the user interaction part it will write skipping in any case, should add more checks to differentiate cases, file not exist, file already in list"
@@ -48,18 +53,12 @@
 - [ ] create new naming conventions for package lists for linux distributions, minimal_arch.lst vs. minimal.lst
 - [ ] add template to the bashrc, so it would add conda only if user has conda installed
 - [ ] create summary of all changes before install
-- [x] detect nvidia and install nvidia drivers, systemd and setup systemd stuff and hyprland if user wants hyprland
 - [ ] in arch add icon themes installation
-- [x] add completing chezmoi.tmpl
 - [ ] turn off the bell
 - [ ] setup buttons in logind
 - [ ] paru BottomUp settings
-- [x] hyprland, kde, gnome
-- [x] warthunder keymap atd.
 - [ ] Add sddm theme
-- [x] Change shell to bash
 - [ ] Remove code and install its proprietary variant
-- [x] Install hyprlock and remove swaylock
 - [ ] Fix conda install script
 - [ ] Save all files to temp directory
 - [ ] sudo systemctl start docker.service
@@ -68,7 +67,7 @@
 - [ ] filetree
 - [ ] hyprpm and setup plugins
 - [ ] install monaspace font
-- [x] add vencord install
+- [ ] test multiple desktops and custom category applications
 
 ## Credits
 

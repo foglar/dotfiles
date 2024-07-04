@@ -112,12 +112,17 @@ fi
 # User
 if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_after_dialog") == "null" ]]; then
   scripts_to_execute=($(list_scripts "$scripts_dir"))
-  scripts_to_execute_checked=()
-  for script in ${scripts_to_execute[@]}; do
-    result=$(is_in_array "${script}" "${scripts_to_run_after_checked[@]}")
-    if [[ $(dialog "${question_box}Run script $script after file sync?$reset") == "true" && -f "${scripts_dir}${script}" && $result -eq 1 ]]; then
+  
+  # Use gum to select scripts to run after file sync
+  scripts_to_run_after_checked=()
+  selected_scripts=$(for script in ${scripts_to_execute[@]}; do echo $script; done | gum choose --no-limit --height 15 --header "Select scripts to run")
+
+  for script in ${selected_scripts}; do
+    if [[ -f "${scripts_dir}${script}" ]]; then
       scripts_to_run_after_checked+=("$script")
       echo "${info_box}Running script $script after file sync"
+      chmod +x "${scripts_dir}${script}"
+      sh "${scripts_dir}${script}"
     else
       echo "${skip_msg} $script"
     fi
