@@ -86,6 +86,8 @@ if [ "$install_nvchad" == "true" ]; then
         echo "${info_box}Removing existing nvim config folder$reset"
         if [ $(check_value "nvchad_overwrite_dir") == "true" ]; then
             echo "${error_box}Removing NvChad configuration$reset"
+            
+            cp -rv ~/.config/nvim/ ~/.config/nvim-bak/
             rm -rfv ~/.config/nvim/
             # Clone NvChad setup
             git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
@@ -93,6 +95,8 @@ if [ "$install_nvchad" == "true" ]; then
             gum confirm "${question_box}Would you like to rewrite your nvim config?$reset" && ans="true" || ans="false"
             if [[ $ans == "true" ]]; then
                 echo "${error_box}Removing previous nvim configuration $reset"
+
+                cp -rv ~/.config/nvim/ ~/.config/nvim-bak/
                 rm -rfv ~/.config/nvim
                 # Clone NvChad setup
                 git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
@@ -112,14 +116,16 @@ else
             echo "${info_box}Removing existing nvim config folder$reset"
             if [ $(check_value "nvchad_overwrite_dir") == "true" ]; then
                 echo "${error_box}Removing NvChad configuration$reset"
-                #rm -rf ~/.config/nvim/
+                cp -rv ~/.config/nvim/ ~/.config/nvim-bak/
+                rm -rfv ~/.config/nvim/
                 # Clone NvChad setup
                 git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
             else
                 gum confirm "${question_box}Would you like to rewrite your nvim config?$reset" && ans="true" || ans="false"
                 if [[ $ans == "true" ]]; then
                     echo "${error_box}Removing previous nvim configuration $reset"
-                    #rm -rf ~/.config/nvim
+                    cp -rv ~/.config/nvim/ ~/.config/nvim-bak/
+                    rm -rfv ~/.config/nvim
                     # Clone NvChad setup
                     git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
                 else
