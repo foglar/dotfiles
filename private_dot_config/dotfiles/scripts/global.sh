@@ -42,10 +42,7 @@ create_chezmoi_toml() {
       touch "$HOME/.config/chezmoi/chezmoi.toml"
     fi
 
-    cat <<EOF > "$HOME/.config/chezmoi/chezmoi.toml"
-    [data]
-    email = "${email}"
-EOF
+    echo -e "[data]\n\temail = \"${email}\"" > "$HOME/.config/chezmoi/chezmoi.toml"
 }
 
 nvidia_detect() {
