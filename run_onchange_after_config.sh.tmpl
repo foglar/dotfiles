@@ -164,6 +164,7 @@ if [[ $(check_value "nvidia") != "false" ]]; then
     echo "${info_box}Nvidia GPU detected"
     if [[ $(check_value "nvidia") != "true" ]]; then
       gum confirm "${question_box}Install NVIDIA drivers?$reset" && nvidia="true"|| nvidia="false"
+    fi
   fi
 elif [[ $(check_value "nvidia") == "true" ]]; then
     nvidia="true"
