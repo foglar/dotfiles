@@ -152,18 +152,22 @@ list_lst_scripts() {
     local search_dir="$1"
     local lst_scripts=()
 
-    # List files with .lst extension
-    for lst_file in "$search_dir"/*.lst; do
-        if [ -f "$lst_file" ]; then
-            filename=$(basename "$lst_file")
-            lst_scripts+=("$filename")
-        fi
-    done
+    # Check if there are any .lst files in the directory
+    if compgen -G "$search_dir/*.lst" > /dev/null; then
+        # List files with .lst extension
+        for lst_file in "$search_dir"/*.lst; do
+            if [ -f "$lst_file" ]; then
+                filename=$(basename "$lst_file")
+                lst_scripts+=("$filename")
+            fi
+        done
+    else
+        echo "No .lst files found in the directory."
+    fi
 
     # Return the array
     echo "${lst_scripts[@]}"
 }
-
 
 # Function to check if a value is present in an array
 is_in_array() {
