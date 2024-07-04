@@ -58,16 +58,18 @@
 - [ ] setup buttons in logind
 - [ ] paru BottomUp settings
 - [ ] Add sddm theme
-- [ ] Remove code and install its proprietary variant
 - [ ] Fix conda install script
 - [ ] Save all files to temp directory
 - [ ] sudo systemctl start docker.service
 - [ ] sudo systemctl enable docker.service
 - [ ] sudo usermod -aG docker $USER
-- [ ] filetree
 - [ ] hyprpm and setup plugins
 - [ ] install monaspace font
 - [ ] test multiple desktops and custom category applications
+- [ ] kind of wrapper script for this script    
+    - [ ] ask for email into .gitignore
+    - [ ] simple installation
+- [ ] create separated scripts for KDE, GNOME and Hyprland setup
 
 ## Credits
 

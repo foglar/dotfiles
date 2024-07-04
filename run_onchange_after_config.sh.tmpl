@@ -153,11 +153,7 @@ fi
 
 # SDDM dialog
 if [[ $(check_value "sddm_theme") == "none" ]]; then
-  if [[ $(dialog "${question_box}Would you like to install sddm theme?") == "true" ]]; then
-    sddm_theme="true"
-  else
-    sddm_theme="false"
-  fi
+  gum confirm "${question_box}Set SDDM theme?$reset" && grub_theme="true" || grub_theme="false"
 else
   sddm_theme="true"
 fi
@@ -166,11 +162,12 @@ fi
 if [[ $(check_value "nvidia") != "false" ]]; then
   if [[ $(nvidia_detect) == "0" ]]; then
     echo "${info_box}Nvidia GPU detected"
-    if [[ $(check_value "nvidia") != "true" && $(dialog "${question_box}Would you like to install nvidia drivers?") == "true" ]]; then
-      nvidia="true"
-    else
-      nvidia="false"
-    fi
+    if [[ $(check_value "nvidia") != "true" ]]; then
+      if gum confirm "${question_box}Install NVIDIA drivers?$reset"; then
+          nvidia="true"
+      else
+        nvidia="false"
+      fi
   fi
 elif [[ $(check_value "nvidia") == "true" ]]; then
     nvidia="true"
@@ -180,11 +177,7 @@ fi
 
 # Warthunder
 if [[ $(check_value "warthunder") == "null" ]]; then
-  if [[ $(dialog "${question_box}Would you like to install WarThunder launcher?") == "false" ]]; then
-    warthunder="false"
-  else
-    warthunder="true"
-  fi
+  gum confirm "${question_box}Would you like to install Warthunder Launcher?$reset" && warthunder="true" || warthunder="false"
 elif [[ $(check_value "warthunder") == "true" ]]; then
   warthunder="true"
 else
@@ -195,20 +188,12 @@ fi
 if [[ $(check_value "gh_copilot") == "true" ]]; then
   gh_copilot="true"
 elif [[ $(check_value "gh_copilot") == "null" ]]; then
-  if [[ $(dialog "${question_box}Would you like to setup gh copilot in cli?") == "false" ]]; then
-    gh_copilot="false"
-  else
-    gh_copilot="true"
-  fi
+  gum confirm "${question_box}Setup github copilot in github-cli?$reset" && gh_copilot="true" || gh_copilot="false"
 fi
 
 # Cleanup
 if [[ $(check_value "cleanup_after_install") == "null" ]]; then
-  if [[ $(dialog "${question_box}Clean all not needed files after installation?${reset}") == "true" ]]; then
-    cleanup_after_install="true"
-  else
-    cleanup_after_install="false"
-  fi
+  gum confirm "${question_box}Clean all not needed files after installation?$reset" && cleanup_after_install="true" || cleanup_after_install="false"
 elif [[ $(check_value "cleanup_after_install") == "true" ]]; then
   echo "${info_box}Cleanup is set to true"
   cleanup_after_install="true"
