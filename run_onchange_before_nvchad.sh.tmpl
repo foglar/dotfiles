@@ -31,7 +31,7 @@ echo "${info_box}Installing dependencies"
 if [[ "${DISTRO}" -eq "arch" ]]; then
     echo "${info_box}${blue}󰣇 Arch$reset detected"
     sudo pacman -Syu --noconfirm --needed
-    sudo pacman -S jq git --noconfirm --needed
+    sudo pacman -S jq git gum --noconfirm --needed
 else
     echo "${error_box}Currently unssuported linux distribution"
     echo "${skip_msg}Installing dependencies"
@@ -90,7 +90,7 @@ if [ "$install_nvchad" == "true" ]; then
             # Clone NvChad setup
             git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
         else
-            ans=$(dialog "${question_box}Would you like to rewrite your nvim config?$reset")
+            gum confirm "${question_box}Would you like to rewrite your nvim config?$reset" && ans="true" || ans="false"
             if [[ $ans == "true" ]]; then
                 echo "${error_box}Removing previous nvim configuration $reset"
                 rm -rfv ~/.config/nvim
@@ -106,7 +106,7 @@ if [ "$install_nvchad" == "true" ]; then
 elif [ "$install_nvchad" == "false" ]; then
     echo "${skip_msg}NvChad setup$reset"
 else
-    ans=$(dialog "${question_box}Install neovim NvChad configuration?")
+    gum confirm "${question_box}Install neovim NvChad configuration?$reset" && ans="true" || ans="false"
     if [[ $ans == "true" ]]; then
         if [ -d ~/.config/nvim ]; then
             echo "${info_box}Removing existing nvim config folder$reset"
@@ -116,7 +116,7 @@ else
                 # Clone NvChad setup
                 git clone https://github.com/NvChad/starter ~/.config/nvim --depth 2
             else
-                ans=$(dialog "${question_box}Would you like to rewrite your nvim config?$reset")
+                gum confirm "${question_box}Would you like to rewrite your nvim config?$reset" && ans="true" || ans="false"
                 if [[ $ans == "true" ]]; then
                     echo "${error_box}Removing previous nvim configuration $reset"
                     #rm -rf ~/.config/nvim
@@ -157,8 +157,7 @@ if [[ $(check_value "config_template") != "false" ]]; then
   fi
   
   #TODO: Copy file from directory and fill every variables in it
-  echo "${question_box}Enter your git email for .gitignore:"
-  read -r email
+  email=$(gum input --prompt "${question_box}Enter your git email for .gitignore: " --placeholder "john.doe@gmail.com")
   create_chezmoi_toml $email
 
 fi
