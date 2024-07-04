@@ -38,6 +38,10 @@ install () {
 create_chezmoi_toml() {
     local email=$1
 
+    if [[ ! -f "$HOME/.config/chezmoi/chezmoi.toml" ]]; then
+      touch "$HOME/.config/chezmoi/chezmoi.toml"
+    fi
+
     cat <<EOF > "$HOME/.config/chezmoi/chezmoi.toml"
     [data]
     email = "${email}"

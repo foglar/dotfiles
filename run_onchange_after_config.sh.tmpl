@@ -144,11 +144,7 @@ fi
 
 # Setup GRUB theme
 if [[ $(check_value "grub_theme") == "null" ]]; then
-  if [[ $(dialog "${question_box}Would you like to setup GRUB theme?") == "true" ]]; then 
-    grub_theme="true"
-  else
-    grub_theme="false"
-  fi
+  gum confirm "${question_box}Configure GRUB theme?$reset" && grub_theme="true" || grub_theme="false"
 elif [[ $(check_value "grub_theme") == "true" ]]; then
     grub_theme="true"
 else
