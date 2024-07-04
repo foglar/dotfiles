@@ -35,7 +35,6 @@ fi
 # If arch linux ask for blackarch
 if [[ ${DISTRO} -eq "arch" ]]; then
   # Blackarch repository setup
-  echo "${info_box}Setup blackarch repository"
   blackarch_repository_config=$(return_value "blackarch_repo")
   if [ "$blackarch_repository_config" == "null" ]; then
    gum confirm "${question_box}Add blackarch repository?$reset" && blackarch_repository_config="true" || blackarch_repository_config="false"
@@ -44,6 +43,7 @@ if [[ ${DISTRO} -eq "arch" ]]; then
 else
   blackarch_repository_config="false"
 fi
+echo "${info_box} Add Blackarch: ${blackarch_repository_config}"
 
 # Change default shell
 if [[ $(check_value "change_shell") == "null" ]]; then
@@ -53,7 +53,7 @@ elif [[ $(return_value "change_shell") != "null" ]]; then
 else
   change_shell="null"
 fi
-echo "${info_box}Selecting shell ${change_shell}"
+echo "${info_box}Selected shell: ${change_shell}"
 
 
 if [[ $(return_value "default_browser") == "null" ]]; then
@@ -61,7 +61,7 @@ if [[ $(return_value "default_browser") == "null" ]]; then
 else
   default_browser=$(return_value "default_browser")
 fi
-echo "${info_box}Selected browser ${default_browser}"
+echo "${info_box}Default browser: ${default_browser}"
 
 # Install KDE GNOME or Hyprland
 desktop_environment_config=$(return_value "desktop_environment")
@@ -71,16 +71,13 @@ if [[ "$desktop_environment_config" != "kde" && "$desktop_environment_config" !=
 fi
 
 # Applications to install setup
-echo "${info_box}Setup applications category"
 applications_to_install_config=$(return_value "category")
 if [[ "$applications_to_install_config" != "minimal" && "$applications_to_install_config" != "base" && "$applications_to_install_config" != "full" && "$applications_to_install_config" != "custom" && "$applications_to_install_config" != "skip" ]]; then
-  echo "$blue"
   category=$(gum choose --header "Setup your desktop environments" Minimal Base Full Custom Skip)
   applications_to_install_config=$category
 fi
 
 # Custom lists
-#echo "${info_box}Application category: ${applications_to_install_config}"
 if [[ "$applications_to_install_config" == "Custom" && $(return_value "categories_to_install") != "null" ]]; then
   json_data=$(return_value "categories_to_install")
   categories_to_install_config=$(json_to_bash_array "$json_data")
@@ -92,10 +89,6 @@ elif [[ "$applications_to_install_config" == "Custom" && $(return_value "categor
     echo "$category_file"
   done | gum choose --no-limit)
 fi
-
-# Which scripts to execute
-echo "${info_box}Setup scripts"
-# After
 
 # Config
 echo "${info_box}Scripts to run ${red}after${reset} file sync"

@@ -163,7 +163,7 @@ if [[ $(check_value "config_template") != "false" ]]; then
   
   #TODO: Copy file from directory and fill every variables in it
   email=$(gum input --prompt "${question_box}Enter your git email for .gitignore: " --placeholder "john.doe@gmail.com" --width 100)
-  echo "${info_box}Setting up your email in .gitignore as ${email}"
+  echo "${info_box}Email .gitignore: ${email}"
   create_chezmoi_toml $email
 fi
 
