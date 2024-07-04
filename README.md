@@ -69,6 +69,7 @@
 - [ ] kind of wrapper script for this script    
     - [ ] ask for email into .gitignore
     - [ ] simple installation
+    - [ ] wallpapers
 - [ ] create separated scripts for KDE, GNOME and Hyprland setup
 
 ## Credits

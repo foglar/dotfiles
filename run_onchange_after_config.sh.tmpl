@@ -128,19 +128,19 @@ fi
 
 # What groups should add user
 # add to groups from config file, check if value in config file is set to true, if
-if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") == "null" ]]; then
-  groups = $(list_groups)
-
-  groups_to_add=()
-  while true; do
-    if [[ $(dialog "${question_box}Create group ${group} for user?$reset") == "true" ]]; then
-      groups_to_add+=("$group")
-    else
-      echo "${info_box}Skipping group creation"
-      break
-    fi
-  done
-fi
+#if [[ $(check_value "group_dialog") == "true" || $(check_value "group_dialog") == "null" ]]; then
+#  groups = $(list_groups)
+#
+#  groups_to_add=()
+#  while true; do
+#    if [[ $(dialog "${question_box}Create group ${group} for user?$reset") == "true" ]]; then
+#      groups_to_add+=("$group")
+#    else
+#      echo "${info_box}Skipping group creation"
+#      break
+#    fi
+#  done
+#fi
 
 # Setup GRUB theme
 if [[ $(check_value "grub_theme") == "null" ]]; then
