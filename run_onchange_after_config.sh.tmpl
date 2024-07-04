@@ -163,11 +163,7 @@ if [[ $(check_value "nvidia") != "false" ]]; then
   if [[ $(nvidia_detect) == "0" ]]; then
     echo "${info_box}Nvidia GPU detected"
     if [[ $(check_value "nvidia") != "true" ]]; then
-      if gum confirm "${question_box}Install NVIDIA drivers?$reset"; then
-          nvidia="true"
-      else
-        nvidia="false"
-      fi
+      gum confirm "${question_box}Install NVIDIA drivers?$reset" && nvidia="true"|| nvidia="false"
   fi
 elif [[ $(check_value "nvidia") == "true" ]]; then
     nvidia="true"
