@@ -55,7 +55,7 @@ elif [[ $(return_value "change_shell") != "null" ]]; then
 else
   change_shell="null"
 fi
-echo "${info_box} Selecting shell ${change_shell}"
+echo "${info_box}Selecting shell ${change_shell}"
 
 
 if [[ $(return_value "default_browser") == "null" ]]; then
@@ -66,11 +66,10 @@ fi
 echo "${info_box}Selected browser ${default_browser}"
 
 # Install KDE GNOME or Hyprland
-echo "${info_box}Setup desktop environment"
 desktop_environment_config=$(return_value "desktop_environment")
 if [[ "$desktop_environment_config" != "kde" && "$desktop_environment_config" != "gnome" && "$desktop_environment_config" != "hyprland" && "$desktop_environment_config" != "skip" ]]; then
   echo "$blue"
-  desktop_environment_config=$(gum choose --no-limit --header "Setup your desktop environments" gnome kde hyprland)
+  desktop_environment_config=$(gum choose --no-limit --header "What desktop environmet would you like to install" gnome kde hyprland skip)
 fi
 
 # Applications to install setup
@@ -78,7 +77,7 @@ echo "${info_box}Setup applications category"
 applications_to_install_config=$(return_value "category")
 if [[ "$applications_to_install_config" != "minimal" && "$applications_to_install_config" != "base" && "$applications_to_install_config" != "full" && "$applications_to_install_config" != "custom" && "$applications_to_install_config" != "skip" ]]; then
   echo "$blue"
-  category=$(gum choose --header "Setup your desktop environments" Minimal Base Full Custom)
+  category=$(gum choose --header "Setup your desktop environments" Minimal Base Full Custom Skip)
   applications_to_install_config=$category
 fi
 
