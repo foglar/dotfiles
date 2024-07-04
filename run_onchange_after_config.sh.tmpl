@@ -84,7 +84,7 @@ fi
 
 # Custom lists
 echo "${info_box}Application category: ${applications_to_install_config}"
-if [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") != "null" ]]; then
+if [[ "$applications_to_install_config" == "Custom" && $(return_value "categories_to_install") != "null" ]]; then
   json_data=$(return_value "categories_to_install")
   categories_to_install_config=$(json_to_bash_array "$json_data")
   read -r -a categories_to_install_config <<<"$categories_to_install_config"
