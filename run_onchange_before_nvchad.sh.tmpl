@@ -162,14 +162,14 @@ if [[ $(check_value "config_template") != "false" ]]; then
   fi
   
   #TODO: Copy file from directory and fill every variables in it
-  email=$(gum input --prompt "${question_box}Enter your git email for .gitignore: " --placeholder "john.doe@gmail.com")
+  email=$(gum input --prompt "${question_box}Enter your git email for .gitignore: " --placeholder "john.doe@gmail.com" --width 100)
   echo "${info_box}Setting up your email in .gitignore as ${email}"
   create_chezmoi_toml $email
 fi
 
 # Interactive user
 if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts_before_dialog") == "null" ]]; then
-    scripts_to_execute=($(list_scripts "${scripts_dir}"))
+    scripts_to_execute=($(list_scripts "${scripts_dir}") "skip")
     selected_scripts=$(for script in ${scripts_to_execute[@]}; do echo $script; done | gum choose --no-limit --header "Select scripts to run:")
     for script in ${selected_scripts[@]}; do
         if [ -f "${scripts_dir}${script}" ]; then

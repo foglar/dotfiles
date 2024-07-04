@@ -171,6 +171,7 @@ browser=$(return_value "default_browser" "${output_config_file}")
 if [[ $browser != "null" ]]; then
   echo "${info_box}Changing default browser to ${browser}"
   install "xdg-utils" ${DISTRO}
+  install "qt5-tools" ${DISTRO}
   if [[ ${browser} == "brave" ]]; then
     xdg-settings set default-web-browser ${browser}-browser.desktop
   else
