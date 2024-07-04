@@ -39,7 +39,6 @@ if [[ ${DISTRO} -eq "arch" ]]; then
   if [ "$blackarch_repository_config" == "null" ]; then
    gum confirm "${question_box}Add blackarch repository?$reset" && blackarch_repository_config="true" || blackarch_repository_config="false"
   fi
-  echo "${info_box}Blackarch repository: ${blackarch_repository_config}"
 else
   blackarch_repository_config="false"
 fi
@@ -69,7 +68,7 @@ if [[ "$desktop_environment_config" != "kde" && "$desktop_environment_config" !=
   echo "$blue"
   desktop_environment_config=$(gum choose --no-limit --header "What desktop environmet would you like to install" gnome kde hyprland skip)
 fi
-echo "${info_box} Desktop: ${desktop_environment_config}"
+echo "${info_box}Desktop: ${desktop_environment_config}"
 
 # Applications to install setup
 applications_to_install_config=$(return_value "category")
@@ -111,7 +110,7 @@ fi
 
 # User
 if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_after_dialog") == "null" ]]; then
-  scripts_to_execute=($(list_scripts "$scripts_dir"))
+  scripts_to_execute=($(list_scripts "$scripts_dir"), "skip")
   
   # Use gum to select scripts to run after file sync
   scripts_to_run_after_checked=()
@@ -120,11 +119,9 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   for script in ${selected_scripts}; do
     if [[ -f "${scripts_dir}${script}" ]]; then
       scripts_to_run_after_checked+=("$script")
-      echo "${info_box}Running script $script after file sync"
-      chmod +x "${scripts_dir}${script}"
-      sh "${scripts_dir}${script}"
+      echo "${info_box}Script $script will be executed after file sync"
     else
-      echo "${skip_msg} $script"
+      echo "${skip_msg} script $script"
     fi
   done
 fi
