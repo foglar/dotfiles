@@ -38,6 +38,8 @@ install () {
 create_chezmoi_toml() {
     local email=$1
 
+    mkdir -p "$HOME/.config/chezmoi/"
+
     if [[ ! -f "$HOME/.config/chezmoi/chezmoi.toml" ]]; then
       touch "$HOME/.config/chezmoi/chezmoi.toml"
     fi
