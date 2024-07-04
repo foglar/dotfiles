@@ -110,7 +110,7 @@ fi
 
 # User
 if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_after_dialog") == "null" ]]; then
-  scripts_to_execute=($(list_scripts "$scripts_dir"), "skip")
+  scripts_to_execute=($(list_scripts "$scripts_dir"))
   
   # Use gum to select scripts to run after file sync
   scripts_to_run_after_checked=()
@@ -119,7 +119,7 @@ if [[ $(check_value "scripts_after_dialog") == "true" || $(check_value "scripts_
   for script in ${selected_scripts}; do
     if [[ -f "${scripts_dir}${script}" ]]; then
       scripts_to_run_after_checked+=("$script")
-      echo "${info_box}Script $script will be executed after file sync"
+      echo "${info_box}Executing $script after file synchronization"
     else
       echo "${skip_msg} script $script"
     fi
