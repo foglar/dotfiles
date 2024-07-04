@@ -153,7 +153,7 @@ fi
 
 # SDDM dialog
 if [[ $(check_value "sddm_theme") == "null" ]]; then
-  gum confirm "${question_box}Set SDDM theme?$reset" && grub_theme="true" || grub_theme="false"
+  gum confirm "${question_box}Set SDDM theme?$reset" && sddm_theme="true" || sddm_theme="false"
 else
   sddm_theme="true"
 fi
