@@ -163,6 +163,7 @@ fi
 shell=$(return_value "change_shell" "${output_config_file}")
 if [[ $shell != "null" ]]; then
   echo "${info_box}Changing default shell to ${shell}"
+  install ${shell} ${DISTRO}
   sudo chsh -s /bin/${shell} $USERNAME
 fi
 

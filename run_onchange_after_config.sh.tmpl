@@ -43,7 +43,7 @@ if [[ ${DISTRO} -eq "arch" ]]; then
 else
   blackarch_repository_config="false"
 fi
-echo "${info_box} Add Blackarch: ${blackarch_repository_config}"
+echo "${info_box}Add Blackarch: ${blackarch_repository_config}"
 
 # Change default shell
 if [[ $(check_value "change_shell") == "null" ]]; then
@@ -69,6 +69,7 @@ if [[ "$desktop_environment_config" != "kde" && "$desktop_environment_config" !=
   echo "$blue"
   desktop_environment_config=$(gum choose --no-limit --header "What desktop environmet would you like to install" gnome kde hyprland skip)
 fi
+echo "${info_box} Desktop: ${desktop_environment_config}"
 
 # Applications to install setup
 applications_to_install_config=$(return_value "category")
