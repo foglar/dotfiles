@@ -40,7 +40,7 @@ if [[ ${DISTRO} -eq "arch" ]]; then
   echo "${info_box}Setup blackarch repository"
   blackarch_repository_config=$(return_value "blackarch_repo")
   if [ "$blackarch_repository_config" == "null" ]; then
-    blackarch_repository_config=$(dialog "${question_box}Add blackarch repo$reset")
+   gum confirm "${question_box}Add blackarch repository?$reset" && blackarch_repository_config="true" || blackarch_repository_config="false"
   fi
   echo "${info_box}Blackarch repository: ${blackarch_repository_config}"
 else
@@ -70,29 +70,7 @@ echo "${info_box}Setup desktop environment"
 desktop_environment_config=$(return_value "desktop_environment")
 if [[ "$desktop_environment_config" != "kde" && "$desktop_environment_config" != "gnome" && "$desktop_environment_config" != "hyprland" && "$desktop_environment_config" != "skip" ]]; then
   echo "$blue"
-  select desktop in kde gnome hyprland skip; do
-    echo "$reset"
-    case "$REPLY" in
-    1)
-      echo "${info_box}Picked KDE$reset"
-      break
-      ;;
-    2)
-      echo "${info_box}Picked GNOME$reset"
-      break
-      ;;
-    3)
-      echo "${info_box}Picked Hyprland$reset"
-      break
-      ;;
-    4)
-      echo "${info_box}Skipping desktop environment$reset"
-      break
-      ;;
-    *) echo "${error_box}Enter number 1-4:" ;;
-    esac
-  done
-  desktop_environment_config=$desktop
+  desktop_environment_config=$(gum choose --no-limit --header "Setup your desktop environments" gnome kde hyprland)
 fi
 
 # Applications to install setup
@@ -100,32 +78,7 @@ echo "${info_box}Setup applications category"
 applications_to_install_config=$(return_value "category")
 if [[ "$applications_to_install_config" != "minimal" && "$applications_to_install_config" != "base" && "$applications_to_install_config" != "full" && "$applications_to_install_config" != "custom" && "$applications_to_install_config" != "skip" ]]; then
   echo "$blue"
-  select category in minimal base full custom skip; do
-    echo "$reset"
-    case "$REPLY" in
-    1)
-      echo "${info_box}Picked category Minimal$reset"
-      break
-      ;;
-    2)
-      echo "${info_box}Picked category Base$reset"
-      break
-      ;;
-    3)
-      echo "${info_box}Picked category Full$reset"
-      break
-      ;;
-    4)
-      echo "${info_box}Picked category Custom$reset"
-      break
-      ;;
-    5)
-      echo "${info_box}Skipping installation of applications$reset"
-      break
-      ;;
-    *) echo "${error_box}Enter number 1-5:" ;;
-    esac
-  done
+  category=$(gum choose --header "Setup your desktop environments" Minimal Base Full Custom)
   applications_to_install_config=$category
 fi
 
@@ -138,12 +91,9 @@ if [[ "$applications_to_install_config" == "custom" && $(return_value "categorie
 elif [[ "$applications_to_install_config" == "custom" && $(return_value "categories_to_install") == "null" ]]; then
   categories=($(list_lst_scripts "packages/"))
   categories_to_install_config=()
-  for category_file in ${categories[@]}; do
-    ans=$(dialog "${question_box}Install packages from $category_file?$reset")
-    if [[ $ans == "true" ]]; then
-      categories_to_install_config+=("$category_file")
-    fi
-  done
+  categories=$(for category_file in "${categories[@]}"; do
+    echo "$category_file"
+  done | gum choose --no-limit)
 fi
 
 # Which scripts to execute
