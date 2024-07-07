@@ -32,7 +32,15 @@
 - [ ] install apps specific to desktop (kdeconnect only for kde, if GNOME gsconnect)
 - [ ] gh-copilot cli not working
 - [ ] bat themes compile
+- [ ] config file forget and add some example one to other directory, create it on run
+
+## Theming features
+
+- [ ] bat theme catpuccin compile
+- [ ] btop config catpuccin setup
 
 ## Credits
 
-- inspired by https://github.com/prasanthrangan/hyprdots Aesthetic, dynamic and minimal dots for Arch hyprland by prasanthrangan
+inspired by:
+    - <https://github.com/prasanthrangan/hyprdots> *Aesthetic, dynamic and minimal dots for Arch hyprland* by prasanthrangan
+    - <https://omakub.org> *Opinionated Ubuntu Setup* by basecamp
