@@ -71,6 +71,7 @@
     - [ ] simple installation
     - [ ] wallpapers
 - [ ] create separated scripts for KDE, GNOME and Hyprland setup
+- [ ] gh-copilot cli not working
 
 ## Credits
 

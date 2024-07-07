@@ -184,14 +184,18 @@ fi
 if [[ $(check_value "grub_theme" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Setting up your grub theme"
   install grub-customizer ${DISTRO}
-  cd ~/.config/dotfiles/grub-theme && sudo ./install.sh && cd -
+  cd ~/.config/dotfiles/configs/grub && sudo ./install.sh && cd -
 fi
 
 # Change sddm theme
-#if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then
-#  echo "${info_box}Changing SDDM theme"
-#  git clone https://github.com/MarianArlt/kde-plasma-chili /usr/share/sddm/themes/chili
-#fi
+if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then
+  echo "${info_box}Changing SDDM theme"
+  setfacl -m u:sddm:x ~/
+  setfacl -m u:sddm:r ~/.face.icon
+  tar -xvf ~/.config/dotfiles/configs/sddm/chili.tar.gz -C /usr/share/sddm/themes/
+  mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
+  cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
+fi
 
 # Executing scripts
 if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
@@ -221,7 +225,7 @@ if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
   #rm -v wt.tar.gz
 fi
 
-if [[ $(return_value "gh_copilot") == "true" ]]; then
+if [[ $(return_value "gh_copilot" ${output_config_file}) == "true" ]]; then
   install "github-cli" ${DISTRO}
   gh auth login && gh extension install github/gh-copilot 
 fi
