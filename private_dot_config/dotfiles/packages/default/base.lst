@@ -13,7 +13,6 @@ gnome-disk-utility
 gimp
 inkscape
 openrocket
-spectacle
 spicetify-cli
 spicetify-themes-git
 spotify-launcher
@@ -52,7 +51,6 @@ jdk-openjdk
 jdk17-openjdk
 jq
 kitty
-konsole
 mingw-w64-gcc
 neovim
 npm
