@@ -20,12 +20,18 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-[".config/oh-my-zsh/custom/plugins/zsh-autocomplete"]
-    type= "archive"
-    url= "https://github.com/marlonrichert/zsh-autocomplete/archive/master.tar.gz"
+[".config/oh-my-zsh/custom/plugins/zsh-256color"]
+    type= "git-repo"
+    url= "https://github.com/chrissicool/zsh-256color"
     exact=true
     stripComponents = 1
     refreshPeriod = "168h"
+[".config/oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+  type = "git-repo"
+  url = "https://github.com/zsh-users/zsh-autosuggestions"
+  exact=true
+  stripComponents = 1
+  refreshPeriod = "168h"
 [".config/dotfiles/themes"]
   type = "git-repo"
   url = "https://github.com/foglar/wallpapers.git"
