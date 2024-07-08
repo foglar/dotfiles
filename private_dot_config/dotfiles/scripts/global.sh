@@ -28,7 +28,7 @@ dependency_install() {
     local package=$1
     local distro=$2
 
-    gum spin --spinner dot --title "Installing dependecy ${package}" -- install $package $distro
+    gum spin --spinner dot --title "Installing dependency ${package}" -- $(install $package $distro)
 }
 
 install () {
