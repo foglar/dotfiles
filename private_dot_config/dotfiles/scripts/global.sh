@@ -24,12 +24,19 @@ scripts_dir="${home_config_directory}scripts/"
 
 app_install_file="$HOME/.local/share/chezmoi/.chezmoidata/packages.yaml"
 
+dependecy_install() {
+    local package=$1
+    local distro=$2
+
+    gum spin --spinner dot --title "Installing dependecy ${package}" -- install $package $distro
+}
+
 install () {
     local package=$1
     local distro=$2
 
     if [[ $distro == "arch" ]]; then
-        sudo pacman -S --noconfirm --needed $package
+         echo "$PASSWORD" | sudo -S pacman -S --noconfirm --needed $package
     elif [[ $distro == "debian" ]]; then
         sudo apt install -y $package
     fi
