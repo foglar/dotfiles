@@ -29,8 +29,7 @@
     - [x] wallpapers
     - [ ] Setup wallpapers + external repositories to synchronize
 - [ ] create separated scripts for KDE, GNOME and Hyprland setup
-- [ ] install apps specific to desktop (kdeconnect only for kde, if GNOME gsconnect)
-- [ ] gh-copilot cli not working
+    - [ ] install apps specific to desktop (kdeconnect only for kde, if GNOME gsconnect)
 - [ ] bat themes compile
 - [ ] config file forget and add some example one to other directory, create it on run
 

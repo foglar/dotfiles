@@ -21,6 +21,7 @@ if [ ! -f "$HOME/.config/dotfiles/scripts/global.sh" ]; then
 fi
 
 USERNAME=$(echo $USER)
+PASSWORD=$(gum input --prompt "[sudo] password for ${USERNAME}: " --password --placeholder secret)
 
 source "$HOME/.config/dotfiles/scripts/global.sh"
 
@@ -45,7 +46,7 @@ install_category() {
 
     if [ -n "$pkg_arch" ]; then
         echo "$green[*]$blue installing $pkg_arch from arch repo...$reset"
-        sudo pacman -S $pkg_arch --noconfirm
+        echo "$PASSWORD" | sudo -S pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -70,20 +71,21 @@ if [ "$skip_installation" == "true" ]; then
     exit 1
 fi
 
+GOPATH=$(mktemp -d /tmp/go.XXXXXX)
+
 # Installation of applications
 echo "${info_box}Installation of applications"
 if [[ "${DISTRO}" -eq "arch" ]]; then
   echo "${blue}󰣇 Arch$reset detected"
-    
     if [[ $(check_value "blackarch_repo" "${output_config_file}") == "true" ]]; then
       echo "${info_box} Updating repositories$reset"
-      sudo pacman -Syu --noconfirm
+      echo "$PASSWORD" | sudo -S pacman -Syu --noconfirm
       echo "${info_box} Adding blackarch repositories$reset"
-      curl -O https://blackarch.org/strap.sh 
+      curl -O https://blackarch.org/strap.sh
       echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
       chmod +x strap.sh
-      sudo ./strap.sh
-      sudo pacman -Syy --noconfirm
+      echo "$PASSWORD" | sudo -S sh strap.sh
+      echo "$PASSWORD" | sudo -S pacman -Syy --noconfirm
     fi
 
     if [[ $(is_blackarch_repository) == "true" ]]; then
@@ -116,21 +118,6 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
       echo "${error_box}Failed to install yay, installing only basic repo packages with pacman, install aur helper yourself"
       installer="pacman"
     fi
-
-    desktop_environment=$(return_value "desktop_environment" "${output_config_file}")
-    if [[ ${desktop_environment} != "skip" ]]; then
-      echo "${info_box}Installing desktop environment ${desktop_environment}"
-      if [[ ${desktop_environment} == "kde" ]]; then
-        echo "${info_box}Installing KDE Plasma"
-        install plasma-meta ${DISTRO}
-      elif [[ ${desktop_environment} == "gnome" ]]; then
-        echo "${info_box}Installing GNOME"
-        install gnome ${DISTRO}
-      elif [[ ${desktop_environment} == "hyprland" ]]; then
-        install hyprland ${DISTRO}
-        install hyprlock ${DISTRO}
-      fi
-    fi
   
     categories=$(return_value categories_to_install "${output_config_file}")
     categories_list=$(json_to_bash_array "${categories}")
@@ -159,12 +146,28 @@ else
   echo "${DISTRO} is unsupproted distribution, feel free to implement this yourself and contribute to this project."
 fi 
 
+# Installation of desktop environment
+desktop_environment=$(return_value "desktop_environment" "${output_config_file}")
+    if [[ ${desktop_environment} != "skip" ]]; then
+      echo "${info_box}Installing desktop environment ${desktop_environment}"
+      if [[ ${desktop_environment} == "kde" ]]; then
+        echo "${info_box}Installing KDE Plasma"
+        install plasma-meta ${DISTRO}
+      elif [[ ${desktop_environment} == "gnome" ]]; then
+        echo "${info_box}Installing GNOME"
+        install gnome ${DISTRO}
+      elif [[ ${desktop_environment} == "hyprland" ]]; then
+        install hyprland ${DISTRO}
+        install hyprlock ${DISTRO}
+      fi
+    fi
+
 # Change default shell
 shell=$(return_value "change_shell" "${output_config_file}")
 if [[ $shell != "null" ]]; then
   echo "${info_box}Changing default shell to ${shell}"
   install ${shell} ${DISTRO}
-  sudo chsh -s /bin/${shell} $USERNAME
+  echo "$PASSWORD" | sudo -S chsh -s /bin/${shell} $USERNAME
 fi
 
 # Change default browser
@@ -184,7 +187,7 @@ fi
 if [[ $(check_value "grub_theme" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Setting up your grub theme"
   install grub-customizer ${DISTRO}
-  cd ~/.config/dotfiles/configs/grub && sudo ./install.sh && cd -
+  cd ~/.config/dotfiles/configs/grub && echo "$PASSWORD" | sudo -S ./install.sh && cd -
 fi
 
 # Change sddm theme
@@ -197,36 +200,28 @@ if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then
   cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
 fi
 
-# Executing scripts
-if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
-      scripts=$(return_value "scripts_after" "${output_config_file}")
-      scripts_after=$(json_to_bash_array "${scripts}")
-      for script in ${scripts_after[@]}; do
-        echo "${info_box} Executing script ${scripts_dir}${script}"
-        chmod +x "${scripts_dir}${script}"
-        sh "${scripts_dir}${script}"
-      done
-fi
-
 if [[ $(return_value "vencord") == "true" ]]; then
+  echo "${info_box}Installing vencord"
   curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi -
-  sudo VencordInstallerCli-linux -install -location /opt/discord
+  gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -S VencordInstallerCli-linux -install -location /opt/discord
 fi
 
 if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Installing WarThunder launcher"
-  install "wget" ${DISTRO}
-  install "gtk3" ${DISTRO}
-  wget "https://warthunder.com/download/launcherLinux/" --output-document wt.tar.gz
-  tar xvf wt.tar.gz
-  chmod -R +x WarThunder/
-  sudo rm -rf /opt/WarThunder
-  sudo mv WarThunder /opt/
-  #rm -v wt.tar.gz
+  dependecy_install "wget" ${DISTRO}
+  dependecy_install "gtk3" ${DISTRO}
+  war_thunder_archive=$(mktemp /tmp/wt.XXXXXX.tar.gz)
+  war_thunder_dir=$(mktemp -d /tmp/wt.XXXXXX)
+  gum spin --spinner dot --title "Downloading WarThunder" -- wget "https://warthunder.com/download/launcherLinux/" --output-document ${war_thunder_archive}
+  #gum spin --spinner dot --title "Removing existing Warthunder launcher" -- echo "$PASSWORD" | sudo -S rm -rf /opt/WarThunder
+  echo "$PASSWORD" | sudo -S mkdir -p /opt/WarThunder
+  echo "$PASSWORD" | sudo -S tar xf ${war_thunder_archive} -C /opt/WarThunder
+  echo "$PASSWORD" | sudo -S chmod -R +x /opt/WarThunder
 fi
 
 if [[ $(return_value "gh_copilot" ${output_config_file}) == "true" ]]; then
-  install "github-cli" ${DISTRO}
+  echo "${info_box}Installing github-cli"
+  dependecy_install "github-cli" ${DISTRO}
   gh auth login && gh extension install github/gh-copilot 
 fi
 
@@ -239,14 +234,15 @@ if [[ $(return_value "groups") == "true" ]]; then
   done
 fi
 
-# Post install cleanup
-if [[ $(return_value "cleanup" "${output_config_file}") == "true" ]]; then
-  echo "rm -rfv strap.sh"
-  #rm -rfv strap.sh
-  echo "rm -rfv $HOME/README.md"
-  #rm -rfv $HOME/README.md
-  echo "rm -rfv $HOME/go"
-  #rm -rfv $HOME/go
+# Executing scripts
+if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
+      scripts=$(return_value "scripts_after" "${output_config_file}")
+      scripts_after=$(json_to_bash_array "${scripts}")
+      for script in ${scripts_after[@]}; do
+        echo "${info_box} Executing script ${scripts_dir}${script}"
+        chmod +x "${scripts_dir}${script}"
+        sh "${scripts_dir}${script}"
+      done
 fi
 
 echo "Installation finished"

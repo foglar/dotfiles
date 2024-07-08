@@ -18,6 +18,8 @@ DISTRO="unkown"
 {{ end }}
 {{ end }}
 
+PASSWORD=$(gum input --prompt "[sudo] password for ${USER}: " --password --placeholder secret)
+
 source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh"
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
 scripts_dir="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
@@ -30,8 +32,8 @@ touch "${output_config_file}"
 echo "${info_box}Installing dependencies"
 if [[ "${DISTRO}" -eq "arch" ]]; then
     echo "${info_box}${blue}󰣇 Arch$reset detected"
-    sudo pacman -Syu --noconfirm --needed
-    sudo pacman -S jq git gum --noconfirm --needed
+    echo "$PASSWORD" | sudo -S pacman -Syu --noconfirm --needed
+    echo "$PASSWORD" | sudo -S pacman -S jq git gum --noconfirm --needed
 else
     echo "${error_box}Currently unssuported linux distribution"
     echo "${skip_msg}Installing dependencies"
@@ -173,7 +175,7 @@ if [[ $(check_value "scripts_before_dialog") == "true" || $(check_value "scripts
     selected_scripts=$(for script in ${scripts_to_execute[@]}; do echo $script; done | gum choose --no-limit --header "Select scripts to run:")
     for script in ${selected_scripts[@]}; do
         if [ -f "${scripts_dir}${script}" ]; then
-            echo "$info_box Executing script $script...$reset"
+            echo "${info_box}Executing script $script...$reset"
             chmod +x "${scripts_dir}${script}"
             sh "$scripts_dir$script"
         else

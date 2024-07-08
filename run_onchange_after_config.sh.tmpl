@@ -172,6 +172,15 @@ else
   nvidia="false"
 fi
 
+# Vencord
+if [[ $(check_value "vencord") == "true" ]]; then
+  vencord="true"
+elif [[ $(check_value "vencord") == "null" ]]; then
+  gum confirm "${question_box}Install Vencord?$reset" && vencord="true" || vencord="false"
+else
+  vencord="false"
+fi
+
 # Warthunder
 if [[ $(check_value "warthunder") == "null" ]]; then
   gum confirm "${question_box}Would you like to install Warthunder Launcher?$reset" && warthunder="true" || warthunder="false"
@@ -216,7 +225,8 @@ if [[ "$applications_to_install_config" == "custom" ]]; then
     --arg sddm_theme "$sddm_theme" \
     --arg default_browser "$default_browser" \
     --arg grub_theme "$grub_theme" \
-    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser, "grub_theme": $grub_theme}' \
+    --arg vencord "$vencord" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "categories_to_install": $categories_to_install_config, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser, "grub_theme": $grub_theme, "vencord": $vencord}' \
     >$output_config_file)
 else
   json=$(jq -n \
@@ -232,6 +242,7 @@ else
     --arg sddm_theme "$sddm_theme" \
     --arg default_browser "$default_browser" \
     --arg grub_theme "$grub_theme" \
-    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser, "grub_theme": $grub_theme}' \
+    --arg vencord "$vencord" \
+    '{"blackarch_repo": $blackarch_repo,"desktop_environment": $desktop_environment , "category": $category, "scripts_after": $scripts_after, "cleanup": $cleanup, "warthunder": $warthunder, "nvidia": $nvidia, "gh_copilot": $gh_copilot, "change_shell": $change_shell, "sddm_theme": $sddm_theme, "default_browser": $default_browser, "grub_theme": $grub_theme, "vencord": $vencord}' \
     >$output_config_file)
 fi
