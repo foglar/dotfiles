@@ -24,7 +24,7 @@ scripts_dir="${home_config_directory}scripts/"
 
 app_install_file="$HOME/.local/share/chezmoi/.chezmoidata/packages.yaml"
 
-dependecy_install() {
+dependency_install() {
     local package=$1
     local distro=$2
 
