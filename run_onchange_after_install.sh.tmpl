@@ -184,7 +184,7 @@ if [[ $browser != "null" ]]; then
 fi
 
 # Change sddm theme
-if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then
+if [[ $(return_value "sddm_theme" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Changing SDDM theme"
   setfacl -m u:sddm:x ~/
   setfacl -m u:sddm:r ~/.face.icon
