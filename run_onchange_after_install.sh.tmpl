@@ -86,6 +86,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
       chmod +x strap.sh
       echo "$PASSWORD" | sudo -S sh strap.sh
       echo "$PASSWORD" | sudo -S pacman -Syy --noconfirm
+      rm strap.sh
     fi
 
     if [[ $(is_blackarch_repository) == "true" ]]; then
@@ -192,13 +193,17 @@ if [[ $(return_value "sddm_theme" "${output_config_file}") == "true" ]]; then
   echo "$PASSWORD" | sudo -S mkdir -p /usr/share/sddm/themes/
   echo "$PASSWORD" | sudo -S mkdir -p /etc/sddm.conf.d/
   echo "$PASSWORD" | sudo -S tar -xvf ~/.config/dotfiles/configs/sddm/chili.tar.gz -C /usr/share/sddm/themes/
-  echo "$PASSWORD" | sudo -S mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
+  if [[ -f "/etc/sddm.conf.d/theme.conf" ]]; then
+    echo "$PASSWORD" | sudo -S mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
+  fi
   echo "$PASSWORD" | sudo -S cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
 fi
 
 if [[ $(return_value "vencord" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Installing Vencord"
+  dependecy_install "discord" ${DISTRO}
   curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi - -O .local/bin/VencordInstallerCli-linux
+  chmod +x .local/bin/VencordInstallerCli-linux
   gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -S VencordInstallerCli-linux -install -location /opt/discord
 fi
 
