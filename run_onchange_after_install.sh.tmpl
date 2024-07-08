@@ -189,11 +189,11 @@ if [[ $(return_value "sddm_theme" "${output_config_file}") == "true" ]]; then
   dependecy_install "sddm" ${DISTRO}
   setfacl -m u:sddm:x ~/
   setfacl -m u:sddm:r ~/.face.icon
-  echo $PASSWORD | sudo -S mkdir -p /usr/share/sddm/themes/
-  echo $PASSWORD | sudo -S mkdir -p /etc/sddm.conf.d/
+  echo "$PASSWORD" | sudo -S mkdir -p /usr/share/sddm/themes/
+  echo "$PASSWORD" | sudo -S mkdir -p /etc/sddm.conf.d/
   echo "$PASSWORD" | sudo -S tar -xvf ~/.config/dotfiles/configs/sddm/chili.tar.gz -C /usr/share/sddm/themes/
-  mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
-  cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
+  echo "$PASSWORD" | sudo -S mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
+  echo "$PASSWORD" | sudo -S cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
 fi
 
 if [[ $(return_value "vencord" "${output_config_file}") == "true" ]]; then

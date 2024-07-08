@@ -18,6 +18,7 @@ DISTRO="unkown"
 {{ end }}
 {{ end }}
 
+source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh"
 config_file="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/config.json"
 scripts_dir="$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/"
 
@@ -40,8 +41,8 @@ if [ $(id -u) = 0 ]; then
   echo "${error_box}Please don't run this script as sudo, it will ask for permission by itself"
   exit 1
 fi
+
 PASSWORD=$(gum input --prompt "[sudo] password for ${USER}: " --password --placeholder secret)
-source "$HOME/.local/share/chezmoi/private_dot_config/dotfiles/scripts/global.sh"
 
 #nvchad_setup()
 #{
