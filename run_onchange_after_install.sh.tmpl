@@ -193,7 +193,7 @@ if [[ $(return_value "sddm_theme" "${output_config_file}") == "true" ]]; then
   cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
 fi
 
-if [[ $(return_value "vencord" $"{output_config_file}") == "true" ]]; then
+if [[ $(return_value "vencord" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Installing vencord"
   curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi -
   gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -S VencordInstallerCli-linux -install -location /opt/discord
