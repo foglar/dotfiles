@@ -183,13 +183,6 @@ if [[ $browser != "null" ]]; then
   fi
 fi
 
-# Change grub theme
-if [[ $(check_value "grub_theme" "${output_config_file}") == "true" ]]; then
-  echo "${info_box}Setting up your grub theme"
-  install grub-customizer ${DISTRO}
-  cd ~/.config/dotfiles/configs/grub && echo "$PASSWORD" | sudo -S ./install.sh && cd -
-fi
-
 # Change sddm theme
 if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then
   echo "${info_box}Changing SDDM theme"
@@ -200,7 +193,7 @@ if [[ $(return_value "sddm_theme" "${output_config_file}") != "true" ]]; then
   cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
 fi
 
-if [[ $(return_value "vencord") == "true" ]]; then
+if [[ $(return_value "vencord" $"{output_config_file}") == "true" ]]; then
   echo "${info_box}Installing vencord"
   curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi -
   gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -S VencordInstallerCli-linux -install -location /opt/discord
@@ -243,6 +236,13 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
         chmod +x "${scripts_dir}${script}"
         sh "${scripts_dir}${script}"
       done
+fi
+
+# Change grub theme
+if [[ $(check_value "grub_theme" "${output_config_file}") == "true" ]]; then
+  echo "${info_box}Setting up your grub theme"
+  install grub-customizer ${DISTRO}
+  cd ~/.config/dotfiles/configs/grub && echo "$PASSWORD" | sudo -S ./install.sh && cd -
 fi
 
 echo "Installation finished"
