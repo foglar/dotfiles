@@ -71,8 +71,6 @@ if [ "$skip_installation" == "true" ]; then
     exit 1
 fi
 
-GOPATH=$(mktemp -d /tmp/go.XXXXXX)
-
 # Installation of applications
 echo "${info_box}Installation of applications"
 if [[ "${DISTRO}" -eq "arch" ]]; then
@@ -202,9 +200,9 @@ fi
 if [[ $(return_value "vencord" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Installing Vencord"
   dependency_install "discord" ${DISTRO}
-  curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi - -O .local/bin/VencordInstallerCli-linux
-  chmod +x .local/bin/VencordInstallerCli-linux
-  gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -S VencordInstallerCli-linux -install -location /opt/discord
+  curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi - -O ~/.local/bin/VencordInstallerCli-linux
+  chmod +x ~/.local/bin/VencordInstallerCli-linux
+  gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -S ~/.local/bin/VencordInstallerCli-linux -install -location /opt/discord
 fi
 
 if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
@@ -213,13 +211,13 @@ if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
   dependency_install "gtk3" ${DISTRO}
   war_thunder_archive=$(mktemp /tmp/wt.XXXXXX.tar.gz)
   war_thunder_dir=$(mktemp -d /tmp/wt.XXXXXX)
-  gum spin --spinner dot --title "Downloading WarThunder" -- wget "https://warthunder.com/download/launcherLinux/" --output-document ${war_thunder_archive}
+  gum spin --spinner dot --title "Downloading WarThunder" -- wget "https://warthunder.com/download/launcherLinux/" --output-document=${war_thunder_archive}
   #gum spin --spinner dot --title "Removing existing Warthunder launcher" -- echo "$PASSWORD" | sudo -S rm -rf /opt/WarThunder
-  echo "$PASSWORD" | sudo -S mkdir -p /opt/WarThunder
-  echo "$PASSWORD" | sudo -S tar xf ${war_thunder_archive} -C /opt/WarThunder
+  echo "$PASSWORD" | sudo -S tar xf ${war_thunder_archive} -C /opt/
   echo "$PASSWORD" | sudo -S chmod -R +x /opt/WarThunder
 fi
 
+# github-cli
 if [[ $(return_value "gh_copilot" ${output_config_file}) == "true" ]]; then
   echo "${info_box}Installing github-cli"
   dependency_install "github-cli" ${DISTRO}
@@ -240,7 +238,7 @@ if [[ $(return_value "scripts_after" "${output_config_file}") != "null" ]]; then
       scripts=$(return_value "scripts_after" "${output_config_file}")
       scripts_after=$(json_to_bash_array "${scripts}")
       for script in ${scripts_after[@]}; do
-        echo "${info_box} Executing script ${scripts_dir}${script}"
+        echo "${info_box}Executing script ${scripts_dir}${script}"
         chmod +x "${scripts_dir}${script}"
         sh "${scripts_dir}${script}"
       done

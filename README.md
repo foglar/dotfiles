@@ -15,8 +15,8 @@
 - [ ] turn off the bell
 - [ ] setup buttons in logind
 - [ ] paru BottomUp settings
-- [ ] Fix conda install script
-- [ ] Save all files to temp directory
+- [x] Fix conda install script
+- [x] Save all files to temp directory
 - [ ] sudo systemctl start docker.service
 - [ ] sudo systemctl enable docker.service
 - [ ] sudo usermod -aG docker $USER
@@ -30,16 +30,30 @@
     - [ ] Setup wallpapers + external repositories to synchronize
 - [ ] create separated scripts for KDE, GNOME and Hyprland setup
     - [ ] install apps specific to desktop (kdeconnect only for kde, if GNOME gsconnect)
-- [ ] bat themes compile
 - [ ] config file forget and add some example one to other directory, create it on run
+- [ ] add gum spinner more places
+- [ ] add sddm enable for other desktops than KDE
+- [ ] if kde don't show option for sddm theme
+- [ ] change desktop selection to select only one
+
+## Issues
+
+- [x] warthunder launcher nesting
+- [x] sddm theme name after untar
+- [ ] fix custom application list
+- [ ] global functions install gum
+- [ ] nvidia
 
 ## Theming features
 
 - [ ] bat theme catpuccin compile
 - [ ] btop config catpuccin setup
+- [ ] add grub theme catpuccin
+- [ ] tty <https://github.com/catppuccin/tty>
 
 ## Credits
 
 inspired by:
-    - <https://github.com/prasanthrangan/hyprdots> *Aesthetic, dynamic and minimal dots for Arch hyprland* by prasanthrangan
-    - <https://omakub.org> *Opinionated Ubuntu Setup* by basecamp
+
+- <https://github.com/prasanthrangan/hyprdots> *Aesthetic, dynamic and minimal dots for Arch hyprland* by prasanthrangan
+- <https://omakub.org> *Opinionated Ubuntu Setup* by basecamp

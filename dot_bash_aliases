@@ -18,5 +18,5 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias mkdir='mkdir -p'
-alias update='paru -Syu;sudo VencordInstallerCli-linux -repair -location /opt/discord; cd ~/.config/dotfiles/grub-theme/ && sudo ./install.sh; cd -'
+alias update='paru;sudo VencordInstallerCli-linux -repair -location /opt/discord; cd ~/.config/dotfiles/configs/grub/ && sudo ./install.sh; cd - '
 alias cat="bat --style plain"

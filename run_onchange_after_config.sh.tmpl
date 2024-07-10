@@ -66,7 +66,7 @@ echo "${info_box}Default browser: ${default_browser}"
 desktop_environment_config=$(return_value "desktop_environment")
 if [[ "$desktop_environment_config" != "kde" && "$desktop_environment_config" != "gnome" && "$desktop_environment_config" != "hyprland" && "$desktop_environment_config" != "skip" ]]; then
   echo "$blue"
-  desktop_environment_config=$(gum choose --no-limit --header "What desktop environmet would you like to install" gnome kde hyprland skip)
+  desktop_environment_config=$(gum choose --header "What desktop environmet would you like to install" gnome kde hyprland skip)
 fi
 echo "${info_box}Desktop: ${desktop_environment_config}"
 
