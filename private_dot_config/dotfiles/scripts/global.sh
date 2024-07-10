@@ -24,13 +24,6 @@ scripts_dir="${home_config_directory}scripts/"
 
 app_install_file="$HOME/.local/share/chezmoi/.chezmoidata/packages.yaml"
 
-dependency_install() {
-    local package=$1
-    local distro=$2
-
-    gum spin --spinner dot --title "Installing dependency ${package}" -- $(install $package $distro)
-}
-
 install () {
     local package=$1
     local distro=$2
