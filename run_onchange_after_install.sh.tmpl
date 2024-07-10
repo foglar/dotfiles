@@ -79,7 +79,7 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
       echo "${info_box} Updating repositories$reset"
       echo "$PASSWORD" | sudo -S pacman -Syu --noconfirm
       echo "${info_box} Adding blackarch repositories$reset"
-      curl -O https://blackarch.org/strap.sh
+      gum spin --spinner dot --title "Adding blackarch repositories" -- curl -O https://blackarch.org/strap.sh
       echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
       chmod +x strap.sh
       echo "$PASSWORD" | sudo -S sh strap.sh
@@ -175,6 +175,7 @@ if [[ $browser != "null" ]]; then
   echo "${info_box}Changing default browser to ${browser}"
   install "xdg-utils" ${DISTRO}
   install "qt5-tools" ${DISTRO}
+  install ${browser} ${DISTRO}
   if [[ ${browser} == "brave" ]]; then
     xdg-settings set default-web-browser ${browser}-browser.desktop
   else
@@ -186,12 +187,13 @@ fi
 if [[ $(return_value "sddm_theme" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Changing SDDM theme"
   install "sddm" ${DISTRO}
+  echo "$PASSWORD" | sudo -S systemctl enable sddm
   setfacl -m u:sddm:x ~/
   setfacl -m u:sddm:r ~/.face.icon
   echo "$PASSWORD" | sudo -S mkdir -p /usr/share/sddm/themes/
   echo "$PASSWORD" | sudo -S mkdir -p /etc/sddm.conf.d/
   echo "$PASSWORD" | sudo -S tar -xvf ~/.config/dotfiles/configs/sddm/chili.tar.gz -C /usr/share/sddm/themes/
-  if [[ -f "/etc/sddm.conf.d/theme.conf" ]]; then
+  if [[ -f "/etc/sddm.conf.d/kde_settings.conf" ]]; then
     echo "$PASSWORD" | sudo -S mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
   fi
   echo "$PASSWORD" | sudo -S cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf

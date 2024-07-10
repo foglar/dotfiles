@@ -33,8 +33,7 @@
 - [ ] config file forget and add some example one to other directory, create it on run
 - [ ] add gum spinner more places
 - [ ] add sddm enable for other desktops than KDE
-- [ ] if kde don't show option for sddm theme
-- [ ] change desktop selection to select only one
+- [x] change desktop selection to select only one
 
 ## Issues
 
@@ -43,6 +42,8 @@
 - [ ] fix custom application list
 - [ ] global functions install gum
 - [ ] nvidia
+- [ ] chezmoiexternal move everything inside script
+- [ ] sddm theme if kde should be catpuccine if hyprland chili, else nothing
 
 ## Theming features
 

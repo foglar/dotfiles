@@ -26,20 +26,20 @@ mkdir -p $HOME/.config/dotfiles/scripts/
 mkdir -p $HOME/.config/dotfiles/packages/
 touch "${output_config_file}"
 
+if [ $(id -u) = 0 ]; then
+  echo "${error_box}Please don't run this script as sudo, it will ask for permission by itself"
+  exit 1
+fi
+
 # dependencies saved in the config file
 echo "${info_box}Installing dependencies"
 if [[ "${DISTRO}" -eq "arch" ]]; then
     echo "${info_box}${blue}󰣇 Arch$reset detected"
-    sudo -S pacman -Syu --noconfirm --needed
-    sudo -S pacman -S jq git gum --noconfirm --needed
+    sudo pacman -Syu --noconfirm --needed
+    sudo pacman -S jq git gum --noconfirm --needed
 else
     echo "${error_box}Currently unssuported linux distribution"
     echo "${skip_msg}Installing dependencies"
-fi
-
-if [ $(id -u) = 0 ]; then
-  echo "${error_box}Please don't run this script as sudo, it will ask for permission by itself"
-  exit 1
 fi
 
 PASSWORD=$(gum input --prompt "[sudo] password for ${USER}: " --password --placeholder secret)
