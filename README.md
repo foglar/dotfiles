@@ -1,4 +1,39 @@
-# My personal dotfiles
+# Best setup script for Linux
+
+## Installation
+
+Currently is script working on Arch, but in future will be added support for other linux distros.
+I am not responsible for any damage caused by the script. **Run it at your own risk.**
+
+### Arch
+
+Install `chezmoi` and `git` on your linux distribution.
+
+```bash
+sudo pacman -S chezmoi git
+```
+
+Then you should clone the repository with chezmoi
+
+```bash
+chezmoi init foglar --apply --depth 1
+```
+
+You probably have to run script twice, there will be error:
+
+```error
+chezmoi: .gitconfig: template: dot_gitconfig.tmpl:2:12: executing "dot_gitconfig.tmpl" at <.email>: map has no entry for key "email"
+```
+
+Just run again:
+
+```bash
+chezmoi init foglar --apply --depth 1
+```
+
+This issue will be soon removed.
+
+## My personal dotfiles
 
 - [ ] Add configuration for colours of terminal and validation of config file before installation
 - [ ] Look of the logo like in Omakub
