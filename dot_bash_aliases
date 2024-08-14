@@ -18,8 +18,9 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias mkdir='mkdir -p'
-alias update='paru;sudo ~/.local/bin/VencordInstallerCli-linux -repair -location /opt/discord; cd ~/.config/dotfiles/configs/grub/ && sudo ./install.sh; cd - '
+alias update='paru;sudo ~/.local/bin/VencordInstallerCli-linux -repair -location /opt/discord; cd ~/.config/dotfiles/configs/grub/ && sudo ./install.sh; cd - ;sudo oh-my-posh upgrade'
 alias cat="bat --style plain"
+alias rasp="s foglar@192.168.8.138"
 
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
