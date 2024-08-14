@@ -46,7 +46,7 @@ install_category() {
 
     if [ -n "$pkg_arch" ]; then
         echo "$green[*]$blue installing $pkg_arch from arch repo...$reset"
-        echo "$PASSWORD" | sudo -S pacman -S $pkg_arch --noconfirm
+        echo "$PASSWORD" | sudo -nS pacman -S $pkg_arch --noconfirm
     fi
 
     if [ -n "$pkg_aur" ]; then
@@ -77,13 +77,13 @@ if [[ "${DISTRO}" -eq "arch" ]]; then
   echo "${blue}󰣇 Arch$reset detected"
     if [[ $(check_value "blackarch_repo" "${output_config_file}") == "true" ]]; then
       echo "${info_box} Updating repositories$reset"
-      echo "$PASSWORD" | sudo -S pacman -Syu --noconfirm
+      echo "$PASSWORD" | sudo -nS pacman -Syu --noconfirm
       echo "${info_box} Adding blackarch repositories$reset"
       gum spin --spinner dot --title "Adding blackarch repositories" -- curl -O https://blackarch.org/strap.sh
       echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c 
       chmod +x strap.sh
-      echo "$PASSWORD" | sudo -S sh strap.sh
-      echo "$PASSWORD" | sudo -S pacman -Syy --noconfirm
+      echo "$PASSWORD" | sudo -nS sh strap.sh
+      echo "$PASSWORD" | sudo -nS pacman -Syy --noconfirm
       rm strap.sh
     fi
 
@@ -166,7 +166,7 @@ shell=$(return_value "change_shell" "${output_config_file}")
 if [[ $shell != "null" ]]; then
   echo "${info_box}Changing default shell to ${shell}"
   install ${shell} ${DISTRO}
-  echo "$PASSWORD" | sudo -S chsh -s /bin/${shell} $USERNAME
+  echo "$PASSWORD" | sudo -nS chsh -s /bin/${shell} $USERNAME
 fi
 
 # Change default browser
@@ -187,16 +187,16 @@ fi
 if [[ $(return_value "sddm_theme" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Changing SDDM theme"
   install "sddm" ${DISTRO}
-  echo "$PASSWORD" | sudo -S systemctl enable sddm
+  echo "$PASSWORD" | sudo -nS systemctl enable sddm
   setfacl -m u:sddm:x ~/
   setfacl -m u:sddm:r ~/.face.icon
-  echo "$PASSWORD" | sudo -S mkdir -p /usr/share/sddm/themes/
-  echo "$PASSWORD" | sudo -S mkdir -p /etc/sddm.conf.d/
-  echo "$PASSWORD" | sudo -S tar -xvf ~/.config/dotfiles/configs/sddm/chili.tar.gz -C /usr/share/sddm/themes/
+  echo "$PASSWORD" | sudo -nS mkdir -p /usr/share/sddm/themes/
+  echo "$PASSWORD" | sudo -nS mkdir -p /etc/sddm.conf.d/
+  echo "$PASSWORD" | sudo -nS tar -xvf ~/.config/dotfiles/configs/sddm/chili.tar.gz -C /usr/share/sddm/themes/
   if [[ -f "/etc/sddm.conf.d/kde_settings.conf" ]]; then
-    echo "$PASSWORD" | sudo -S mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
+    echo "$PASSWORD" | sudo -nS mv /etc/sddm.conf.d/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf.bak
   fi
-  echo "$PASSWORD" | sudo -S cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
+  echo "$PASSWORD" | sudo -nS cp ~/.config/dotfiles/configs/sddm/kde_settings.conf /etc/sddm.conf.d/kde_settings.conf
 fi
 
 if [[ $(return_value "vencord" "${output_config_file}") == "true" ]]; then
@@ -204,7 +204,7 @@ if [[ $(return_value "vencord" "${output_config_file}") == "true" ]]; then
   install "discord" ${DISTRO}
   curl -s https://api.github.com/repos/Vencord/Installer/releases/latest | grep "VencordInstallerCli-linux" | cut -d : -f 2,3 | tr -d \" | wget -qi - -O ~/.local/bin/VencordInstallerCli-linux
   chmod +x ~/.local/bin/VencordInstallerCli-linux
-  gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -S ~/.local/bin/VencordInstallerCli-linux -install -location /opt/discord
+  gum spin --spinner dot --title "Installing Vencord on your device" -- echo "$PASSWORD" | sudo -nS ~/.local/bin/VencordInstallerCli-linux -install -location /opt/discord
 fi
 
 if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
@@ -214,9 +214,9 @@ if [[ $(return_value "warthunder" "${output_config_file}") == "true" ]]; then
   war_thunder_archive=$(mktemp /tmp/wt.XXXXXX.tar.gz)
   war_thunder_dir=$(mktemp -d /tmp/wt.XXXXXX)
   gum spin --spinner dot --title "Downloading WarThunder" -- wget "https://warthunder.com/download/launcherLinux/" --output-document=${war_thunder_archive}
-  #gum spin --spinner dot --title "Removing existing Warthunder launcher" -- echo "$PASSWORD" | sudo -S rm -rf /opt/WarThunder
-  echo "$PASSWORD" | sudo -S tar xf ${war_thunder_archive} -C /opt/
-  echo "$PASSWORD" | sudo -S chmod -R +x /opt/WarThunder
+  #gum spin --spinner dot --title "Removing existing Warthunder launcher" -- echo "$PASSWORD" | sudo -nS rm -rf /opt/WarThunder
+  echo "$PASSWORD" | sudo -nS tar xf ${war_thunder_archive} -C /opt/
+  echo "$PASSWORD" | sudo -nS chmod -R +x /opt/WarThunder
 fi
 
 # github-cli
@@ -250,7 +250,7 @@ fi
 if [[ $(check_value "grub_theme" "${output_config_file}") == "true" ]]; then
   echo "${info_box}Setting up your grub theme"
   install grub-customizer ${DISTRO}
-  cd ~/.config/dotfiles/configs/grub && echo "$PASSWORD" | sudo -S ./install.sh && cd -
+  cd ~/.config/dotfiles/configs/grub && echo "$PASSWORD" | sudo -nS ./install.sh && cd -
 fi
 
 echo "Installation finished"
