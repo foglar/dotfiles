@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Function to display usage help
+usage() {
+  echo "Usage: $0 <project_name>"
+  echo "    <project_name> : Name of the project directory and the assembly file (without .asm extension)"
+  exit 1
+}
+
+# Check if exactly one argument is passed
+if [ "$#" -ne 1 ]; then
+  usage
+fi
+
+# The first argument will be used as both the directory and the assembly filename
+project_name=$1
+
+# Ensure directory exists
+if [ ! -d "$project_name" ]; then
+  echo "[!] Directory does not exist, creating $project_name"
+  mkdir -p "$project_name"
+fi
+
+cat <<EOL > "${project_name}/${project_name}.asm"
+; ${project_name}.asm
+section .data
+section .bss
+section .text
+  global main
+main:
+
+EOL
+echo "[*] ASM file was created at ${project_name}/${project_name}.asm"
+# Create the Makefile in the specified directory
+cat <<EOL > "$project_name/makefile"
+# ${project_name}.asm
+$project_name: ${project_name}.o
+  gcc -o $project_name ${project_name}.o -no-pie
+
+${project_name}.o: ${project_name}.asm
+  nasm -f elf64 -g -F dwarf ${project_name}.asm -l ${project_name}.lst
+
+EOL
+
+echo "[*] Makefile has been created in $project_name for ${project_name}.asm"
+# Notify the user
+

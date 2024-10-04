@@ -69,6 +69,7 @@ This issue will be soon removed.
 - [ ] add gum spinner more places
 - [ ] add sddm enable for other desktops than KDE
 - [x] change desktop selection to select only one
+- [ ] zsh plugins install
 
 ## Issues
 

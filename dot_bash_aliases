@@ -2,7 +2,6 @@ alias vim="nvim"
 alias ls="exa --icons"
 alias ll="exa -alh --icons"
 alias tree="exa --tree --icons"
-alias ai="tgpt"
 alias open=rifle
 alias ip="ip -c"
 alias s="kitten ssh"
@@ -20,8 +19,10 @@ alias .5='cd ../../../../..'
 alias mkdir='mkdir -p'
 alias update='paru;sudo ~/.local/bin/VencordInstallerCli-linux -repair -location /opt/discord; cd ~/.config/dotfiles/configs/grub/ && sudo ./install.sh; cd - ;sudo oh-my-posh upgrade'
 alias cat="bat --style plain"
-alias rasp="s foglar@192.168.8.138"
-
+alias rasp="s foglar@192.168.8.140"
+alias hist="history | awk '{for (i=2; i<=NF; i++) printf \$i\" \"; print \"\"}' | fzf | wl-copy"
+alias packages="paru -Qe | fzf | wl-copy"
+alias "cdx"="zoxide query --interactive"
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \

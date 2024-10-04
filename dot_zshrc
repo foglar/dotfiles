@@ -58,6 +58,7 @@ source ~/.bash_aliases
 
 eval "$(oh-my-posh init zsh -c ~/.config/oh-my-posh/minimal.omp.toml)"
 eval "$(zoxide init zsh)"
+source <(fzf --zsh)
 
 if type pfetch >/dev/null 2>&1
 then
@@ -65,6 +66,18 @@ then
 fi
 
 unsetopt BEEP
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
