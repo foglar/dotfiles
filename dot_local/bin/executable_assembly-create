@@ -35,10 +35,10 @@ echo "[*] ASM file was created at ${project_name}/${project_name}.asm"
 cat <<EOL > "$project_name/makefile"
 # ${project_name}.asm
 $project_name: ${project_name}.o
-  gcc -o $project_name ${project_name}.o -no-pie
+ gcc -o $project_name ${project_name}.o -no-pie
 
 ${project_name}.o: ${project_name}.asm
-  nasm -f elf64 -g -F dwarf ${project_name}.asm -l ${project_name}.lst
+ nasm -f elf64 -g -F dwarf ${project_name}.asm -l ${project_name}.lst
 
 EOL
 

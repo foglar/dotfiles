@@ -55,6 +55,9 @@ export GRUB_BTRFS_GRUB_DIRNAME="/boot/grub/"
 export PICO_SDK_PATH=~/Documents/Programming/Projects/pico-sdk/
 export TERMINAL=/usr/bin/kitty
 
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 export PATH=$PATH:~/.local/bin/:~/.console-ninja/.bin/:${HOME}/.local/share/JetBrains/Toolbox/scripts
 
 PATH=~/.console-ninja/.bin:$PATH
