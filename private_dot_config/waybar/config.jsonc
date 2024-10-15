@@ -15,7 +15,7 @@
 
 // positions generated based on config.ctl //
 
-	"modules-left": ["custom/padd","custom/l_end","cpu","memory","custom/cpuinfo","custom/gpuinfo","custom/updates","custom/r_end","custom/l_end","idle_inhibitor","clock","custom/spotify","custom/r_end","","custom/padd"],
+	"modules-left": ["custom/padd","custom/l_end","cpu","memory","custom/cpuinfo","custom/gpuinfo","custom/updates","custom/r_end","custom/l_end","idle_inhibitor","clock","custom/cava","mpris","custom/r_end","","custom/padd"],
 	"modules-center": ["custom/padd","","custom/l_end","hyprland/workspaces","hyprland/window","custom/r_end","custom/padd"],
 	"modules-right": ["custom/padd","custom/l_end","backlight","network","bluetooth","pulseaudio","pulseaudio#microphone","custom/keybindhint","custom/r_end","custom/l_end","tray","battery","custom/r_end","custom/l_end","custom/cliphist","custom/power","custom/r_end","custom/padd"],
 
@@ -143,19 +143,25 @@
         }
     },
 
-    "custom/spotify": {
-        "exec": "mediaplayer.py --player spotify",
-        "format": " {}",
+"custom/cava": {
+	"format": "{}",
+	"exec": "waybar_cava.sh",
+	"restart-interval": 1,
+	"hide-empty": true
+},    "mpris": {
+        "format": "{player_icon} {dynamic}",
         "rotate": 0,
-        "return-type": "json",
-        "on-click": "playerctl play-pause --player spotify",
-        "on-click-right": "playerctl next --player spotify",
-        "on-click-middle": "playerctl previous --player spotify",
-        "on-scroll-up": "volumecontrol.sh -p spotify i",
-        "on-scroll-down": "volumecontrol.sh -p spotify d",
-        "max-length": 25,
-        "escape": true,
-        "tooltip": true
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "player-icons": { 
+            "default": "▶",
+            "mpv": "🎵"
+        },
+        "status-icons": {
+            "paused": ""
+        },
+        // "ignored-players": ["firefox"]
+        "max-length": 45,
+        "interval": 1
     },
 
     "hyprland/workspaces": {
@@ -185,7 +191,7 @@
             "(.*)Spotify": "Spotify 󰓇",
             "(.*)Steam": "Steam 󰓓"
         },
-        "max-length": 1000
+        "max-length": 50
     },
 
     "backlight": {

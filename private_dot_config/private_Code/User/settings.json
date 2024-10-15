@@ -83,18 +83,29 @@
     "workbench.action.tasks.configureTaskRunner",
     "workbench.action.tasks.runTask"
   ],
-  "workbench.colorTheme": "One Dark Pro Darker",
+  "workbench.colorTheme": "One Dark Pro Flat",
   "sourcegraph.basePath": "/home/foglar/Programming/",
   "workbench.activityBar.location": "hidden",
   "editor.minimap.enabled": false,
-
   "vscode_custom_css.imports": [
     "file:///home/foglar/.config/Code/style.css",
     "file:///home/foglar/.config/Code/script.js"
   ],
   "window.menuBarVisibility": "toggle",
-  "workbench.statusBar.visible": false,
   "console-ninja.featureSet": "Community",
   "terminal.integrated.stickyScroll.enabled": true,
-  "editor.stickyScroll.enabled": false
+  "editor.stickyScroll.enabled": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "nativescript.analytics.enabled": false,
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  }
 }

@@ -17,7 +17,7 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias mkdir='mkdir -p'
-alias update='paru;sudo ~/.local/bin/VencordInstallerCli-linux -repair -location /opt/discord; cd ~/.config/dotfiles/configs/grub/ && sudo ./install.sh; cd - ;sudo oh-my-posh upgrade'
+alias update='paru;cd ~/.config/dotfiles/configs/grub/ && sudo ./install.sh; cd - ;sudo oh-my-posh upgrade'
 alias cat="bat --style plain"
 alias rasp="s foglar@192.168.8.140"
 alias hist="history | awk '{for (i=2; i<=NF; i++) printf \$i\" \"; print \"\"}' | fzf | wl-copy"
