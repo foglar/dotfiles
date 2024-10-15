@@ -1,5 +1,4 @@
 {
-  "window.menuBarVisibility": "toggle",
   "editor.fontSize": 16,
   "editor.scrollbar.vertical": "hidden",
   "editor.scrollbar.verticalScrollbarSize": 0,
@@ -10,13 +9,12 @@
   "editor.fontFamily": "'Monaspace Neon','JetBrainsMono Nerd Font','Maple Mono', 'monospace'",
   "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'liga'",
   "extensions.autoUpdate": false,
-  "workbench.statusBar.visible": false,
   "terminal.external.linuxExec": "kitty",
   "terminal.explorerKind": "both",
   "terminal.sourceControlRepositoriesKind": "both",
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.env.linux": {},
-  "workbench.iconTheme": "icons",
+  "workbench.iconTheme": "material-icon-theme",
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -85,6 +83,18 @@
     "workbench.action.tasks.configureTaskRunner",
     "workbench.action.tasks.runTask"
   ],
-  "workbench.colorTheme": "wallbash",
-  "sourcegraph.basePath": "/home/foglar/Programming/"
+  "workbench.colorTheme": "One Dark Pro Darker",
+  "sourcegraph.basePath": "/home/foglar/Programming/",
+  "workbench.activityBar.location": "hidden",
+  "editor.minimap.enabled": false,
+
+  "vscode_custom_css.imports": [
+    "file:///home/foglar/.config/Code/style.css",
+    "file:///home/foglar/.config/Code/script.js"
+  ],
+  "window.menuBarVisibility": "toggle",
+  "workbench.statusBar.visible": false,
+  "console-ninja.featureSet": "Community",
+  "terminal.integrated.stickyScroll.enabled": true,
+  "editor.stickyScroll.enabled": false
 }
