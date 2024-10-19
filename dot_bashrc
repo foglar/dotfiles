@@ -52,7 +52,7 @@ export GOARCH=amd64
 export EDITOR=nvim
 export GRUB_BTRFS_GRUB_DIRNAME="/boot/grub/"
 
-export PICO_SDK_PATH=~/Documents/Programming/Projects/pico-sdk/
+export PICO_SDK_PATH=~/Programming/Projects/pico-sdk/
 export TERMINAL=/usr/bin/kitty
 
 export ANDROID_HOME=$HOME/Android/Sdk
